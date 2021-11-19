@@ -1,0 +1,27 @@
+#ifndef PARSER_H
+#define PARSER_H
+
+#include "tipos_edificios.h"
+#include "edificio.h"
+
+
+
+class Parser {
+
+	public:
+		
+		std::string lectura_archivo[5];
+		
+		//Precondiciones: -
+		//Postcondicions: Devuelve una línea del archivo "edificios" y la guarda en lectura_archivos[]
+		Parser(std::string* lectura);
+		Tipo_edificio* procesar_entrada ();
+		
+		std::string tipo_edificio ();
+		int piedra();
+		int madera();
+		int metal();
+		int cant_max_construido();
+};
+
+#endif // PARSER_H
