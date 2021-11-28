@@ -42,44 +42,47 @@ void Juego::leerMateriales(){
 	fstream archivoMateriales(PATH_MATERIALES, ios::in);
 	
 	Material *material;
-	string nombre, cantidadMaterial;
+	string nombre, cantidadMaterialJugador1, cantidadMaterialJugador2;
 	
 	while(archivoMateriales >> nombre){
-		archivoMateriales >> cantidadMaterial;
+		archivoMateriales >> cantidadMaterialJugador1;
+		archivoMateriales >> cantidadMaterialJugador2;
 		
 		material = new Material;
-		*material = Material(nombre, stoi(cantidadMaterial));
+		*material = Material(nombre, stoi(cantidadMaterialJugador1));
 
-		jugadores[0]->agregarMaterial()
+		jugadores[0] -> agregarMaterial(material);
 
-		agregarMaterial(material);
+		material = new Material;
+		*material = Material(nombre, stoi(cantidadMaterialJugador2));
+
+		jugadores[1] -> agregarMaterial(material);
 
 	}
 	
 	archivoMateriales.close();
 }
 
+/*
+void Juego::agregarMaterial(Material *nuevoMaterial, int jugador){
 
-void Juego::agregarMaterial(Material *nuevoMaterial){
-
-	Material **vectorMateriales = new Material*[this -> cantidadMateriales + 1];
+	Material **vectorMateriales = new Material*[this -> jugadores[jugador] -> obtenerCantidadMateriales() + 1];
 	if(vectorMateriales == NULL)
 		delete[] vectorMateriales;
 	
-	for(int i = 0; i < this -> cantidadMateriales; i++)
-		vectorMateriales[i] = this -> material[i];
+	for(int i = 0; i < this -> jugadores[jugador] -> obtenerCantidadMateriales(); i++)
+		*vectorMateriales = this -> jugadores[jugador] -> obtenerMateriales();
 		
-	vectorMateriales[this -> cantidadMateriales] = nuevoMaterial;
+	vectorMateriales[this -> jugadores[jugador] -> obtenerCantidadMateriales()] = nuevoMaterial;
 	
-	if(this -> cantidadMateriales != 0){
-		delete[] this -> material;
+	if(this -> jugadores[jugador] -> obtenerCantidadMateriales() != 0){
+		delete[] this -> jugadores[jugador] -> obtenerMateriales();
 	}
 	
-	this -> material = vectorMateriales;
-	this -> cantidadMateriales++;	
-
+	this -> jugadores[jugador] -> establecerMaterial(*vectorMateriales);
+	this -> jugadores[jugador] -> establecerCantidadMateriales((this -> jugadores[jugador] -> obtenerCantidadMateriales())++);
 }
-
+*/
 
 
 
@@ -87,14 +90,20 @@ void Juego::cerrarMateriales(){
 
 	ofstream archivoMateriales(PATH_MATERIALES);
 	
-	for(int i = 0; i < this -> cantidadMateriales; i++){
-		archivoMateriales << this -> material[i]->obtenerNombreMaterial() << ' '
-						   << this -> material[i]->obtenerCantidadMaterial() << '\n';
-		delete this -> material[i];
+	for(int i = 0; i < this -> jugadores[0] -> obtenerCantidadMateriales(); i++){
+		archivoMateriales << this -> jugadores[0] -> obtenerMaterial(i).obtenerNombreMaterial() << ' ' << 
+		this -> jugadores[0] -> obtenerMaterial(i).obtenerCantidadMaterial() << " " << 
+		this -> jugadores[1] -> obtenerMaterial(i).obtenerCantidadMaterial() << endl;
+
+		//delete this -> jugadores[0] -> obtenerMaterial(i);
+		//delete this -> jugadores[1] -> obtenerMaterial(i);
 	}
 	
-	delete[] this -> material;
-	this -> material = nullptr;
+	//delete[] this -> jugadores[0] -> obtenerMateriales();
+	// this -> jugadores[0] -> establecerMateriales() = nullptr;
+	//delete[] this -> jugadores[1] -> obtenerMateriales();
+
+	
 }
 
 bool Juego::verificarMateriales(string nombreIngresado, int piedraNecesaria, int maderaNecesaria, int metalNecesario, int construidos, int cantidadMax){

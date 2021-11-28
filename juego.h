@@ -67,7 +67,7 @@ class Juego{
 		
 		//Precondiciones: Se tiene que haber leído bien el archivo de materiales
 		//Postcondiciones: Agrega el material leído a la lista de materiales disponibles
-		void agregarMaterial(Material *nuevoMaterial);
+		void agregarMaterial(Material *nuevoMaterial, int jugador);
 		
 		//Precondiciones: Se tiene que haber leído bien el archivo de edificio
 		//Postcondiciones: Agrega el edificio leído a la lista de edificios disponibles
