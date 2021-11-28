@@ -1,6 +1,7 @@
 #include "jugador.h"
 
-Jugardor::Jugardor() {
+Jugador::Jugador(std::string nombreJugador) {
+    nombre = nombreJugador;
     edificiosContruidos; new std::string * [0];
     energia = 50;
     andycoinsRecolectadas = bombasCompradas = bombasUsadas = 0;
@@ -20,45 +21,46 @@ Jugardor::Jugardor() {
     extremistaCumplido = false;
 };
 
-void Jugardor::asignarMateriales(Material** materialesAsignados) {
-    materiales = materialesAsignados;
+void Jugador::agregarMaterial(Material* nuevoMaterial) {
+    //arreglar
+    materiales = nuevoMaterial;
 }
 
-Material* Jugardor::buscarMaterial(string nombreMaterial) {
+Material* Jugador::buscarMaterial(string nombreMaterial) {
     Material* material = nullptr;
     int i = 0;
     while (i < 5 || material == nullptr) {
-        if (materiales[i] -> obtener_nombre_material() == nombreMaterial)
+        if (materiales[i] -> obtenerNombreMaterial() == nombreMaterial)
             material = materiales[i];
     }
     return material;
 }
 
-bool Jugardor::comprarAndypolis() {
+bool Jugador::comprarAndypolis() {
     return comprarAndypolisCumplido || (comprarAndypolisCumplido = (andycoinsRecolectadas >= 100000));
 }
-bool Jugardor::edadDePiedra() {
-    return edadDePiedraCumplido || (edadDePiedraCumplido = (buscarMaterial("piedra") -> obtener_cantidad_material() >= 50000));
+bool Jugador::edadDePiedra() {
+    return edadDePiedraCumplido || (edadDePiedraCumplido = (buscarMaterial("piedra") -> obtenerCantidadMaterial() >= 50000));
 }
-bool Jugardor::bombardero() {
+bool Jugador::bombardero() {
     return bombarderoCumplido || (bombarderoCumplido = (bombasUsadas >= 5));
 }
-bool Jugardor::energetico() {
+bool Jugador::energetico() {
     return energeticoCumplido || (energeticoCumplido = (energia == 100));
 }
-bool Jugardor::minero() {
+bool Jugador::minero() {
     return mineroCumplido || (mineroCumplido = (minaConstruida && minaOroConstruida));
 }
-bool Jugardor::cansado() {
+bool Jugador::cansado() {
     return cansadoCumplido || (cansadoCumplido = (energia == 0));
 }
-bool Jugardor::constructor() {
+bool Jugador::constructor() {
     return constructorCumplido || 
         (constructorCumplido = (minaConstruida && aserraderoConstruido && fabricaConstruida && escuelaConstruida && plantaElectricaConstruida && minaOroConstruida));
 }
-bool Jugardor::armado() {
-    return armadoCumplido || (armadoCumplido = (buscarMaterial("bomba") -> obtener_cantidad_material() >= 10));
+bool Jugador::armado() {
+    return armadoCumplido || (armadoCumplido = (buscarMaterial("bomba") -> obtenerCantidadMaterial() >= 10));
 }
-bool Jugardor::extremista() {
+bool Jugador::extremista() {
     return extremistaCumplido || (extremistaCumplido = (bombasCompradas >= 500));
 }

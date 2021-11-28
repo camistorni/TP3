@@ -1,5 +1,5 @@
-#ifndef PROCESAMIENTO_H
-#define PROCESAMIENTO_H
+#ifndef JUEGO_H
+#define JUEGO_H
 
 #include "materiales.h"
 #include "mapa.h"
@@ -7,6 +7,7 @@
 #include "edificios/tipos_edificios.h"
 #include "edificios/edificio.h"
 #include "mapa.h"
+#include "jugadores/jugador.h"
 
 #include <iostream>
 
@@ -28,18 +29,19 @@
 
 using namespace std;
 
-class Proceso{
+class Juego{
 
 	private:
-		Material** material;
 		Mapa* mapa;
 		TipoEdificio** listaEdificios;
-		int cantidadMateriales, cantidadEdificios, cantidadUbicaciones;
-		
+		Jugador** jugadores;
+
+		//int cantidadMateriales, cantidadEdificios, cantidadUbicaciones;
+	
 	public:
 
 		//Costructor 
-		Proceso();
+		Juego();
 		
 		//Precondiciones: -
 		//Postcondiciones: Guarda los datos de todos los archivos

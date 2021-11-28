@@ -5,7 +5,7 @@
 #include <cstdlib>
 
 #include "materiales.h"
-#include "procesamiento.h"
+#include "juego.h"
 #include "edificios/edificio.h"
 #include "edificios/tipos_edificios.h"
 #include "edificios/parser.h"
@@ -21,21 +21,26 @@ const int CANT_CARACTERISTICAS_EDIFICIOS = 5;
 
 //
 
-Proceso::Proceso (){
-	cantidadEdificios = 0;
-	cantidadMateriales = 0;
-	cantidadUbicaciones = 0;
+Juego::Juego (){
+
+	Jugador* jugadoresAux[2];
+	jugadoresAux[0] = new Jugador("Jugador 1");
+	jugadoresAux[1] = new Jugador("Jugador 2");
+	jugadores = jugadoresAux;
+	leerMateriales();
+	leerOpcionesEdificios();
+	leerMapa();
+	leerUbicaciones();
 }
 
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
-void Proceso::leerMateriales(){
+void Juego::leerMateriales(){
 
 	fstream archivoMateriales(PATH_MATERIALES, ios::in);
 	
-	this -> cantidadMateriales = 0;
 	Material *material;
 	string nombre, cantidadMaterial;
 	
@@ -45,6 +50,8 @@ void Proceso::leerMateriales(){
 		material = new Material;
 		*material = Material(nombre, stoi(cantidadMaterial));
 
+		jugadores[0]->agregarMaterial()
+
 		agregarMaterial(material);
 
 	}
@@ -53,7 +60,7 @@ void Proceso::leerMateriales(){
 }
 
 
-void Proceso::agregarMaterial(Material *nuevoMaterial){
+void Juego::agregarMaterial(Material *nuevoMaterial){
 
 	Material **vectorMateriales = new Material*[this -> cantidadMateriales + 1];
 	if(vectorMateriales == NULL)
@@ -76,7 +83,7 @@ void Proceso::agregarMaterial(Material *nuevoMaterial){
 
 
 
-void Proceso::cerrarMateriales(){
+void Juego::cerrarMateriales(){
 
 	ofstream archivoMateriales(PATH_MATERIALES);
 	
@@ -90,7 +97,7 @@ void Proceso::cerrarMateriales(){
 	this -> material = nullptr;
 }
 
-bool Proceso::verificarMateriales(string nombreIngresado, int piedraNecesaria, int maderaNecesaria, int metalNecesario, int construidos, int cantidadMax){
+bool Juego::verificarMateriales(string nombreIngresado, int piedraNecesaria, int maderaNecesaria, int metalNecesario, int construidos, int cantidadMax){
 
 	int errores = 0;
 	for(int i = 0; i < cantidadMateriales; i++){
@@ -123,7 +130,7 @@ bool Proceso::verificarMateriales(string nombreIngresado, int piedraNecesaria, i
 }
 
 
-void Proceso::mostrarInventario(){
+void Juego::mostrarInventario(){
 
 	long nombre_mas_largo = 0;
 	long nombre = 0;
@@ -161,7 +168,7 @@ void Proceso::mostrarInventario(){
 
 
 
-void Proceso::leerOpcionesEdificios(){
+void Juego::leerOpcionesEdificios(){
 	
 	
 	fstream archivoEdificios(PATH_EDIFICIOS, ios::in);
@@ -190,7 +197,7 @@ void Proceso::leerOpcionesEdificios(){
 	archivoEdificios.close();
 }
 
-bool Proceso::verificarEdificio(string nombreIngresado, int *piedraNecesaria, int *maderaNecesaria, int *metalNecesario, int *construidos, int *cantidadMax){
+bool Juego::verificarEdificio(string nombreIngresado, int *piedraNecesaria, int *maderaNecesaria, int *metalNecesario, int *construidos, int *cantidadMax){
 
 	int existe = 0;
 	
@@ -217,7 +224,7 @@ bool Proceso::verificarEdificio(string nombreIngresado, int *piedraNecesaria, in
 
 
 
-void Proceso::listarEdificiosConstruidos(){
+void Juego::listarEdificiosConstruidos(){
 
 	int construidosTotal = 0;
 	long nombreMasLargo = 0;
@@ -257,7 +264,7 @@ void Proceso::listarEdificiosConstruidos(){
 
 
 
-void Proceso::agregarTipoEdificio(TipoEdificio* tipoEdificio){
+void Juego::agregarTipoEdificio(TipoEdificio* tipoEdificio){
 
     TipoEdificio** nuevaListaEdificios = new TipoEdificio*[(this -> cantidadEdificios) + 1];
     
@@ -282,7 +289,7 @@ void Proceso::agregarTipoEdificio(TipoEdificio* tipoEdificio){
 
 
 
-void Proceso::listarEdificios(){
+void Juego::listarEdificios(){
 
 	cout << endl << endl;
 	cout << "Lista de edificios:" << endl << endl;
@@ -310,7 +317,7 @@ void Proceso::listarEdificios(){
 
 
 
-bool Proceso::construirEdificio(string nombreIngresado){
+bool Juego::construirEdificio(string nombreIngresado){
 	int piedraNecesaria = 0, maderaNecesaria = 0, metalNecesario = 0, construidos = 0, cantidadMax = 0;
 	
 	//Verifica que el edificio ingresado exista
@@ -373,7 +380,7 @@ bool Proceso::construirEdificio(string nombreIngresado){
 
 }
 
-void Proceso::agregarRecursos(string nombreEdificio){
+void Juego::agregarRecursos(string nombreEdificio){
 	if(nombreEdificio == "mina"){
 		
 		for(int i = 0; i < cantidadMateriales; i++){
@@ -398,7 +405,7 @@ void Proceso::agregarRecursos(string nombreEdificio){
 
 }
 
-void Proceso::recolectarRecursos(){
+void Juego::recolectarRecursos(){
 	for(int i = 0; i < this -> cantidadEdificios; i++){
 		if(this -> listaEdificios[i] -> brindaMaterial())
 			agregarRecursos(this -> listaEdificios[i] -> obtenerTipo());		
@@ -408,7 +415,7 @@ void Proceso::recolectarRecursos(){
 }
 
 
-void Proceso::cerrarEdificios(){
+void Juego::cerrarEdificios(){
 	
 	for(int i = 0; i < this -> cantidadEdificios; i++){
 		listaEdificios[i] -> liberarEdificosConstruidos();
@@ -423,7 +430,7 @@ void Proceso::cerrarEdificios(){
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-void Proceso::leerUbicaciones(){
+void Juego::leerUbicaciones(){
 
 	fstream archivoUbicaciones(PATH_UBICACIONES, ios::in);
 	Edificio* edificio;
@@ -456,7 +463,7 @@ void Proceso::leerUbicaciones(){
 
 
 
-int Proceso::identificarEdificio(string tipoEdficio){
+int Juego::identificarEdificio(string tipoEdficio){
 
 	int posicionEdificio = 0;
 	while (listaEdificios[posicionEdificio] -> obtenerTipo() != tipoEdficio){
@@ -469,7 +476,7 @@ int Proceso::identificarEdificio(string tipoEdficio){
 
 
 
-void Proceso::cerrarUbicaciones(){
+void Juego::cerrarUbicaciones(){
 
 	ofstream archivoUbicaciones(PATH_UBICACIONES);
 
@@ -493,7 +500,7 @@ void Proceso::cerrarUbicaciones(){
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
-void Proceso::leerMapa(){
+void Juego::leerMapa(){
 	
 	fstream archivoMapa(PATH_MAPA, ios::in);
 	Casillero* casillero;
@@ -524,7 +531,7 @@ void Proceso::leerMapa(){
 
 
 
-bool Proceso::verificarCoordenadas(int fila, int columna){
+bool Juego::verificarCoordenadas(int fila, int columna){
 	
 	if(fila < 0 || fila > mapa->obtenerCantidadFilas()){
 		cout << "La fila ingresada está fuera de rango. No se puede construir el edificio" << endl;
@@ -550,14 +557,7 @@ bool Proceso::verificarCoordenadas(int fila, int columna){
 
 
 
-void Proceso::leerArchivos(){
-	leerMateriales();
-	leerOpcionesEdificios();
-	leerMapa();
-	leerUbicaciones();
-}
-
-void Proceso::mostrarMenu(){
+void Juego::mostrarMenu(){
 	cout << endl << endl;
 	cout << TXT_ITALIC << TXT_LIGHT_AQUA_123 << "\t            ¡BIENVENIDOS A ANDYPOLIS!" << END_COLOR << endl << endl;
 	cout << "                        " << TXT_UNDERLINE << "Menú de opciones" << END_COLOR << endl << endl;
@@ -577,7 +577,7 @@ void Proceso::mostrarMenu(){
 
 
 
-int Proceso::pedirOpcion(){
+int Juego::pedirOpcion(){
 	
 	int opcionElegida = 0;
 	cout << "Ingrese el número de la opción elegida: ";
@@ -593,7 +593,7 @@ int Proceso::pedirOpcion(){
 
 
 
-void Proceso::procesarOpciones(int opcion){
+void Juego::procesarOpciones(int opcion){
 	
 	string nombreIngresado;
 	
@@ -644,7 +644,7 @@ void Proceso::procesarOpciones(int opcion){
 
 
 
-void Proceso::guardarYSalir(){
+void Juego::guardarYSalir(){
 	cerrarMateriales();
 	cerrarUbicaciones();
 	cerrarMapa();
@@ -656,7 +656,7 @@ void Proceso::guardarYSalir(){
 
 
 
-void Proceso::imprimirMensajeError(string nombre_edificio, string material, int cantidad, int cantidadNecesaria){
+void Juego::imprimirMensajeError(string nombre_edificio, string material, int cantidad, int cantidadNecesaria){
 	cout << "No hay suficiente " << material << "." << endl;
 	cout << "Hay " << cantidad << " " << material << " disponibles. Se necesitan "<< cantidadNecesaria << " para construir " << nombre_edificio << endl << endl;
 }
@@ -664,11 +664,11 @@ void Proceso::imprimirMensajeError(string nombre_edificio, string material, int 
 
 
 
-void Proceso::mostrarMapa(){
+void Juego::mostrarMapa(){
 	mapa -> mostrarMapa();
 }
 
-void Proceso::cerrarMapa(){
+void Juego::cerrarMapa(){
 	mapa -> liberarCasilleros();
 	delete mapa;
 }
@@ -679,7 +679,7 @@ void Proceso::cerrarMapa(){
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
-int Proceso::identificarMaterial(string nombreMaterial){
+int Juego::identificarMaterial(string nombreMaterial){
 	int posicion_material = 0;
 	while (material[posicion_material] -> obtenerNombreMaterial() != nombreMaterial){
 		posicion_material ++;
@@ -687,7 +687,7 @@ int Proceso::identificarMaterial(string nombreMaterial){
 	return posicion_material;
 }
 
-void Proceso::aumentarMaterialesDerrumbe(TipoEdificio* tipoEdificio){
+void Juego::aumentarMaterialesDerrumbe(TipoEdificio* tipoEdificio){
 	for (int i = 0; i < cantidadMateriales; i++){
 		if (material[i] -> obtenerNombreMaterial() == "piedra"){
 			material[i] -> establecerCantidad(material[i] -> obtenerCantidadMaterial() + tipoEdificio -> obtenerPiedra());
@@ -702,7 +702,7 @@ void Proceso::aumentarMaterialesDerrumbe(TipoEdificio* tipoEdificio){
 }
 
 
-void Proceso::demolerEdificioCoordenada(){
+void Juego::demolerEdificioCoordenada(){
 	int fila, columna;
 	mapa -> pedirCoordenada(fila, columna);
 	int posicion;
@@ -717,7 +717,7 @@ void Proceso::demolerEdificioCoordenada(){
 }	
 
 
-void Proceso::consultarCoordenada(){
+void Juego::consultarCoordenada(){
 	int fila,columna;
 	mapa -> pedirCoordenada(fila,columna);
 	mapa -> obtenerCasillero(fila, columna) -> responder();
@@ -725,7 +725,7 @@ void Proceso::consultarCoordenada(){
 
 
 
-void Proceso::lluviaElementos(){
+void Juego::lluviaElementos(){
 	bool generoPiedra = false;
 	bool generoMadera = false;
 	bool generoMetal = false;

@@ -3,9 +3,10 @@
 
 #include "./../materiales.h"
 
-class Jugardor {
+class Jugador {
 
 	protected:
+        std::string nombre;
         Material** materiales;
         std::string* edificiosContruidos; // para el objetivo, no para el juego en si
         int energia;
@@ -36,10 +37,10 @@ class Jugardor {
         bool extremistaCumplido;
 		
 	public:
-		Jugardor();
-        ~Jugardor();
-
-        void asignarMateriales(Material** materialesAsignados);
+		Jugador(std::string nombreJugador);
+        ~Jugador();
+        
+        void agregarMaterial(Material* nuevoMaterial);
         Material* buscarMaterial(string nombreMaterial);
 
         // Objetivos
