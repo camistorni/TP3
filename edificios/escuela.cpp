@@ -4,9 +4,9 @@
 #include "edificio.h"
 
 
-Escuela::Escuela (int piedra, int madera, int metal, int cant_max_construido, std::string tipo_edificio):
-Tipo_edificio (piedra, madera, metal, cant_max_construido, tipo_edificio){
+Escuela::Escuela (int piedra, int madera, int metal, int cantMaxConstruido, std::string tipoEdificio):
+TipoEdificio (piedra, madera, metal, cantMaxConstruido, tipoEdificio){
     caracter = CARACTER_ESCUELA;
-    cantidad_construidos = 0;
-    brinda_materiales = false;
+    cantidadConstruidos = 0;
+    brindaMateriales = false;
 }

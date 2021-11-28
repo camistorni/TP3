@@ -9,20 +9,20 @@ int main(){
 	Proceso proceso;
 	int opcion = 0;
 	
-	proceso.leer_archivos();
+	proceso.leerArchivos();
 
 	
-	proceso.mostrar_menu();
-	opcion = proceso.pedir_opcion();
+	proceso.mostrarMenu();
+	opcion = proceso.pedirOpcion();
 	
 	while(opcion != 10){
-		proceso.procesar_opciones(opcion);
+		proceso.procesarOpciones(opcion);
 		
-		proceso.mostrar_menu();
-		opcion = proceso.pedir_opcion();
+		proceso.mostrarMenu();
+		opcion = proceso.pedirOpcion();
 	}
 		
-	proceso.guardar_y_salir();
+	proceso.guardarYSalir();
 	
 	
 

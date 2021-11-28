@@ -6,8 +6,8 @@
 class Mapa{
 
 	private:
-		  int cantidad_filas;
-		  int cantidad_columnas;
+		  int cantidadFilas;
+		  int cantidadColumnas;
 		  Casillero*** casilleros;
 
 		
@@ -18,40 +18,40 @@ class Mapa{
 		
 		//Precondiciones: -
 		//Postcondicions: Inicializa la memoria del mapa
-		void inicializar_mapa(int cant_filas, int cant_columnas);
+		void inicializarMapa(int cantFilas, int cantColumnas);
 	
 		//Precondiciones: -
 		//Postcondicions: Devuelve la cantidad de filas
-		int obtener_cantidad_filas ();
+		int obtenerCantidadFilas ();
 		
 		//Precondiciones: -
 		//Postcondicions: Devuelve la cantidad de columnas
-		int obtener_cantidad_columnas ();
+		int obtenerCantidadColumnas ();
 		
 		//Precondiciones: -
 		//Postcondicions: Devuelve el tipo de casillero
-		Casillero* tipo_casillero(int fila, int columna);
+		Casillero* tipoCasillero(int fila, int columna);
 
 		//Precondiciones: -
 		//Postcondicions: Crea un objeto casillero transitable, intransitabloe o construible
-		Casillero* identificar_casillero(int fila, int columna, char caracter);
+		Casillero* identificarCasillero(int fila, int columna, char caracter);
 		
 		//Precondiciones: -
 		//Postcondiciones: Agrega el casillero leído a la lista de casilleros
-		void agregar_casillero(Casillero* casillero);
+		void agregarCasillero(Casillero* casillero);
 		
-		bool se_puede_demoler (int fila, int columna);
+		bool sePuedeDemoler (int fila, int columna);
 
-      	Casillero* obtener_casillero(int fila, int columna);
+      	Casillero* obtenerCasillero(int fila, int columna);
 
 
 		//Precondiciones: -
 		//Postcondicions: Muestra un dibujo del mapa 
-		void mostrar_mapa ();
+		void mostrarMapa ();
 			
 		//Precondiciones: un numero mayor a 0
 		//Postcondicions: devuelve un numero entre el limite y 0
-		void pedir_coordenada(int &fila, int &columna);
+		void pedirCoordenada(int &fila, int &columna);
 
 		
 
@@ -60,9 +60,9 @@ class Mapa{
 
 		//Precondiciones: -
 		//Postcondiciones: Libera la memoria utilizada por los casilleros
-		void liberar_casilleros ();
+		void liberarCasilleros ();
 	private:
-		void identificar_contenido (Casillero* casillero);
+		void identificarContenido (Casillero* casillero);
 
 };
 

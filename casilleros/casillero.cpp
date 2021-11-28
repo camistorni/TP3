@@ -11,21 +11,21 @@ Casillero::Casillero(int fila, int columna, char caracter){
 
 
 
-char Casillero::obtener_caracter(){
+char Casillero::obtenerCaracter(){
     return caracter;
 }
-int Casillero::obtener_fila(){
+int Casillero::obtenerFila(){
     return fila;
 }
-int Casillero::obtener_columna(){
+int Casillero::obtenerColumna(){
     return columna;
 }
-std::string Casillero::obtener_caracter_color(){
-    return caracter_color;
+std::string Casillero::obtenerCaracterColor(){
+    return caracterColor;
 }
-bool Casillero::es_construible(){
+bool Casillero::esConstruible(){
    return caracter == 'T';
 }
-bool Casillero::es_transitable(){
+bool Casillero::esTransitable(){
     return caracter == 'C';
 }

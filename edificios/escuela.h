@@ -7,13 +7,13 @@
 
 const char CARACTER_ESCUELA = 'E';
 
-class Escuela: public Tipo_edificio {
+class Escuela: public TipoEdificio {
 
 	public:
 	
 		//Precondiciones: -
 		//Postcondiciones: Construye un edificio de tipo escuela
-		Escuela (int piedra, int madera, int metal, int cant_max_construido, std::string tipo_edificio);
+		Escuela (int piedra, int madera, int metal, int cantMaxConstruido, std::string tipoEdificio);
 
 };
 

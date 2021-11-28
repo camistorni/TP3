@@ -7,13 +7,13 @@
 
 const char CARACTER_ASERRADERO = 'A';
 
-class Aserradero: public Tipo_edificio{
+class Aserradero: public TipoEdificio{
 
 	public:
 		
 		//Precondiciones: -
 		//Postcondiciones: Construye un edificio de tipo aserradero
-		Aserradero (int piedra, int madera, int metal, int cant_max_construido, std::string tipo_edificio);
+		Aserradero (int piedra, int madera, int metal, int cantMaxconstruido, std::string tipoEdificio);
 };
 
 #endif // ASERRADERO_H

@@ -8,9 +8,9 @@ class Casillero {
 		int fila;
 		int columna;
 		char caracter;
-		std::string caracter_contenido;
+		std::string caracterContenido;
 		std::string tipo;
-		std::string caracter_color;
+		std::string caracterColor;
   
 		
 	public:
@@ -24,35 +24,35 @@ class Casillero {
 		
 		//Precondiciones: -
 		//Postcondicions: Devuelve el caracter del casillero
-		char obtener_caracter();
+		char obtenerCaracter();
 		
 		//Precondiciones: -
 		//Postcondicions: Devuelve la fila en la que se encuentra el casillero
-		int obtener_fila();
+		int obtenerFila();
 		
 		//Precondiciones: -
 		//Postcondicions: Devuelve la columna en la que se encuentra el casillero
-		int  obtener_columna();
+		int  obtenerColumna();
 		
 		//Precondiciones: -
 		//Postcondicions: Devuelve el color del caracter del casillero
-		std::string obtener_caracter_color();
+		std::string obtenerCaracterColor();
 
-		virtual std::string obtener_tipo() = 0;
-		virtual void establecer_tipo(std::string tipo) = 0;
-		virtual int obtener_cantidad_material() = 0;
-		virtual void establecer_cantidad_material(int cantidad) = 0;
+		virtual std::string obtenerTipo() = 0;
+		virtual void establecerTipo(std::string tipo) = 0;
+		virtual int obtenerCantidadMaterial() = 0;
+		virtual void establecerCantidadMaterial(int cantidad) = 0;
 		virtual void liberar() = 0;
 		virtual void responder() = 0;
-		virtual void establecer_caracter_contenido(std::string caracter) = 0;
-		virtual std::string obtener_caracter_contenido() = 0;
+		virtual void establecerCaracterContenido(std::string caracter) = 0;
+		virtual std::string obtenerCaracterContenido() = 0;
 		//Precondiciones: -
 		//Postcondicions: Verifica que el casillero sea construible
-		bool es_construible();
+		bool esConstruible();
 		
 		//Precondiciones: -
 		//Postcondicions: Verifica que el casillero sea transitable
-		bool es_transitable();
+		bool esTransitable();
 
 
     

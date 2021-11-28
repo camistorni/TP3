@@ -7,13 +7,13 @@
 
 const char CARACTER_FABRICA = 'F';
 
-class Fabrica: public Tipo_edificio {
+class Fabrica: public TipoEdificio {
 
 	public:
 	
 		//Precondiciones: -
 		//Postcondiciones: Construye un edificio de tipo fábrica
-		Fabrica (int piedra, int madera, int metal, int cant_max_construido, std::string tipo_edificio);
+		Fabrica (int piedra, int madera, int metal, int cantMaxConstruido, std::string tipoEdificio);
 };
 
 #endif // FABRICA_H

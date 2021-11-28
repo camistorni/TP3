@@ -3,17 +3,17 @@
 
 #include "casillero.h"
 
-class Casillero_inaccesible: public Casillero{
+class CasilleroInaccesible: public Casillero{
 public:
-    Casillero_inaccesible(int fila, int columna, char caracter);
-    std::string obtener_tipo();
-    void establecer_tipo(std::string tipo);
-    int obtener_cantidad_material();
-    void establecer_cantidad_material(int cantidad);
-	void establecer_recursos();
+    CasilleroInaccesible(int fila, int columna, char caracter);
+    std::string obtenerTipo();
+    void establecerTipo(std::string tipo);
+    int obtenerCantidadMaterial();
+    void establecerCantidadMaterial(int cantidad);
+	void establecerRecursos();
 	virtual void responder();
-    void establecer_caracter_contenido(std::string caracter);
-    std::string obtener_caracter_contenido();
+    void establecerCaracterContenido(std::string caracter);
+    std::string obtenerCaracterContenido();
     void liberar();
 };
 

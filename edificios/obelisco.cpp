@@ -4,9 +4,9 @@
 #include "edificio.h"
 
 
-Obelisco::Obelisco (int piedra, int madera, int metal, int cant_max_construido, std::string tipo_edificio):
-Tipo_edificio (piedra, madera, metal, cant_max_construido, tipo_edificio){
+Obelisco::Obelisco (int piedra, int madera, int metal, int cantMaxConstruido, std::string tipoEdificio):
+TipoEdificio (piedra, madera, metal, cantMaxConstruido, tipoEdificio){
     caracter = CARACTER_OBELISCO;
-    cantidad_construidos = 0;
-    brinda_materiales = false;
+    cantidadConstruidos = 0;
+    brindaMateriales = false;
 }

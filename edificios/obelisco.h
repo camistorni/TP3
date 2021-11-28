@@ -7,13 +7,13 @@
 
 const char CARACTER_OBELISCO = 'O';
 
-class Obelisco: public Tipo_edificio {
+class Obelisco: public TipoEdificio {
 
 	public:
 	
 		//Precondiciones: -
 		//Postcondiciones: Construye un edificio de tipo obelisco
-		Obelisco (int piedra, int madera, int metal, int cant_max_construido, std::string tipo_edificio);
+		Obelisco (int piedra, int madera, int metal, int cantMaxConstruido, std::string tipoEdificio);
 };
 
 #endif // OBELISCO_H
