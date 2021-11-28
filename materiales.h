@@ -8,8 +8,8 @@ using namespace std;
 class Material{
 	
 	private:
-		string nombre_material;
-		int cantidad_material;
+		string nombreMaterial;
+		int cantidadMaterial;
 	
 	public:		
 		
@@ -19,27 +19,27 @@ class Material{
 		
 		//Precondiciones: -
 		//Postcondicions: Construye un objeto material
-		Material(string nombre_material, int cantidad_material);
+		Material(string nombreMaterial, int cantidadMaterial);
 		
 		//Precondiciones: -
 		//Postcondicions: Devuelve el nombre del material
-		string obtener_nombre_material();
+		string obtenerNombreMaterial();
 		
 		//Precondiciones: -
 		//Postcondicions: Devuelve la cantidad disponible del material
-		int obtener_cantidad_material();
+		int obtenerCantidadMaterial();
 		
 		//Precondiciones: -
 		//Postcondicions: Disminuye la cantidad de materiales
-		void modificar_cantidad(int cantidad_usada);
+		void modificarCantidad(int cantidadUsada);
 		
 		//Precondiciones: -
 		//Postcondicions: Agrega material
-		void agregar_cantidad(int recurso_agregado);
+		void agregarCantidad(int recursoAgregado);
 
-		void establecer_nombre_material (string nombre);
+		void establecerNombreMaterial (string nombre);
 
-		void establecer_cantidad (int cantidad);
+		void establecerCantidad (int cantidad);
 
 };
 

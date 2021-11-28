@@ -4,9 +4,9 @@
 #include "edificio.h"
 
 
-Mina::Mina (int piedra, int madera, int metal, int cant_max_construido, std::string tipo_edificio):
-Tipo_edificio (piedra, madera, metal, cant_max_construido, tipo_edificio){
+Mina::Mina (int piedra, int madera, int metal, int cantMaxConstruido, std::string tipoEdificio):
+TipoEdificio (piedra, madera, metal, cantMaxConstruido, tipoEdificio){
     caracter = CARACTER_MINA;
-    cantidad_construidos = 0;
-    brinda_materiales = true;
+    cantidadConstruidos = 0;
+    brindaMateriales = true;
 }

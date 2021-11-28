@@ -6,43 +6,43 @@
 
 const std::string CARACTER_COLOR_CAMINO = "\033[1;42mC\033[0m";
 
-Casillero_transitable::Casillero_transitable(int fila, int columna, char caracter):
+CasilleroTransitable::CasilleroTransitable(int fila, int columna, char caracter):
 Casillero(fila, columna, caracter){
-    caracter_color = CARACTER_COLOR_CAMINO;
-    caracter_contenido = CARACTER_COLOR_CAMINO;
+    caracterColor = CARACTER_COLOR_CAMINO;
+    caracterContenido = CARACTER_COLOR_CAMINO;
     tipo = "transitable";
     
 }
 
-std::string Casillero_transitable::obtener_tipo(){
-    return material.obtener_nombre_material();
+std::string CasilleroTransitable::obtenerTipo(){
+    return material.obtenerNombreMaterial();
 }
-void Casillero_transitable::establecer_tipo(std::string nombre_tipo){
-    material.establecer_nombre_material(nombre_tipo);
+void CasilleroTransitable::establecerTipo(std::string nombreTipo){
+    material.establecerNombreMaterial(nombreTipo);
 }
-int Casillero_transitable::obtener_cantidad_material(){
-    return material.obtener_cantidad_material();
+int CasilleroTransitable::obtenerCantidadMaterial(){
+    return material.obtenerCantidadMaterial();
 }
-void Casillero_transitable::establecer_cantidad_material(int cantidad){
-    material.establecer_cantidad(cantidad);
+void CasilleroTransitable::establecerCantidadMaterial(int cantidad){
+    material.establecerCantidad(cantidad);
 }
 
-void Casillero_transitable::liberar(){
-    material.establecer_cantidad (0);
-    material.establecer_nombre_material ("-1");
+void CasilleroTransitable::liberar(){
+    material.establecerCantidad (0);
+    material.establecerNombreMaterial ("-1");
 }
-void Casillero_transitable::responder(){
-    if (material.obtener_nombre_material() != "-1"){
-        cout << "Soy un casillero transitable y tengo " << material.obtener_cantidad_material() << " de " << material.obtener_nombre_material();
+void CasilleroTransitable::responder(){
+    if (material.obtenerNombreMaterial() != "-1"){
+        cout << "Soy un casillero transitable y tengo " << material.obtenerCantidadMaterial() << " de " << material.obtenerNombreMaterial();
         cout << endl;
     }
     else {
         cout << "Soy un casillero transitable vacio" << endl;
     }
 }
-void Casillero_transitable::establecer_caracter_contenido(std::string caracter){
-    caracter_contenido = caracter;
+void CasilleroTransitable::establecerCaracterContenido(std::string caracter){
+    caracterContenido = caracter;
 }
-std::string Casillero_transitable::obtener_caracter_contenido(){
-    return caracter_contenido;
+std::string CasilleroTransitable::obtenerCaracterContenido(){
+    return caracterContenido;
 }

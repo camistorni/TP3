@@ -5,104 +5,111 @@
 
 using namespace std;
 
-Tipo_edificio::Tipo_edificio(){
+TipoEdificio::TipoEdificio(){
 }
-Tipo_edificio::~Tipo_edificio(){
+
+TipoEdificio::~TipoEdificio(){
 }
 
 //Constructor
-Tipo_edificio::Tipo_edificio (int piedra, int madera, int metal, int cant_max_construido, std::string tipo_edificio){
-    this -> tipo_edificio = tipo_edificio;
-    cant_piedra = piedra;
-    cant_madera = madera;
-    cant_metal = metal;
-    this -> cant_max_construido = cant_max_construido;
-    cantidad_construidos = 0;
+TipoEdificio::TipoEdificio (int piedra, int madera, int metal, int cantMaxConstruido, std::string tipoEdificio){
+    this -> tipoEdificio = tipoEdificio;
+    cantPiedra = piedra;
+    cantMadera = madera;
+    cantMetal = metal;
+    this -> cantMaxConstruido = cantMaxConstruido;
+    cantidadConstruidos = 0;
 
 }
 
 
 
-int Tipo_edificio::obtener_piedra(){
-    return cant_piedra;
-}
-int Tipo_edificio::obtener_madera(){
-    return cant_madera;
-}
-int Tipo_edificio::obtener_metal(){
-    return cant_metal;
-}
-int Tipo_edificio::obtener_cant_max_construido(){
-    return cant_max_construido;
-}
-std::string Tipo_edificio::obtener_tipo(){
-    return tipo_edificio;
-}
-int Tipo_edificio::obtener_cant_construidos(){
-    return cantidad_construidos;
+int TipoEdificio::obtenerPiedra(){
+    return cantPiedra;
 }
 
-bool Tipo_edificio::brinda_material(){
-	return brinda_materiales;
+int TipoEdificio::obtenerMadera(){
+    return cantMadera;
 }
-Edificio* Tipo_edificio::obetener_edificios_construidos(int posisicion_edificio){
-    return edificios_construidos[posisicion_edificio];
+
+int TipoEdificio::obtenerMetal(){
+    return cantMetal;
+}
+
+int TipoEdificio::obtenerCantMaxConstruido(){
+    return cantMaxConstruido;
+}
+
+std::string TipoEdificio::obtenerTipo(){
+    return tipoEdificio;
+}
+
+int TipoEdificio::obtenerCantConstruidos(){
+    return cantidadConstruidos;
+}
+
+bool TipoEdificio::brindaMaterial(){
+	return brindaMateriales;
+}
+Edificio* TipoEdificio::obetenerEdificiosConstruidos(int posisicionEdificio){
+    return edificiosConstruidos[posisicionEdificio];
 }
 
 
-void Tipo_edificio::liberar_edificos_construidos(){
-    if (cantidad_construidos > 0){
-        for (int i = 0; i < cantidad_construidos; i++){
-            delete edificios_construidos[i];
+void TipoEdificio::liberarEdificosConstruidos(){
+    if (cantidadConstruidos > 0){
+        for (int i = 0; i < cantidadConstruidos; i++){
+            delete edificiosConstruidos[i];
         }
-        delete [] edificios_construidos;
+        delete [] edificiosConstruidos;
     }
 }
 
-void Tipo_edificio::agregar_edificio_construido(Edificio* edificio){
+void TipoEdificio::agregarEdificioConstruido(Edificio* edificio){
 
-    Edificio** nuevo_edificios_construidos = new Edificio* [cantidad_construidos + 1];
+    Edificio** nuevoEdificiosConstruidos = new Edificio* [cantidadConstruidos + 1];
 
-    for (int i = 0; i < cantidad_construidos; i++){
-        nuevo_edificios_construidos[i] = edificios_construidos[i];
+    for (int i = 0; i < cantidadConstruidos; i++){
+        nuevoEdificiosConstruidos[i] = edificiosConstruidos[i];
     }
 
-    nuevo_edificios_construidos[cantidad_construidos] = edificio;
+    nuevoEdificiosConstruidos[cantidadConstruidos] = edificio;
 
-    if (cantidad_construidos != 0){
-        delete [] edificios_construidos;
+    if (cantidadConstruidos != 0){
+        delete [] edificiosConstruidos;
     }
 
-    this -> edificios_construidos = nuevo_edificios_construidos;
-    this -> cantidad_construidos++;
+    this -> edificiosConstruidos = nuevoEdificiosConstruidos;
+    this -> cantidadConstruidos++;
 }
 
-void Tipo_edificio::derribar_edificio_construido(int fila, int columna){
-    if (cantidad_construidos > 1){
-        Edificio** nuevo_edificios_construidos = new Edificio* [cantidad_construidos - 1];
+void TipoEdificio::derribarEdificioConstruido(int fila, int columna){
+    if (cantidadConstruidos > 1){
+        Edificio** nuevoEdificiosConstruidos = new Edificio* [cantidadConstruidos - 1];
 
         int posicion = 0;
-        while (fila != edificios_construidos[posicion] -> obtener_fila() && columna != edificios_construidos[posicion] -> obtener_columna()){
+        while (fila != edificiosConstruidos[posicion] -> obtenerFila() && columna != edificiosConstruidos[posicion] -> obtenerColumna()){
             posicion++;
         }
-        Edificio* aux = edificios_construidos[posicion];
-        edificios_construidos[posicion] = edificios_construidos[cantidad_construidos];
-        edificios_construidos[cantidad_construidos] = aux;
+        
+        Edificio* aux = edificiosConstruidos[posicion];
+        edificiosConstruidos[posicion] = edificiosConstruidos[cantidadConstruidos];
+        edificiosConstruidos[cantidadConstruidos] = aux;
 
-        for (int i = 0; i < (cantidad_construidos - 1); i++){
-            nuevo_edificios_construidos[i] = edificios_construidos [i];
+        for (int i = 0; i < (cantidadConstruidos - 1); i++){
+            nuevoEdificiosConstruidos[i] = edificiosConstruidos [i];
         }
-        delete edificios_construidos [cantidad_construidos - 1];
-        delete [] edificios_construidos;
+        delete edificiosConstruidos [cantidadConstruidos - 1];
+        delete [] edificiosConstruidos;
 
-        edificios_construidos = nuevo_edificios_construidos;
+        edificiosConstruidos = nuevoEdificiosConstruidos;
     }
     else {
-        delete edificios_construidos [cantidad_construidos - 1];
-        delete [] edificios_construidos;
+        delete edificiosConstruidos [cantidadConstruidos - 1];
+        delete [] edificiosConstruidos;
     
     }
-    cantidad_construidos--;
+    cantidadConstruidos--;
 
 
 }

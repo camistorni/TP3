@@ -13,45 +13,45 @@ const char LAGO = 'L';
 const char CAMINO = 'C';
 
 Mapa::Mapa(){
-	cantidad_filas = 0;
-	cantidad_columnas = 0;
+	cantidadFilas = 0;
+	cantidadColumnas = 0;
 }
 
-void Mapa::inicializar_mapa(int cant_filas, int cant_columnas){
+void Mapa::inicializarMapa(int cantFilas, int cantColumnas){
 	
-	this -> cantidad_filas = cant_filas;
-    this -> cantidad_columnas = cant_columnas;
+	this -> cantidadFilas = cantFilas;
+    this -> cantidadColumnas = cantColumnas;
 	
-	casilleros = new Casillero**[cantidad_filas];
+	casilleros = new Casillero**[cantidadFilas];
 
 	
-	for(int i = 0; i < cantidad_filas; i++){
-        casilleros[i] = new Casillero* [cantidad_columnas];
+	for(int i = 0; i < cantidadFilas; i++){
+        casilleros[i] = new Casillero* [cantidadColumnas];
     }
     		
 }
 
-int Mapa::obtener_cantidad_filas(){
-    return cantidad_filas;
+int Mapa::obtenerCantidadFilas(){
+    return cantidadFilas;
 }
-int Mapa::obtener_cantidad_columnas(){
-    return cantidad_columnas;
+int Mapa::obtenerCantidadColumnas(){
+    return cantidadColumnas;
 }
 
-Casillero* Mapa::tipo_casillero(int fila, int columna){
+Casillero* Mapa::tipoCasillero(int fila, int columna){
 	return casilleros[fila][columna];
 }
 
-Casillero* Mapa::identificar_casillero(int fila, int columna, char caracter){
+Casillero* Mapa::identificarCasillero(int fila, int columna, char caracter){
 	Casillero* casillero;
 	if (caracter == 'L'){
-		casillero = new Casillero_inaccesible(fila, columna, caracter);
+		casillero = new CasilleroInaccesible(fila, columna, caracter);
 	}
 	else if (caracter == 'T'){
-		casillero = new Casillero_construible(fila, columna, caracter);
+		casillero = new CasilleroConstruible(fila, columna, caracter);
 	}
 	else if (caracter == 'C'){
-		casillero = new Casillero_transitable(fila, columna, caracter);
+		casillero = new CasilleroTransitable(fila, columna, caracter);
 	}
 	else {
 		cout << "NO leyo bien el caracter" << endl;
@@ -59,55 +59,55 @@ Casillero* Mapa::identificar_casillero(int fila, int columna, char caracter){
 	return casillero;
 }
 
-void Mapa::agregar_casillero(Casillero* casillero){
-    casilleros[casillero -> obtener_fila()][casillero -> obtener_columna()] = casillero;
+void Mapa::agregarCasillero(Casillero* casillero){
+    casilleros[casillero -> obtenerFila()][casillero -> obtenerColumna()] = casillero;
 }
 
 
-void Mapa::identificar_contenido (Casillero* casillero){
-	if (casillero -> es_construible()){
-		if (casillero -> obtener_tipo() == "aserradero"){
-			casillero -> establecer_caracter_contenido("\033[1;41mA\033[0m");
+void Mapa::identificarContenido (Casillero* casillero){
+	if (casillero -> esConstruible()){
+		if (casillero -> obtenerTipo() == "aserradero"){
+			casillero -> establecerCaracterContenido("\033[1;41mA\033[0m");
 		}
-		else if (casillero -> obtener_tipo() == "mina"){
-			casillero -> establecer_caracter_contenido("\033[1;41mM\033[0m");
+		else if (casillero -> obtenerTipo() == "mina"){
+			casillero -> establecerCaracterContenido("\033[1;41mM\033[0m");
 		}
-		else if (casillero -> obtener_tipo() == "fabrica"){
-			casillero -> establecer_caracter_contenido("\033[1;41mF\033[0m");
+		else if (casillero -> obtenerTipo() == "fabrica"){
+			casillero -> establecerCaracterContenido("\033[1;41mF\033[0m");
 		}
-		else if (casillero -> obtener_tipo() == "escuela"){
-			casillero -> establecer_caracter_contenido("\033[1;41mE\033[0m");
+		else if (casillero -> obtenerTipo() == "escuela"){
+			casillero -> establecerCaracterContenido("\033[1;41mE\033[0m");
 		}
 
-		else if (casillero -> obtener_tipo() == "obelisco"){
-			casillero -> establecer_caracter_contenido("\033[1;41mO\033[0m");
+		else if (casillero -> obtenerTipo() == "obelisco"){
+			casillero -> establecerCaracterContenido("\033[1;41mO\033[0m");
 		}
-		else if (casillero -> obtener_tipo() == "planta_electrica"){
-			casillero -> establecer_caracter_contenido("\033[1;41mP\033[0m");
+		else if (casillero -> obtenerTipo() == "planta_electrica"){
+			casillero -> establecerCaracterContenido("\033[1;41mP\033[0m");
 		}
 	
 	}
-	else if (casillero -> es_transitable()){
-		if (casillero -> obtener_tipo() == "madera"){
-			casillero -> establecer_caracter_contenido("\033[1;41mW\033[0m");
+	else if (casillero -> esTransitable()){
+		if (casillero -> obtenerTipo() == "madera"){
+			casillero -> establecerCaracterContenido("\033[1;41mW\033[0m");
 		}
-		else if (casillero -> obtener_tipo() == "piedra"){
-			casillero -> establecer_caracter_contenido("\033[1;41mS\033[0m");
+		else if (casillero -> obtenerTipo() == "piedra"){
+			casillero -> establecerCaracterContenido("\033[1;41mS\033[0m");
 		}
-		else if (casillero -> obtener_tipo() == "metal"){
-			casillero -> establecer_caracter_contenido("\033[1;41mI\033[0m");
+		else if (casillero -> obtenerTipo() == "metal"){
+			casillero -> establecerCaracterContenido("\033[1;41mI\033[0m");
 		}
 	}
 }
 
 
 
-void Mapa::mostrar_mapa(){
+void Mapa::mostrarMapa(){
 
-	for(int i = 0; i < cantidad_filas; i++){
-		for(int j = 0; j < cantidad_columnas; j++){
-            identificar_contenido(casilleros[i][j]);
-			cout << casilleros[i][j] -> obtener_caracter_contenido();
+	for(int i = 0; i < cantidadFilas; i++){
+		for(int j = 0; j < cantidadColumnas; j++){
+            identificarContenido(casilleros[i][j]);
+			cout << casilleros[i][j] -> obtenerCaracterContenido();
 		}
 		cout << endl;
 	}
@@ -115,41 +115,41 @@ void Mapa::mostrar_mapa(){
 
 }
 
-Casillero* Mapa::obtener_casillero(int fila, int columna){
+Casillero* Mapa::obtenerCasillero(int fila, int columna){
 	return casilleros[fila][columna];
 }
 
-bool Mapa::se_puede_demoler(int fila, int columna){
-	bool es_demolible = false;
+bool Mapa::sePuedeDemoler(int fila, int columna){
+	bool esDemolible = false;
 
-	if ( ! casilleros[fila][columna] -> es_construible() ){
+	if ( ! casilleros[fila][columna] -> esConstruible() ){
 
-		cout << "NO se puede construir en este casillero pq es un casillero " << casilleros[fila][columna]->obtener_tipo();
+		cout << "NO se puede construir en este casillero pq es un casillero " << casilleros[fila][columna]->obtenerTipo();
 		cout << endl;
 	}
-	else if (  casilleros[fila][columna] -> obtener_tipo() == "-1" ){
+	else if (  casilleros[fila][columna] -> obtenerTipo() == "-1" ){
 
 		cout << "NO se puede construir en este casillero no hay ningun edificio construido";
 	}
 	else {
-		cout << "El edificio " << casilleros[fila][columna] -> obtener_tipo() << " se derribo con exito";
-		es_demolible = true;
+		cout << "El edificio " << casilleros[fila][columna] -> obtenerTipo() << " se derribo con exito";
+		esDemolible = true;
 	}
-	return es_demolible;
+	return esDemolible;
 }
 
 
-void Mapa::pedir_coordenada(int &fila, int &columna){
+void Mapa::pedirCoordenada(int &fila, int &columna){
 	std::cout << "Ingrese la fila: ";
 	std::cin >> fila;
 	std::cout << std::endl;
 	std::cout << "Ingrese la columna: ";
 	std::cin >> columna;
 	std::cout  << std::endl;
-	while (fila > cantidad_filas || fila < 0 || columna > cantidad_columnas || columna < 0){
+	while (fila > cantidadFilas || fila < 0 || columna > cantidadColumnas || columna < 0){
 		cout << "Coordenada incorrecta" << endl;
-		cout << "Ingrese la coordenada nuevamente -> fil (" << cantidad_filas << " - 0)" << endl;
-		cout << "                                 -> col (" << cantidad_columnas << " - 0)" << endl;
+		cout << "Ingrese la coordenada nuevamente -> fil (" << cantidadFilas << " - 0)" << endl;
+		cout << "                                 -> col (" << cantidadColumnas << " - 0)" << endl;
 		cout << "fila ->  ";
 		cin >> fila;
 		cout << "columna ->  ";
@@ -159,10 +159,10 @@ void Mapa::pedir_coordenada(int &fila, int &columna){
 }
 
 
-void Mapa::liberar_casilleros(){
+void Mapa::liberarCasilleros(){
 
-    for (int i = 0; i < cantidad_filas; i ++){
-        for (int j = 0; j < cantidad_columnas; j ++){
+    for (int i = 0; i < cantidadFilas; i ++){
+        for (int j = 0; j < cantidadColumnas; j ++){
             delete casilleros[i][j];
         }
         delete [] casilleros [i];

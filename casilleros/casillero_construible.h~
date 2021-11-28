@@ -3,9 +3,9 @@
 
 #include "casillero.h"
 
-class Casillero_construible: public Casillero{
+class CasilleroConstruible: public Casillero{
 	public:
-		Casillero_construible(int fila, int columna, char caracter);
+		CasilleroConstruible(int fila, int columna, char caracter);
 };
 
 

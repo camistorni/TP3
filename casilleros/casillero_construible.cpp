@@ -6,39 +6,39 @@
 
 const std::string CARACTER_COLOR_TERRENO = "\033[1;41mT\033[0m";
 
-Casillero_construible::Casillero_construible(int fila, int columna, char caracter):
+CasilleroConstruible::CasilleroConstruible(int fila, int columna, char caracter):
 Casillero(fila, columna, caracter){
-    caracter_color = CARACTER_COLOR_TERRENO;
+    caracterColor = CARACTER_COLOR_TERRENO;
     tipo = "construible";
-    this -> tipo_edificio = "-1";
-    caracter_contenido = CARACTER_COLOR_TERRENO;
+    this -> tipoEdificio = "-1";
+    caracterContenido = CARACTER_COLOR_TERRENO;
 }
-std::string Casillero_construible::obtener_tipo(){
-    return tipo_edificio;
+std::string CasilleroConstruible::obtenerTipo(){
+    return tipoEdificio;
 }
-void Casillero_construible::establecer_tipo(std::string nombre_tipo){
-    tipo_edificio = nombre_tipo;
+void CasilleroConstruible::establecerTipo(std::string nombre_tipo){
+    tipoEdificio = nombre_tipo;
 }
-int Casillero_construible::obtener_cantidad_material(){
+int CasilleroConstruible::obtenerCantidadMaterial(){
     return -1;
 }
-void Casillero_construible::liberar(){
-    tipo_edificio = "-1";
+void CasilleroConstruible::liberar(){
+    tipoEdificio = "-1";
 }
-void Casillero_construible::responder(){
-    if (tipo_edificio != "-1"){
-        std::cout << "Soy un casillero construible y tengo construido un " << tipo_edificio;
+void CasilleroConstruible::responder(){
+    if (tipoEdificio != "-1"){
+        std::cout << "Soy un casillero construible y tengo construido un " << tipoEdificio;
         std::cout << std::endl;
     }
     else {
         std::cout << "Soy un casillero construible vacio" << std::endl;
     }
 }
-void Casillero_construible::establecer_caracter_contenido(std::string caracter){
-    caracter_contenido = caracter;
+void CasilleroConstruible::establecerCaracterContenido(std::string caracter){
+    caracterContenido = caracter;
 }
-std::string Casillero_construible::obtener_caracter_contenido(){
-    return caracter_contenido;
+std::string CasilleroConstruible::obtenerCaracterContenido(){
+    return caracterContenido;
 }
-void Casillero_construible::establecer_cantidad_material(int cantidad){
+void CasilleroConstruible::establecerCantidadMaterial(int cantidad){
 }

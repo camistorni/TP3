@@ -7,12 +7,12 @@
 
 const char CARACTER_PLANTA_ELECTRICA = 'P';
 
-class Planta_electrica: public Tipo_edificio {
+class PlantaElectrica: public TipoEdificio {
 
 	public:
 	
 		//Precondiciones: -
 		//Postcondiciones: Construye un edificio de tipo planta eléctrica
-		Planta_electrica (int piedra, int madera, int metal, int cant_max_construido, std::string tipo_edificio);
+		PlantaElectrica (int piedra, int madera, int metal, int cantMaxConstruido, std::string tipoEdificio);
 };
 #endif // PLANTA_ELECTRICA_H
