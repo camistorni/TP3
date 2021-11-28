@@ -21,11 +21,11 @@ class Edificio{
 		
 		//Precondiciones: -
 		//Postcondicions: devuelve la primer coordenada del edificio
-		int obtener_fila();
+		int obtenerFila();
 		
 		//Precondiciones: -
 		//Postcondicions: devuelve la segunda coordenada del edificio
-		int obtener_columna();
+		int obtenerColumna();
 
 };
 

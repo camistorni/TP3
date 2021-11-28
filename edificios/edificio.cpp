@@ -17,10 +17,10 @@ Edificio::Edificio(){
 }
 
 
-int Edificio::obtener_columna(){
+int Edificio::obtenerColumna(){
     return columna;
 }
 
-int Edificio::obtener_fila(){
+int Edificio::obtenerFila(){
     return fila;
 }

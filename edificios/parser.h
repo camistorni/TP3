@@ -8,7 +8,7 @@
 
 class Parser {
 	private:
-		std::string *lectura_archivo;
+		std::string *lecturaArchivo;
 
 	public:
 		
@@ -19,11 +19,11 @@ class Parser {
 		
 		//Precondiciones: -
 		//Postcondicions: Procesa y crea tipos de edificios
-		Tipo_edificio* procesar_entrada ();
+		TipoEdificio* procesarEntrada ();
 		
 		//Precondiciones: -
 		//Postcondicions: Devuelve el nombre del edificio
-		std::string tipo_edificio ();
+		std::string tipoEdificio ();
 		
 		//Precondiciones: -
 		//Postcondicions: Devuelve la cantidad de piedra que requiere el edificio
@@ -39,7 +39,7 @@ class Parser {
 		
 		//Precondiciones: -
 		//Postcondicions: Devuelve la cantidad máxima de edificios que pueden construirse
-		int cant_max_construido();
+		int cantMaxConstruido();
 };
 
 #endif // PARSER_H

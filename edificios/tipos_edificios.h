@@ -6,73 +6,73 @@
 
 const std::string PATH_ENTRADA_EDIFICIOS = "edificios.txt";
 
-class Tipo_edificio {
+class TipoEdificio {
 
 	protected:
-		std::string tipo_edificio;
-		int cant_piedra;
-		int cant_madera;
-		int cant_metal;
-		int cant_max_construido;
+		std::string tipoEdificio;
+		int cantPiedra;
+		int cantMadera;
+		int cantMetal;
+		int cantMaxConstruido;
 		char caracter;
 
-		int cantidad_construidos;
-		bool brinda_materiales;
-		Edificio** edificios_construidos;
+		int cantidadConstruidos;
+		bool brindaMateriales;
+		Edificio** edificiosConstruidos;
 
 	public:
-		~Tipo_edificio();
-		Tipo_edificio();
+		~TipoEdificio();
+		TipoEdificio();
 		
 		//Precondiciones: -
 		//Postcondicions: Construye un objeto tipo edificio
-		Tipo_edificio (int piedra, int madera, int metal, int cant_max_construido, std::string tipo_edificio);
+		TipoEdificio (int piedra, int madera, int metal, int cantMaxConstruido, std::string TipoEdificio);
 		
 		//Precondiciones: -
 		//Postcondicions: Devuelve la cantidad de piedra que requiere el edificio
-		int obtener_piedra();
+		int obtenerPiedra();
 		
 		//Precondiciones: -
 		//Postcondicions: Devuelve la cantidad de madera que requiere el edificio
-		int obtener_madera();
+		int obtenerMadera();
 		
 		//Precondiciones: -
 		//Postcondicions: Devuelve la cantidad de metal que requiere el edificio
-		int obtener_metal();
+		int obtenerMetal();
 		
 		//Precondiciones: -
 		//Postcondicions: Devuelve la cantidad máxima de edificios que pueden construirse
-		int obtener_cant_max_construido();
+		int obtenerCantMaxConstruido();
 		
 		//Precondiciones: -
 		//Postcondicions: Devuelve el nombre del edificio
-		std::string obtener_tipo();
+		std::string obtenerTipo();
 		
 		//Precondiciones: -
 		//Postcondicions: Devuelve la cantidad de edificios construidos
-		int obtener_cant_construidos();
+		int obtenerCantConstruidos();
 		
 		//Precondiciones: -
 		//Postcondicions: Espeifica si el edificio brinda materiales o no
-		bool brinda_material();
+		bool brindaMaterial();
 		
 		
 		//Precondiciones: -
 		//Postcondicions: Devuelve los edificios construidos
-		Edificio* obetener_edificios_construidos(int posisicion_edificio);
+		Edificio* obetenerEdificiosConstruidos(int posisicionEdificio);
 		
 
 		//Precondiciones: -
 		//Postcondiciones: Agrega el edificio leído a la lista de edificios construidos
-		void agregar_edificio_construido(Edificio* edificio);
+		void agregarEdificioConstruido(Edificio* edificio);
 
 		//Precondiciones: el edificio tiene que existir
 		//Postcondiciones: destruye un edificio
-		void derribar_edificio_construido(int fila, int columna);
+		void derribarEdificioConstruido(int fila, int columna);
 		
 		//Precondiciones: -
 		//Postcondiciones: Libera la memoria utilizada por los edificios construidos
-		void liberar_edificos_construidos();
+		void liberarEdificosConstruidos();
 		
 		
 		void mostrar();
