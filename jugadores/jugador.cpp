@@ -1,5 +1,7 @@
 #include "jugador.h"
 
+using namespace std;
+
 Jugador::Jugador(std::string nombreJugador) {
     nombre = nombreJugador;
     edificiosContruidos; new std::string * [0];

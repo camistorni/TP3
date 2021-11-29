@@ -43,12 +43,14 @@ class Jugador {
         int obtenerCantidadMateriales();
         Material* obtenerMateriales();
         Material obtenerMaterial(int material);
-        std::string obtenerNombreMaterial(int posicion);
 
         void establecerMaterial(Material* vectorMateriales);
-        void establecerCantidadMateriales(int nuevaCantidadMateriales);
-        
+        void establecerCantidadMateriales(int cantidadMateriales);
+
+        //Precondiciones: Se tiene que haber leído bien el archivo de materiales
+		//Postcondiciones: Agrega el material leído a la lista de materiales disponibles
         void agregarMaterial(Material* nuevoMaterial, int cantidadMateriales);
+        
         Material* buscarMaterial(string nombreMaterial);
 
         // Objetivos
