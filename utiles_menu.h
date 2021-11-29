@@ -5,7 +5,7 @@ void mostrarMenu();
 
 void mostrarInventario(Juego* juego);
 
-bool construirEdificio(Juego* juego, string nombreIngresado);
+void construirEdificio(Juego* juego, string nombreIngresado);
 
 int pedirOpcion();
 

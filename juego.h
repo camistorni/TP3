@@ -48,6 +48,7 @@ class Juego{
 		int obtenerCantidadMateriales();
 		Jugador* obtenerJugador();
 		int obtenerJugadorActivo();
+		TipoEdificio* obtenerEdificio(std::string nombreEdificio);
 		
 		//Precondiciones: -
 		//Postcondiciones: Guarda los datos de todos los archivos
@@ -124,8 +125,6 @@ class Juego{
 		//Precondiciones: -
 		//Postcondiciones: - (modificar)
 		void demolerEdificioCoordenada();
-
-		int identificarMaterial(string nombreMaterial);
 
 		void aumentarMaterialesDerrumbe(TipoEdificio* tipoEdificio);
 

@@ -27,7 +27,7 @@ Jugador::Jugador(std::string nombreJugador) {
 Jugador::~Jugador() {}
 
 Material** Jugador::obtenerMateriales() {
-    return **materiales;
+    return materiales;
 }
 
 void Jugador::agregarMaterial(Material* nuevoMaterial, int cantidadMateriales) {

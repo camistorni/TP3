@@ -36,17 +36,17 @@ void mostrarInventario(Juego* juego){
 	}
 }
 
-bool construirEdificio(Juego* juego, string nombreIngresado){
-	int piedraNecesaria = 0, maderaNecesaria = 0, metalNecesario = 0, construidos = 0, cantidadMax = 0;
-	
+void construirEdificio(Juego* juego, string nombreIngresado){
+	int piedraNecesaria, maderaNecesaria, metalNecesario, construidos, cantidadMax;
 	//Verifica que el edificio ingresado exista
-	if(!verificarEdificio(nombreIngresado, &piedraNecesaria, &maderaNecesaria, &metalNecesario, &construidos, &cantidadMax)){
-		return false;
+	if(!juego -> verificarEdificio(nombreIngresado, &piedraNecesaria, &maderaNecesaria, &metalNecesario, &construidos, &cantidadMax)){
+		std::cout << "El edificio '" << nombreIngresado << "' no existe" << endl << endl;
+		return;
 	}
 	
 	//Verifica que se tengan todos los materiales
-	if(!verificarMateriales(nombreIngresado, piedraNecesaria, maderaNecesaria, metalNecesario, construidos, cantidadMax))
-		return false;
+	if(!juego -> verificarMateriales(nombreIngresado, piedraNecesaria, maderaNecesaria, metalNecesario, construidos, cantidadMax))
+		return;
 	
 	int fila, columna;
 	cout << "¿Donde desea construir su " << nombreIngresado << "? Ingrese la primer coordenada: " << endl;
@@ -54,49 +54,29 @@ bool construirEdificio(Juego* juego, string nombreIngresado){
 	cout << "Ingrese la segunda coordenada: " << endl;
 	cin >> columna;
 	
-	if(!verificarCoordenadas(fila, columna))
-		return false;
+	if(juego -> verificarCoordenadas(fila, columna))
+		return;
 	
 	char respuesta;
 	bool done = false;
 	
 	std::cout << "Todo listo para construir " << nombreIngresado << ", ¿Está seguro que quiere seguir? [y/n]: ";
-	do{
+	cin >> respuesta;
+	Edificio* edificio;
+	int posicionEdificio;
+	while (respuesta != 'y' && respuesta != 'n') {
+		cout << "Ingrese una opción válida: ";
 		cin >> respuesta;
-		Edificio* edificio;
-		int posicionEdificio;
-		switch(respuesta){
-			case 'y':
-				cout << "El edificio ha sido construido correctamente" << endl << endl;
-				edificio  = new Edificio (fila , columna);
-				posicionEdificio = identificarEdificio(nombreIngresado);
-				listaEdificios[posicionEdificio] -> agregarEdificioConstruido(edificio);
-
-				mapa -> obtenerCasillero(fila, columna) -> establecerTipo(nombreIngresado);
-				for(int i = 0; i < cantidadMateriales; i++){
-					if(material[i]->obtenerNombreMaterial() == "piedra")
-						material[i]->modificarCantidad(piedraNecesaria);
-					if(material[i]->obtenerNombreMaterial() == "madera")
-						material[i]->modificarCantidad(maderaNecesaria);
-					if(material[i]->obtenerNombreMaterial() == "metal")
-						material[i]->modificarCantidad(metalNecesario);
-				}
-
-				done = true;
-				break;
-				
-			case 'n':
-				done = true;
-				break;
-				
-			default:
-				cout << "Ingrese una opción válida: ";
-				break;
-		}
-	}while(!done);
-
-	return true;
-
+	}
+	if (respuesta == 'y') {
+		cout << "El edificio ha sido construido correctamente" << endl << endl;
+		edificio  = new Edificio (fila , columna);
+		juego -> obtenerEdificio(nombreIngresado) -> agregarEdificioConstruido(); // hay que hacer una lista de edificios construdidos para cada jugador
+		mapa -> obtenerCasillero(fila, columna) -> establecerTipo(nombreIngresado); //agregar metodo de devolver mapa
+		juego -> obtenerJugador() -> buscarMaterial("piedra") -> modificarCantidad(piedraNecesaria);
+		juego -> obtenerJugador() -> buscarMaterial("madera") -> modificarCantidad(piedraNecesaria);
+		juego -> obtenerJugador() -> buscarMaterial("metal") -> modificarCantidad(piedraNecesaria);
+	}
 }
 
 int pedirOpcion(){
