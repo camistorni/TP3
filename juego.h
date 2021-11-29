@@ -44,6 +44,9 @@ class Juego{
 
 		//Costructor 
 		Juego();
+
+		int obtenerCantidadMateriales();
+		Jugador* obtenerJugadorActivo();
 		
 		//Precondiciones: -
 		//Postcondiciones: Guarda los datos de todos los archivos

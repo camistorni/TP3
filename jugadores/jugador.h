@@ -41,7 +41,7 @@ class Jugador {
         ~Jugador();
 
         int obtenerCantidadMateriales();
-        Material* obtenerMateriales();
+        Material** obtenerMateriales();
         Material obtenerMaterial(int material);
 
         void establecerMaterial(Material* vectorMateriales);
