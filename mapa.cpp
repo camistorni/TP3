@@ -136,12 +136,12 @@ bool Mapa::sePuedeDemoler(int fila, int columna){
 
 
 void Mapa::pedirCoordenada(int &fila, int &columna){
-	std::cout << "Ingrese la fila: ";
-	std::cin >> fila;
-	std::cout << std::endl;
-	std::cout << "Ingrese la columna: ";
-	std::cin >> columna;
-	std::cout  << std::endl;
+	cout << "Ingrese la fila: ";
+	cin >> fila;
+	cout << endl;
+	cout << "Ingrese la columna: ";
+	cin >> columna;
+	cout  << endl;
 	while (fila > cantidadFilas || fila < 0 || columna > cantidadColumnas || columna < 0){
 		cout << "Coordenada incorrecta" << endl;
 		cout << "Ingrese la coordenada nuevamente -> fil (" << cantidadFilas << " - 0)" << endl;

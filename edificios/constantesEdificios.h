@@ -1,6 +1,8 @@
 #ifndef CONSTANTESEDIFICIOS_H
 #define CONSTANTESEDIFICIOS_H
 
+#include <iostream>
+
 // asserradero.h
 const char CARACTER_ASERRADERO = 'A';
 
@@ -12,6 +14,9 @@ const char CARACTER_FABRICA = 'F';
 
 // mina.h
 const char CARACTER_MINA = 'M';
+
+// mina.h
+const char CARACTER_MINA_ORO = 'G';
 
 // obelisco.h
 const char CARACTER_OBELISCO = 'O';

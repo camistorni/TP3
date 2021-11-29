@@ -19,10 +19,7 @@ TipoEdificio::TipoEdificio (int piedra, int madera, int metal, int cantMaxConstr
     cantMetal = metal;
     this -> cantMaxConstruido = cantMaxConstruido;
     cantidadConstruidos = 0;
-
 }
-
-
 
 int TipoEdificio::obtenerPiedra(){
     return cantPiedra;
@@ -51,7 +48,8 @@ int TipoEdificio::obtenerCantConstruidos(){
 bool TipoEdificio::brindaMaterial(){
 	return brindaMateriales;
 }
-Edificio* TipoEdificio::obetenerEdificiosConstruidos(int posisicionEdificio){
+
+Edificio* TipoEdificio::obtenerEdificiosConstruidos(int posisicionEdificio){
     return edificiosConstruidos[posisicionEdificio];
 }
 

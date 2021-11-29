@@ -1,6 +1,7 @@
 #include <iostream>
 #include "utilesMenu.h"
 #include "juego.h"
+#include "opciones.h"
 
 void mostrarMenu() {
 
@@ -21,7 +22,7 @@ void mostrarMenu() {
 	cout << "            ╚═══════════════════════════════════════╝" << endl << endl;
 }
 
-void mostrarInventario(Juego* juego){
+void mostrarInventario(Juego* juego) {
 
 	cout << endl << endl;
 	cout << "Lista de materiales propios:" << endl << endl;
@@ -31,12 +32,12 @@ void mostrarInventario(Juego* juego){
 	cout << '\t' << " ═══════════════════════════════ " << endl;
 
 	for(int i = 0; i < juego -> obtenerCantidadMateriales(); i++) {
-		cout << '\t' << juego -> obtenerJugadorActivo() -> obtenerMateriales()[i] -> obtenerNombreMaterial() << ":\t" << 
-		'\t' << juego -> obtenerJugadorActivo() -> obtenerMateriales()[i] -> obtenerNombreMaterial() << endl;
+		cout << '\t' << juego -> obtenerJugador() -> obtenerMateriales()[i] -> obtenerNombreMaterial() << ":\t" << 
+		'\t' << juego -> obtenerJugador() -> obtenerMateriales()[i] -> obtenerNombreMaterial() << endl;
 	}
 }
 
-void construirEdificio(Juego* juego, string nombreIngresado){
+void construirEdificio(Juego* juego, string nombreIngresado) {
 	int piedraNecesaria, maderaNecesaria, metalNecesario, construidos, cantidadMax;
 	//Verifica que el edificio ingresado exista
 	if(!juego -> verificarEdificio(nombreIngresado, &piedraNecesaria, &maderaNecesaria, &metalNecesario, &construidos, &cantidadMax)){
@@ -72,14 +73,14 @@ void construirEdificio(Juego* juego, string nombreIngresado){
 		cout << "El edificio ha sido construido correctamente" << endl << endl;
 		edificio  = new Edificio (fila , columna);
 		juego -> obtenerEdificio(nombreIngresado) -> agregarEdificioConstruido(); // hay que hacer una lista de edificios construdidos para cada jugador
-		mapa -> obtenerCasillero(fila, columna) -> establecerTipo(nombreIngresado); //agregar metodo de devolver mapa
+		//mapa -> obtenerCasillero(fila, columna) -> establecerTipo(nombreIngresado); //agregar metodo de devolver mapa
 		juego -> obtenerJugador() -> buscarMaterial("piedra") -> modificarCantidad(piedraNecesaria);
 		juego -> obtenerJugador() -> buscarMaterial("madera") -> modificarCantidad(piedraNecesaria);
 		juego -> obtenerJugador() -> buscarMaterial("metal") -> modificarCantidad(piedraNecesaria);
 	}
 }
 
-int pedirOpcion(){
+int pedirOpcion() {
 	
 	int opcionElegida = 0;
 	cout << "Ingrese el número de la opción elegida: ";
@@ -94,93 +95,126 @@ int pedirOpcion(){
 }
 
 void procesarOpcionesMenu(Juego* juego, int opcion) {
-    switch(opcion){
+    switch(opcion) {
         case MODIFICAR_EDIFICIO_POR_NOMBRE:
-            modificarEdificioPorNombre();
+            //modificarEdificioPorNombre();
             break;
+
         case LISTAR_EDIFICIOS:
-            listarEdificios();
+        	juego -> listarEdificios();
             break;
+
         case MOSTRAR_MAPA:
-            mostrarMapa();
+            //mostrarMapa();
             break;
+
         case COMENZAR_PARTIDA:
-            comenzarPartida();
+			int fila = -1, columna = -1;
+			// Se hace dos veces, una para cada jugador, hay que ver como indicar de quien es cada posicion
+			// Tambien hay que chequear si las coordenadas son validas o volver a pedirlas
+			juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
+			juego -> verificarCoordenadas(fila, columna);
+			juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
+			juego -> verificarCoordenadas(fila, columna);
+
+            comenzarPartida(juego);
             break;
+
         case GUARDAR_Y_SALIR:
             opcion = SALIR;
             break;
+
         default:
             cout << "ERROR" << endl;
             break;
+	}
+}
+
+void comenzarPartida(Juego* juego) {
+	juego -> establecerJugadorActivo(rand() % 2);
 }
 
 void procesarOpcionesSubmenu(Juego* juego, int opcion) {
     switch(opcion) {
         case CONSTRUIR_EDIFICIO_POR_NOMBRE:
-			cout << "Ingrese el nombre del edificio que desea construir: ";
-			cin >> nombreIngresado;
-			construirEdificio(nombreIngresado);
+			//string nombreIngresado;
+			cout << "Ingrese el nombre del edificio que desea construir" << endl;
+			//cin >> nombreIngresado;
+			//construirEdificio(nombreIngresado);
 			break;
-			
+
 		case LISTAR_EDIFICIOS_CONSTRUIDOS:
-			listarEdificiosConstruidos();
+			juego -> listarEdificiosConstruidos();
 			break;
-		
+
 		case DEMOLER_EDIFICIO_POR_COORDENADA:
 			//listarEdificios();
 			break;
-		
+
 		case ATACAR_EDIFICIO_POR_COORDENADA:
 			//demolerEdificioCoordenada();
 			break;
-		
+
 		case REPARAR_EDIFICIO_POR_COORDENADA:
 			//mostrarMapa();
 			break;
-		
+
 		case COMPRAR_BOMBAS:
+			//comprarBombas();
 			break;
-			
+
 		case CONSULTAR_COORDENADA:
-            consultarCoordenada();
+            //consultarCoordenada();
 			break;
-		
+
 		case MOSTRAR_INVENTARIO:
-            mostrarInventario();
+			mostrarInventario(juego);
 			break;
-		
+
 		case MOSTRAR_OBJETIVOS:
 			break;
-		
-		case RECOLECTAR_RECURSOS_PRODUCIDOS:
-            recolectarRecursos();
-			break;
-        
-        case MOVERSE_A_UNA_COORDENADA:
-            break;
-    }
-        
-}
 
-void procesarOpciones(Juego* juego, int opcion){
+		case RECOLECTAR_RECURSOS_PRODUCIDOS:
+			juego -> recolectarRecursos();
+			break;
+
+		case MOVERSE_A_UNA_COORDENADA:
+            break;
+
+		case FINALIZAR_TURNO:
+			int energiaActual = juego -> obtenerJugador() -> obtenerEnergia();
+			juego -> obtenerJugador() -> establecerEnergia(energiaActual + ENERGIA_POR_FINALIZAR_TURNO);
+			if(juego -> obtenerJugadorActivo() == 0)
+				juego -> establecerJugadorActivo(1);
+			else
+				juego -> establecerJugadorActivo(0);
+			break;
+
+		case GUARDAR_Y_SALIR:
+			opcion = SALIR;
+			break;
+
+		case SALIR:
+			break;
+
+		default:
+			cout << "ERROR" << endl;
+			break;
+    }
+}       
+        
+void procesarOpciones(Juego* juego, int opcion) {
 	
 	string nombreIngresado;
 	
     if(juego -> obtenerJugadorActivo() < 0) 
-        procesarOpcionesMenu(juego);
+        procesarOpcionesMenu(juego, opcion);
     else
-        procesarOpcionesSubmenu(juego);
-
-	
-
-/*
-		
-            */
-	}
+        procesarOpcionesSubmenu(juego, opcion);
 }
 
-void demolerEdificioCoordenada(Juego* juego){
+/*
+void demolerEdificioCoordenada(Juego* juego) {
 	int fila, columna;
 	mapa -> pedirCoordenada(fila, columna);
 	int posicion;
@@ -193,13 +227,12 @@ void demolerEdificioCoordenada(Juego* juego){
 
 	}
 }
-
-void consultarCoordenada(Juego* juego){
+*/
+/*
+void consultarCoordenada(Juego* juego) {
 	int fila,columna;
 	mapa -> pedirCoordenada(fila,columna);
 	mapa -> obtenerCasillero(fila, columna) -> responder();
 }
-
-
-
+*/
 

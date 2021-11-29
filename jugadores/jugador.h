@@ -40,6 +40,9 @@ class Jugador {
 		Jugador(std::string nombreJugador);
         ~Jugador();
 
+        int obtenerEnergia();
+        void establecerEnergia(int cantidadEnergia);
+
         int obtenerCantidadMateriales();
         Material** obtenerMateriales();
         Material obtenerMaterial(int material);

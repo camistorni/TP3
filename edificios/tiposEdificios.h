@@ -57,7 +57,7 @@ class TipoEdificio {
 		
 		//Precondiciones: -
 		//Postcondicions: Devuelve los edificios construidos
-		Edificio* obetenerEdificiosConstruidos(int posisicionEdificio);
+		Edificio* obtenerEdificiosConstruidos(int posisicionEdificio);
 		
 
 		//Precondiciones: -

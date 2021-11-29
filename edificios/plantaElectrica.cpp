@@ -8,5 +8,5 @@ PlantaElectrica::PlantaElectrica (int piedra, int madera, int metal, int cantMax
 TipoEdificio (piedra, madera, metal, cantMaxConstruido, tipoEdificio){
     caracter = CARACTER_plantaElectrica;
     cantidadConstruidos = 0;
-    brindaMateriales = false;
+    brindaMateriales = true;
 }

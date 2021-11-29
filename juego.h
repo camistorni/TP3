@@ -33,7 +33,9 @@ class Juego{
 		int obtenerCantidadMateriales();
 		Jugador* obtenerJugador();
 		int obtenerJugadorActivo();
+		void establecerJugadorActivo(int jugador);
 		TipoEdificio* obtenerEdificio(std::string nombreEdificio);
+		Mapa* obtenerMapa();
 		
 		//Precondiciones: -
 		//Postcondiciones: Guarda los datos de todos los archivos

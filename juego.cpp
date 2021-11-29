@@ -20,10 +20,11 @@ using namespace std;
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
-Juego::Juego (){
+Juego::Juego () {
 	Jugador* jugadoresAux[2] = {new Jugador("Jugador 1"), new Jugador("Jugador 2")};
 	jugadores = jugadoresAux;
 	cantidadMateriales = 0;
+	jugadorActivo = -1;
 	leerMateriales();
 	leerOpcionesEdificios();
 	leerMapa();
@@ -48,7 +49,13 @@ int Juego::obtenerJugadorActivo() {
 	return jugadorActivo;
 }
 
+void Juego::establecerJugadorActivo(int jugador) {
+	jugadorActivo = jugador;
+}
 
+Mapa* Juego::obtenerMapa() {
+	return mapa;
+}
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -193,7 +200,7 @@ void Juego::listarEdificiosConstruidos(){
 			std::cout << this -> listaEdificios[i] -> obtenerCantConstruidos() << setw(20);
 			
 			for(int j = 0; j < listaEdificios[i] -> obtenerCantConstruidos(); j++)
-		 		std::cout << "(" << this -> listaEdificios[i] -> obetenerEdificiosConstruidos(j) -> obtenerFila() << ", " << this -> listaEdificios[i] -> obetenerEdificiosConstruidos(j) -> obtenerColumna() << ")";
+		 		std::cout << "(" << this -> listaEdificios[i] -> obtenerEdificiosConstruidos(j) -> obtenerFila() << ", " << this -> listaEdificios[i] -> obtenerEdificiosConstruidos(j) -> obtenerColumna() << ")";
 			
 			construidosTotal += listaEdificios[i]->obtenerCantConstruidos();
 			std::cout << endl;
@@ -252,28 +259,48 @@ void Juego::listarEdificios(){
 }
 
 void Juego::agregarRecursos(string nombreEdificio){
+	
 	if(nombreEdificio == "mina"){
-		
 		for(int i = 0; i < cantidadMateriales; i++){
-			if(material[i]->obtenerNombreMaterial() == "piedra")
-				material[i]->modificarCantidad(PIEDRA_AGREGADA);
+			if(this -> obtenerJugador() -> obtenerMateriales()[i] -> obtenerNombreMaterial() == "piedra")
+				this -> obtenerJugador() -> obtenerMateriales()[i] -> modificarCantidad(PIEDRA_AGREGADA_POR_MINA);
 		}
 	}
 		
 	if(nombreEdificio == "aserradero"){
 		for(int i = 0; i < cantidadMateriales; i++){
-			if(material[i]->obtenerNombreMaterial() == "madera")
-				material[i]->modificarCantidad(MADERA_AGREGADA);
+			if(this -> obtenerJugador() -> obtenerMateriales()[i] -> obtenerNombreMaterial() == "madera")
+				this -> obtenerJugador() -> obtenerMateriales()[i] -> modificarCantidad(MADERA_AGREGADA_POR_ASERRADERO);
 		}		
 	}
 	
 	if(nombreEdificio == "fabrica"){
 		for(int i = 0; i < cantidadMateriales; i++){
-			if(material[i]->obtenerNombreMaterial() == "metal")
-				material[i]->modificarCantidad(METAL_AGREGADO);
+			if(this -> obtenerJugador() -> obtenerMateriales()[i] -> obtenerNombreMaterial() == "metal")
+				this -> obtenerJugador() -> obtenerMateriales()[i] -> modificarCantidad(METAL_AGREGADO_POR_FABRICA);
 		}		
 	}
 
+	if(nombreEdificio == "escuela") {
+		for(int i = 0; i < cantidadMateriales; i++) {
+			if(this -> obtenerJugador() -> obtenerMateriales()[i] -> obtenerNombreMaterial() == "andycoins")
+				this -> obtenerJugador() -> obtenerMateriales()[i] -> modificarCantidad(ANDYCOINS_AGREGADAS_POR_ESCUELA);
+		}
+	}
+
+	if(nombreEdificio == "planta electrica") {
+		for(int i = 0; i < cantidadMateriales; i++) {
+			if(this -> obtenerJugador() -> obtenerMateriales()[i] -> obtenerNombreMaterial() == "energia")
+				this -> obtenerJugador() -> obtenerMateriales()[i] -> modificarCantidad(ENERGIA_AGREGADA_POR_PLANTA_ELECTRICA);
+		}
+	}
+
+	if(nombreEdificio == "mina oro") {
+		for(int i = 0; i < cantidadMateriales; i++) {
+			if(this -> obtenerJugador() -> obtenerMateriales()[i] -> obtenerNombreMaterial() == "andycoins")
+				this -> obtenerJugador() -> obtenerMateriales()[i] -> modificarCantidad(ANDYCOINS_AGREGADAS_POR_MINA_ORO);
+		}
+	}
 }
 
 void Juego::recolectarRecursos(){
@@ -296,7 +323,7 @@ void Juego::cerrarEdificios(){
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
-
+/*
 void Juego::leerUbicaciones(){
 
 	fstream archivoUbicaciones(PATH_UBICACIONES, ios::in);
@@ -327,7 +354,7 @@ void Juego::leerUbicaciones(){
 	}
 	archivoUbicaciones.close();
 }
-
+*/
 int Juego::identificarEdificio(string tipoEdficio){
 
 	int posicionEdificio = 0;
@@ -346,10 +373,10 @@ void Juego::cerrarUbicaciones(){
 	for(int i = 0; i < cantidadEdificios; i++){
 		for(int j = 0; j < listaEdificios[i] -> obtenerCantConstruidos(); j++){
 			
-			cout << listaEdificios[i] -> obetenerEdificiosConstruidos(j) -> obtenerFila() << " - " << listaEdificios[i] -> obetenerEdificiosConstruidos(j) -> obtenerColumna() << endl;
+			cout << listaEdificios[i] -> obtenerEdificiosConstruidos(j) -> obtenerFila() << " - " << listaEdificios[i] -> obtenerEdificiosConstruidos(j) -> obtenerColumna() << endl;
 			archivoUbicaciones << this -> listaEdificios[i] -> obtenerTipo() << " ("
-								<< listaEdificios[i] -> obetenerEdificiosConstruidos(j) -> obtenerFila() << ", "
-								<< listaEdificios[i] -> obetenerEdificiosConstruidos(j) -> obtenerColumna() << ')' << '\n';
+								<< listaEdificios[i] -> obtenerEdificiosConstruidos(j) -> obtenerFila() << ", "
+								<< listaEdificios[i] -> obtenerEdificiosConstruidos(j) -> obtenerColumna() << ')' << '\n';
 		}
 
 	}
@@ -417,7 +444,7 @@ void Juego::imprimirMensajeError(string nombre_edificio, string material, int ca
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
-
+/*
 void Juego::aumentarMaterialesDerrumbe(TipoEdificio* tipoEdificio){
 	for (int i = 0; i < cantidadMateriales; i++){
 		if (material[i] -> obtenerNombreMaterial() == "piedra"){
@@ -431,7 +458,7 @@ void Juego::aumentarMaterialesDerrumbe(TipoEdificio* tipoEdificio){
 		}
 	}
 }
-
+*/
 void Juego::lluviaElementos(){
 	bool generoPiedra = false;
 	bool generoMadera = false;
@@ -477,6 +504,3 @@ void Juego::lluviaElementos(){
 		}			
 	}
 }
-	
-
-

@@ -26,6 +26,14 @@ Jugador::Jugador(std::string nombreJugador) {
 
 Jugador::~Jugador() {}
 
+int Jugador::obtenerEnergia() {
+    return energia;
+}
+
+void Jugador::establecerEnergia(int cantidadEnergia) {
+    energia = cantidadEnergia;
+}
+
 Material** Jugador::obtenerMateriales() {
     return materiales;
 }
