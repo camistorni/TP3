@@ -1,28 +1,25 @@
 #include "materiales.h"
 #include "edificios/edificio.h"
-#include "procesamiento.h"
+#include "juego.h"
 #include "edificios/tipos_edificios.h"
 #include "casilleros/casillero.h"
 
 int main(){
 	
-	Proceso proceso;
+	Juego juego;
 	int opcion = 0;
 	
-	proceso.leer_archivos();
-
-	
-	proceso.mostrar_menu();
-	opcion = proceso.pedir_opcion();
+	juego.mostrarMenu();
+	opcion = juego.pedirOpcion();
 	
 	while(opcion != 10){
-		proceso.procesar_opciones(opcion);
+		juego.procesarOpciones(opcion);
 		
-		proceso.mostrar_menu();
-		opcion = proceso.pedir_opcion();
+		juego.mostrarMenu();
+		opcion = juego.pedirOpcion();
 	}
 		
-	proceso.guardar_y_salir();
+	juego.guardarYSalir();
 	
 	
 

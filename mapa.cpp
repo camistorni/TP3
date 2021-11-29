@@ -159,7 +159,7 @@ void Mapa::pedirCoordenada(int &fila, int &columna){
 }
 
 
-void Mapa::liberarCasilleros(){
+Mapa::~Mapa(){
 
     for (int i = 0; i < cantidadFilas; i ++){
         for (int j = 0; j < cantidadColumnas; j ++){

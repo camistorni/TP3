@@ -65,22 +65,8 @@ void TipoEdificio::liberarEdificosConstruidos(){
     }
 }
 
-void TipoEdificio::agregarEdificioConstruido(Edificio* edificio){
-
-    Edificio** nuevoEdificiosConstruidos = new Edificio* [cantidadConstruidos + 1];
-
-    for (int i = 0; i < cantidadConstruidos; i++){
-        nuevoEdificiosConstruidos[i] = edificiosConstruidos[i];
-    }
-
-    nuevoEdificiosConstruidos[cantidadConstruidos] = edificio;
-
-    if (cantidadConstruidos != 0){
-        delete [] edificiosConstruidos;
-    }
-
-    this -> edificiosConstruidos = nuevoEdificiosConstruidos;
-    this -> cantidadConstruidos++;
+void TipoEdificio::agregarEdificioConstruido(){
+    cantidadConstruidos++;
 }
 
 void TipoEdificio::derribarEdificioConstruido(int fila, int columna){

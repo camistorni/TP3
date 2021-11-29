@@ -1,5 +1,5 @@
-#ifndef PROCESAMIENTO_H
-#define PROCESAMIENTO_H
+#ifndef JUEGO_H
+#define JUEGO_H
 
 #include "materiales.h"
 #include "mapa.h"
@@ -7,6 +7,7 @@
 #include "edificios/tipos_edificios.h"
 #include "edificios/edificio.h"
 #include "mapa.h"
+#include "jugadores/jugador.h"
 
 #include <iostream>
 
@@ -28,18 +29,26 @@
 
 using namespace std;
 
-class Proceso{
+class Juego{
 
 	private:
-		Material** material;
 		Mapa* mapa;
 		TipoEdificio** listaEdificios;
-		int cantidadMateriales, cantidadEdificios, cantidadUbicaciones;
-		
+		Jugador** jugadores;
+		int jugadorActivo;
+		int cantidadEdificios, cantidadMateriales;
+
+		//int cantidadMateriales, cantidadEdificios, cantidadUbicaciones;
+	
 	public:
 
 		//Costructor 
-		Proceso();
+		Juego();
+
+		int obtenerCantidadMateriales();
+		Jugador* obtenerJugador();
+		int obtenerJugadorActivo();
+		TipoEdificio* obtenerEdificio(std::string nombreEdificio);
 		
 		//Precondiciones: -
 		//Postcondiciones: Guarda los datos de todos los archivos
@@ -63,9 +72,10 @@ class Proceso{
 		void leerMapa();
 
 		
-		//Precondiciones: Se tiene que haber leído bien el archivo de materiales
-		//Postcondiciones: Agrega el material leído a la lista de materiales disponibles
-		void agregarMaterial(Material *nuevoMaterial);
+		//Precondiciones: -
+		//Postcondiciones: Imprime los materiales disponibles
+		void mostrarInventario();
+
 		
 		//Precondiciones: Se tiene que haber leído bien el archivo de edificio
 		//Postcondiciones: Agrega el edificio leído a la lista de edificios disponibles
@@ -116,8 +126,6 @@ class Proceso{
 		//Postcondiciones: - (modificar)
 		void demolerEdificioCoordenada();
 
-		int identificarMaterial(string nombreMaterial);
-
 		void aumentarMaterialesDerrumbe(TipoEdificio* tipoEdificio);
 
 		void consultarCoordenada();
@@ -126,9 +134,7 @@ class Proceso{
 
 		void modificarMateriales();
 
-		//Precondiciones: -
-		//Postcondiciones: Imprime los materiales disponibles
-		void mostrarInventario();
+		
 
 		//Precondiciones: -
 		//Postcondiciones: Guarda los edificios en el archivo "edificios" y elimina la lista

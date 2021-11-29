@@ -64,7 +64,7 @@ class TipoEdificio {
 
 		//Precondiciones: -
 		//Postcondiciones: Agrega el edificio leído a la lista de edificios construidos
-		void agregarEdificioConstruido(Edificio* edificio);
+		void agregarEdificioConstruido();
 
 		//Precondiciones: el edificio tiene que existir
 		//Postcondiciones: destruye un edificio
