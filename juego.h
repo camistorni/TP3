@@ -46,7 +46,8 @@ class Juego{
 		Juego();
 
 		int obtenerCantidadMateriales();
-		Jugador* obtenerJugadorActivo();
+		Jugador* obtenerJugador();
+		int obtenerJugadorActivo();
 		
 		//Precondiciones: -
 		//Postcondiciones: Guarda los datos de todos los archivos

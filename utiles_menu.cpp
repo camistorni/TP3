@@ -113,11 +113,8 @@ int pedirOpcion(){
 	return opcionElegida;
 }
 
-void procesarOpciones(Juego* juego, int opcion){
-	
-	string nombreIngresado;
-	
-	switch(opcion){
+void procesarOpcionesMenu(Juego* juego, int opcion) {
+    switch(opcion){
         case MODIFICAR_EDIFICIO_POR_NOMBRE:
             modificarEdificioPorNombre();
             break;
@@ -136,49 +133,69 @@ void procesarOpciones(Juego* juego, int opcion){
         default:
             cout << "ERROR" << endl;
             break;
+}
 
-/*
-		case 1:
+void procesarOpcionesSubmenu(Juego* juego, int opcion) {
+    switch(opcion) {
+        case CONSTRUIR_EDIFICIO_POR_NOMBRE:
 			cout << "Ingrese el nombre del edificio que desea construir: ";
 			cin >> nombreIngresado;
 			construirEdificio(nombreIngresado);
 			break;
 			
-		case 2:
+		case LISTAR_EDIFICIOS_CONSTRUIDOS:
 			listarEdificiosConstruidos();
 			break;
 		
-		case 3:
-			listarEdificios();
+		case DEMOLER_EDIFICIO_POR_COORDENADA:
+			//listarEdificios();
 			break;
 		
-		case 4:
-			demolerEdificioCoordenada();
+		case ATACAR_EDIFICIO_POR_COORDENADA:
+			//demolerEdificioCoordenada();
 			break;
 		
-		case 5:
-			mostrarMapa();
+		case REPARAR_EDIFICIO_POR_COORDENADA:
+			//mostrarMapa();
 			break;
 		
-		case 6:
-			consultarCoordenada();
+		case COMPRAR_BOMBAS:
 			break;
 			
-		case 7:
-			mostrarInventario();
+		case CONSULTAR_COORDENADA:
+            consultarCoordenada();
 			break;
 		
-		case 8:
-			recolectarRecursos();
+		case MOSTRAR_INVENTARIO:
+            mostrarInventario();
 			break;
 		
-		case 9:
-			lluviaElementos();
+		case MOSTRAR_OBJETIVOS:
 			break;
 		
-		case 10:
-			guardarYSalir();
+		case RECOLECTAR_RECURSOS_PRODUCIDOS:
+            recolectarRecursos();
 			break;
+        
+        case MOVERSE_A_UNA_COORDENADA:
+            break;
+    }
+        
+}
+
+void procesarOpciones(Juego* juego, int opcion){
+	
+	string nombreIngresado;
+	
+    if(juego -> obtenerJugadorActivo() < 0) 
+        procesarOpcionesMenu(juego);
+    else
+        procesarOpcionesSubmenu(juego);
+
+	
+
+/*
+		
             */
 	}
 }

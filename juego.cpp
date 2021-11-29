@@ -38,8 +38,12 @@ int Juego::obtenerCantidadMateriales() {
 	return cantidadMateriales;
 }
 
-Jugador* Juego::obtenerJugadorActivo() {
+Jugador* Juego::obtenerJugador() {
 	return jugadores[jugadorActivo];
+}
+
+int Juego::obtenerJugadorActivo() {
+	return jugadorActivo;
 }
 
 
