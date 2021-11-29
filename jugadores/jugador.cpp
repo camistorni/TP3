@@ -1,5 +1,7 @@
 #include "jugador.h"
 
+using namespace std;
+
 Jugador::Jugador(std::string nombreJugador) {
     nombre = nombreJugador;
     edificiosContruidos; new std::string * [0];
@@ -36,10 +38,6 @@ Material Jugador::obtenerMaterial(int material) {
     return *materiales[material];
 }
 
-string Jugador::obtenerNombreMaterial(int posicion) {
-    return this -> materiales[posicion] -> obtenerNombreMaterial();
-}
-
 void Jugador::establecerMaterial(Material* vectorMateriales) {
     for(int i = 0; i < cantidadMateriales++; i++) {
         *(this -> materiales[i]) = vectorMateriales[i];
@@ -51,26 +49,15 @@ void Jugador::establecerCantidadMateriales(int cantidadMateriales) {
 }
 
 void Jugador::agregarMaterial(Material* nuevoMaterial) {
-    //arreglar
-    Material **vectorMateriales = new Material*[this -> obtenerCantidadMateriales() + 1];
-	if(vectorMateriales == NULL)
-		delete[] vectorMateriales;
-	
-	for(int i = 0; i < this -> obtenerCantidadMateriales(); i++)
-		*vectorMateriales = this -> obtenerMateriales();
-		
-	vectorMateriales[this -> obtenerCantidadMateriales()] = nuevoMaterial;
-	
-	if(this -> obtenerCantidadMateriales() != 0){
-		delete[] this -> obtenerMateriales();
+    Material **vectorMateriales = new Material*[cantidadMateriales + 1];
+    copy(materiales, materiales + cantidadMateriales, vectorMateriales);
+	vectorMateriales[cantidadMateriales] = nuevoMaterial;
+	if(cantidadMateriales != 0){
+		delete[] materiales;
 	}
-	
-	this -> establecerMaterial(*vectorMateriales);
-    int cantidadMateriales = this -> obtenerCantidadMateriales();
-	this -> establecerCantidadMateriales(cantidadMateriales++);
+    materiales = vectorMateriales;
+    cantidadMateriales++;
 }
-
-
 
 Material* Jugador::buscarMaterial(string nombreMaterial) {
     Material* material = nullptr;

@@ -58,6 +58,7 @@ void Juego::leerMateriales(){
 
 		jugadores[1] -> agregarMaterial(material);
 
+		cantidadMateriales++;
 	}
 	
 	archivoMateriales.close();
@@ -141,30 +142,17 @@ bool Juego::verificarMateriales(string nombreIngresado, int piedraNecesaria, int
 
 void Juego::mostrarInventario(){
 
-	long nombre_mas_largo = 0;
-	long nombre = 0;
+	cout << endl << endl;
+	cout << "Lista de materiales propios:" << endl << endl;
+	
+	cout << "            ═══════════════════════════════" << endl;
+	cout << "             Materiales        Cantidades"<< endl;
+	cout << "            ═══════════════════════════════" << endl;
 
-	std::cout << endl << endl;
-	std::cout << "Lista de materiales propios:" << endl << endl;
-	
-	std::cout << "            ═══════════════════════════════" << endl;
-	std::cout << "             Materiales        Cantidades"<< endl;
-	std::cout << "            ═══════════════════════════════" << endl;
-	
-	for(int i = 0; i < this->cantidadMateriales; i++){
-		nombre = this->material[i]->obtenerNombreMaterial().length();
-		if(nombre > nombre_mas_largo)
-			nombre_mas_largo = nombre;
+	for(int i = 0; i < cantidadMateriales; i++) {
+		cout << this -> jugadores[jugadorActivo] -> obtenerMaterial(i).obtenerNombreMaterial() << ":\t" << 
+		this -> jugadores[jugadorActivo] -> obtenerMaterial(i).obtenerCantidadMaterial() << endl;
 	}
-	
-	for(int i = 0; i < this->cantidadMateriales; i++){
-		long espacio = nombre_mas_largo - this->material[i]->obtenerNombreMaterial().length();
-		std::cout << "              " << this->material[i]->obtenerNombreMaterial();
-		std::cout << setw(17 + (int)espacio);
-		std::cout << this->material[i]->obtenerCantidadMaterial() <<endl;
-	}
-	
-	std::cout << endl << endl;
 }
 
 

@@ -35,6 +35,8 @@ class Juego{
 		Mapa* mapa;
 		TipoEdificio** listaEdificios;
 		Jugador** jugadores;
+		int jugadorActivo;
+		int cantidadEdificios, cantidadMateriales;
 
 		//int cantidadMateriales, cantidadEdificios, cantidadUbicaciones;
 	
@@ -65,9 +67,10 @@ class Juego{
 		void leerMapa();
 
 		
-		//Precondiciones: Se tiene que haber leído bien el archivo de materiales
-		//Postcondiciones: Agrega el material leído a la lista de materiales disponibles
-		void agregarMaterial(Material *nuevoMaterial, int jugador);
+		//Precondiciones: -
+		//Postcondiciones: Imprime los materiales disponibles
+		void mostrarInventario();
+
 		
 		//Precondiciones: Se tiene que haber leído bien el archivo de edificio
 		//Postcondiciones: Agrega el edificio leído a la lista de edificios disponibles
@@ -128,9 +131,7 @@ class Juego{
 
 		void modificarMateriales();
 
-		//Precondiciones: -
-		//Postcondiciones: Imprime los materiales disponibles
-		void mostrarInventario();
+		
 
 		//Precondiciones: -
 		//Postcondiciones: Guarda los edificios en el archivo "edificios" y elimina la lista
