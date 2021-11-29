@@ -1,9 +1,8 @@
 #include <iostream>
 
 #include "casillero.h"
-#include "casillero_inaccesible.h"
-
-const std::string CARACTER_COLOR_LAGO = "\033[1;44mI\033[0m";
+#include "casilleroInaccesible.h"
+#include "constantesCasilleros.h"
 
 CasilleroInaccesible::CasilleroInaccesible(int fila, int columna, char caracter):
 Casillero(fila, columna, caracter){

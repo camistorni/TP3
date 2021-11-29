@@ -7,19 +7,18 @@
 #include "materiales.h"
 #include "juego.h"
 #include "edificios/edificio.h"
-#include "edificios/tipos_edificios.h"
+#include "edificios/tiposEdificios.h"
 #include "edificios/parser.h"
 #include "edificios/edificio.h"
 #include "casilleros/casillero.h"
-#include "casilleros/casillero_construible.h"
-#include "casilleros/casillero_inaccesible.h"
-#include "casilleros/casillero_transitable.h"
+#include "casilleros/casilleroConstruible.h"
+#include "casilleros/casilleroInaccesible.h"
+#include "casilleros/casilleroTransitable.h"
+#include "constantes.h"
 
 using namespace std;
 
-const int CANT_CARACTERISTICAS_EDIFICIOS = 5;
-
-//
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 
 Juego::Juego (){
 	Jugador* jugadoresAux[2] = {new Jugador("Jugador 1"), new Jugador("Jugador 2")};
@@ -205,8 +204,6 @@ void Juego::listarEdificiosConstruidos(){
 
 }
 
-
-
 void Juego::agregarTipoEdificio(TipoEdificio* tipoEdificio){
 
     TipoEdificio** nuevaListaEdificios = new TipoEdificio*[(this -> cantidadEdificios) + 1];
@@ -227,7 +224,6 @@ void Juego::agregarTipoEdificio(TipoEdificio* tipoEdificio){
     this -> cantidadEdificios++;
 	
 }
-
 
 void Juego::listarEdificios(){
 
@@ -254,9 +250,6 @@ void Juego::listarEdificios(){
 		cout << this -> listaEdificios[i] -> obtenerCantMaxConstruido() - this -> listaEdificios[i] -> obtenerCantConstruidos() << endl;
 	}
 }
-
-
-
 
 void Juego::agregarRecursos(string nombreEdificio){
 	if(nombreEdificio == "mina"){
@@ -292,7 +285,6 @@ void Juego::recolectarRecursos(){
 	cout << "Se recolectaron todos los recursos disponibles" << endl;
 }
 
-
 void Juego::cerrarEdificios(){
 	
 	for(int i = 0; i < this -> cantidadEdificios; i++){
@@ -303,10 +295,7 @@ void Juego::cerrarEdificios(){
 	delete[] this -> listaEdificios;
 }
 
-
-
 //----------------------------------------------------------------------------------------------------------------------------------------------------
-
 
 void Juego::leerUbicaciones(){
 
@@ -339,8 +328,6 @@ void Juego::leerUbicaciones(){
 	archivoUbicaciones.close();
 }
 
-
-
 int Juego::identificarEdificio(string tipoEdficio){
 
 	int posicionEdificio = 0;
@@ -351,8 +338,6 @@ int Juego::identificarEdificio(string tipoEdficio){
 	
 	return posicionEdificio;
 }
-
-
 
 void Juego::cerrarUbicaciones(){
 
@@ -371,10 +356,6 @@ void Juego::cerrarUbicaciones(){
 	cerrarEdificios();
 	archivoUbicaciones.close();
 }
-
-
-
-
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -406,9 +387,6 @@ void Juego::leerMapa(){
 	archivoMapa.close();
 }
 
-
-
-
 bool Juego::verificarCoordenadas(int fila, int columna){
 	
 	if(fila < 0 || fila > mapa->obtenerCantidadFilas()){
@@ -425,23 +403,7 @@ bool Juego::verificarCoordenadas(int fila, int columna){
 	return true;
 }
 
-
-
-
-
-
-
 //----------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
 
 void Juego::guardarYSalir(){
 	

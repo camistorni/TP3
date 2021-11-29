@@ -1,7 +1,7 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include "tipos_edificios.h"
+#include "tiposEdificios.h"
 #include "edificio.h"
 
 

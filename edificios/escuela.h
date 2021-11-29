@@ -1,11 +1,9 @@
 #ifndef ESCUELA_H
 #define ESCUELA_H
 
-#include "tipos_edificios.h"
+#include "tiposEdificios.h"
 #include "edificio.h"
-
-
-const char CARACTER_ESCUELA = 'E';
+#include "constantesEdificios.h"
 
 class Escuela: public TipoEdificio {
 

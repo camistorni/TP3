@@ -1,11 +1,9 @@
-#ifndef PLANTA_ELECTRICA_H
-#define PLANTA_ELECTRICA_H
+#ifndef plantaElectrica_H
+#define plantaElectrica_H
 
-#include "tipos_edificios.h"
+#include "tiposEdificios.h"
 #include "edificio.h"
-
-
-const char CARACTER_PLANTA_ELECTRICA = 'P';
+#include "constantesEdificios.h"
 
 class PlantaElectrica: public TipoEdificio {
 
@@ -15,4 +13,4 @@ class PlantaElectrica: public TipoEdificio {
 		//Postcondiciones: Construye un edificio de tipo planta eléctrica
 		PlantaElectrica (int piedra, int madera, int metal, int cantMaxConstruido, std::string tipoEdificio);
 };
-#endif // PLANTA_ELECTRICA_H
+#endif // plantaElectrica_H

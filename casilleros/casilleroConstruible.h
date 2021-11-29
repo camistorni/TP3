@@ -1,5 +1,5 @@
-#ifndef CASILLERO_CONSTRUIBLE_H
-#define CASILLERO_CONSTRUIBLE_H
+#ifndef casilleroConstruible_H
+#define casilleroConstruible_H
 
 #include "casillero.h"
 
@@ -24,4 +24,4 @@ class CasilleroConstruible: public Casillero{
 };
 
 
-#endif // CASILLERO_CONSTRUIBLE_H
+#endif // casilleroConstruible_H

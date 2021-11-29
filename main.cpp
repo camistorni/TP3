@@ -1,7 +1,7 @@
 #include "materiales.h"
 #include "edificios/edificio.h"
 #include "juego.h"
-#include "edificios/tipos_edificios.h"
+#include "edificios/tiposEdificios.h"
 #include "casilleros/casillero.h"
 
 int main(){

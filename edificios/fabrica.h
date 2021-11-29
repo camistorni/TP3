@@ -1,11 +1,9 @@
 #ifndef FABRICA_H
 #define FABRICA_H
 
-#include "tipos_edificios.h"
+#include "tiposEdificios.h"
 #include "edificio.h"
-
-
-const char CARACTER_FABRICA = 'F';
+#include "constantesEdificios.h"
 
 class Fabrica: public TipoEdificio {
 
