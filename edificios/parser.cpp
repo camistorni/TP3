@@ -2,13 +2,13 @@
 
 #include "parser.h"
 #include "edificio.h"
-#include "tipos_edificios.h"
+#include "tiposEdificios.h"
 #include "aserradero.h"
 #include "escuela.h"
 #include "fabrica.h"
 #include "mina.h"
 #include "obelisco.h"
-#include "planta_electrica.h"
+#include "plantaElectrica.h"
 
 Parser::Parser (std::string* lectura){
     lecturaArchivo = lectura;
@@ -32,7 +32,7 @@ TipoEdificio* Parser::procesarEntrada(){
     else if (this -> tipoEdificio() == "obelisco"){
         tipoEdificio = new Obelisco (piedra(), madera(), metal(), cantMaxConstruido(), this -> tipoEdificio());
     }
-    else if (this -> tipoEdificio() == "planta_electrica"){
+    else if (this -> tipoEdificio() == "plantaElectrica"){
         tipoEdificio = new PlantaElectrica (piedra(), madera(), metal(), cantMaxConstruido(), this -> tipoEdificio());
     }
     else {

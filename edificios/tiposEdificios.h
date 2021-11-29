@@ -1,10 +1,8 @@
-#ifndef TIPOS_EDIFICIOS_H
-#define TIPOS_EDIFICIOS_H
+#ifndef tiposEdificios_H
+#define tiposEdificios_H
 
 #include "edificio.h"
-
-
-const std::string PATH_ENTRADA_EDIFICIOS = "edificios.txt";
+#include "constantesEdificios.h"
 
 class TipoEdificio {
 
@@ -79,4 +77,4 @@ class TipoEdificio {
 };
 
 
-#endif //TIPOS_EDIFICIOS_H
+#endif //tiposEdificios_H

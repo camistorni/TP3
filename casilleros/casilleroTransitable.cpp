@@ -1,10 +1,9 @@
 #include <iostream>
 
 #include "casillero.h"
-#include "casillero_transitable.h"
+#include "casilleroTransitable.h"
 #include "../materiales.h"
-
-const std::string CARACTER_COLOR_CAMINO = "\033[1;42mC\033[0m";
+#include "constantesCasilleros.h"
 
 CasilleroTransitable::CasilleroTransitable(int fila, int columna, char caracter):
 Casillero(fila, columna, caracter){

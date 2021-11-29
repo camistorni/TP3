@@ -1,5 +1,5 @@
 CC = g++ -Wall -Werror -Wconversion
-OBJS = main.o mapa.o materiales.o juego.o aserradero.o edificio.o escuela.o fabrica.o mina.o obelisco.o parser.o planta_electrica.o tipos_edificios.o casillero_construible.o casillero_inaccesible.o casillero_transitable.o casillero.o
+OBJS = main.o mapa.o materiales.o juego.o aserradero.o edificio.o escuela.o fabrica.o mina.o obelisco.o parser.o plantaElectrica.o tiposEdificios.o casilleroConstruible.o casilleroInaccesible.o casilleroTransitable.o casillero.o
 
 andypolis: $(OBJS)
 	$(CC) -o andypolis $(OBJS)
@@ -38,20 +38,20 @@ obelisco.o: edificios/obelisco.cpp
 parser.o: edificios/parser.cpp
 	$(CC) -o parser.o -c edificios/parser.cpp
 
-planta_electrica.o: edificios/planta_electrica.cpp
-	$(CC) -o planta_electrica.o -c edificios/planta_electrica.cpp
+plantaElectrica.o: edificios/plantaElectrica.cpp
+	$(CC) -o plantaElectrica.o -c edificios/plantaElectrica.cpp
 
-tipos_edificios.o: edificios/tipos_edificios.cpp
-	$(CC) -o tipos_edificios.o -c edificios/tipos_edificios.cpp
+tiposEdificios.o: edificios/tiposEdificios.cpp
+	$(CC) -o tiposEdificios.o -c edificios/tiposEdificios.cpp
 
-casillero_construible.o: casilleros/casillero_construible.cpp
-	$(CC) -o casillero_construible.o -c casilleros/casillero_construible.cpp
+casilleroConstruible.o: casilleros/casilleroConstruible.cpp
+	$(CC) -o casilleroConstruible.o -c casilleros/casilleroConstruible.cpp
 
-casillero_inaccesible.o: casilleros/casillero_inaccesible.cpp
-	$(CC) -o casillero_inaccesible.o -c casilleros/casillero_inaccesible.cpp
+casilleroInaccesible.o: casilleros/casilleroInaccesible.cpp
+	$(CC) -o casilleroInaccesible.o -c casilleros/casilleroInaccesible.cpp
 
-casillero_transitable.o: casilleros/casillero_transitable.cpp
-	$(CC) -o casillero_transitable.o -c casilleros/casillero_transitable.cpp
+casilleroTransitable.o: casilleros/casilleroTransitable.cpp
+	$(CC) -o casilleroTransitable.o -c casilleros/casilleroTransitable.cpp
 
 casillero.o: casilleros/casillero.cpp
 	$(CC) -o casillero.o -c casilleros/casillero.cpp

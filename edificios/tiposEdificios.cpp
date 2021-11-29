@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "tipos_edificios.h"
+#include "tiposEdificios.h"
 #include "edificio.h"
 
 using namespace std;

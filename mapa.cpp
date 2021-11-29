@@ -2,15 +2,11 @@
 
 #include "mapa.h"
 #include "casilleros/casillero.h"
-#include "casilleros/casillero_construible.h"
-#include "casilleros/casillero_inaccesible.h"
-#include "casilleros/casillero_transitable.h"
-
+#include "casilleros/casilleroConstruible.h"
+#include "casilleros/casilleroInaccesible.h"
+#include "casilleros/casilleroTransitable.h"
+#include "constantes.h"
 using namespace std;
-
-const char TERRENO = 'T';
-const char LAGO = 'L';
-const char CAMINO = 'C';
 
 Mapa::Mapa(){
 	cantidadFilas = 0;
@@ -82,7 +78,7 @@ void Mapa::identificarContenido (Casillero* casillero){
 		else if (casillero -> obtenerTipo() == "obelisco"){
 			casillero -> establecerCaracterContenido("\033[1;41mO\033[0m");
 		}
-		else if (casillero -> obtenerTipo() == "planta_electrica"){
+		else if (casillero -> obtenerTipo() == "plantaElectrica"){
 			casillero -> establecerCaracterContenido("\033[1;41mP\033[0m");
 		}
 	

@@ -1,11 +1,9 @@
 #ifndef OBELISCO_H
 #define OBELISCO_H
 
-#include "tipos_edificios.h"
+#include "tiposEdificios.h"
 #include "edificio.h"
-
-
-const char CARACTER_OBELISCO = 'O';
+#include "constantesEdificios.h"
 
 class Obelisco: public TipoEdificio {
 

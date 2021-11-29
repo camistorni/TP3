@@ -1,5 +1,5 @@
-#ifndef CASILLERO_INACCESIBLE_H
-#define CASILLERO_INACCESIBLE_H
+#ifndef casilleroInaccesible_H
+#define casilleroInaccesible_H
 
 #include "casillero.h"
 
@@ -18,4 +18,4 @@ public:
 };
 
 
-#endif // CASILLERO_INACCESIBLE_H
+#endif // casilleroInaccesible_H

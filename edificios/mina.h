@@ -1,11 +1,9 @@
 #ifndef MINA_H
 #define MINA_H
 
-#include "tipos_edificios.h"
+#include "tiposEdificios.h"
 #include "edificio.h"
-
-
-const char CARACTER_MINA = 'M';
+#include "constantesEdificios.h"
 
 class Mina: public TipoEdificio {
 

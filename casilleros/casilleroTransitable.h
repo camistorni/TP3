@@ -1,5 +1,5 @@
-#ifndef CASILLERO_TRANSITABLE_H
-#define CASILLERO_TRANSITABLE_H
+#ifndef CASILLEROTRANSITABLE_H
+#define CASILLEROTRANSITABLE_H
 
 #include "casillero.h"
 #include "../materiales.h"
@@ -23,4 +23,4 @@ public:
 };
 
 
-#endif // CASILLERO_TRANSITABLE_H
+#endif // casilleroTransitable_H
