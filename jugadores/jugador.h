@@ -8,7 +8,6 @@ class Jugador {
 	protected:
         std::string nombre;
         Material** materiales;
-        int cantidadMateriales = 0;
         std::string* edificiosContruidos; // para el objetivo, no para el juego en si
         int energia;
 		int* ubicacion; // capaz no hace falta
@@ -47,9 +46,9 @@ class Jugador {
         std::string obtenerNombreMaterial(int posicion);
 
         void establecerMaterial(Material* vectorMateriales);
-        void establecerCantidadMateriales(int cantidadMateriales);
+        void establecerCantidadMateriales(int nuevaCantidadMateriales);
         
-        void agregarMaterial(Material* nuevoMaterial);
+        void agregarMaterial(Material* nuevoMaterial, int cantidadMateriales);
         Material* buscarMaterial(string nombreMaterial);
 
         // Objetivos

@@ -24,53 +24,19 @@ Jugador::Jugador(std::string nombreJugador) {
 
 Jugador::~Jugador() {}
 
-int Jugador::obtenerCantidadMateriales() {
-    return cantidadMateriales;
-}
-
 Material* Jugador::obtenerMateriales() {
     return *materiales;
 }
 
-Material Jugador::obtenerMaterial(int material) {
-    return *materiales[material];
-}
-
-string Jugador::obtenerNombreMaterial(int posicion) {
-    return this -> materiales[posicion] -> obtenerNombreMaterial();
-}
-
-void Jugador::establecerMaterial(Material* vectorMateriales) {
-    for(int i = 0; i < cantidadMateriales++; i++) {
-        *(this -> materiales[i]) = vectorMateriales[i];
-    }
-}
-
-void Jugador::establecerCantidadMateriales(int cantidadMateriales) {
-    this -> cantidadMateriales = cantidadMateriales;
-}
-
-void Jugador::agregarMaterial(Material* nuevoMaterial) {
-    //arreglar
-    Material **vectorMateriales = new Material*[this -> obtenerCantidadMateriales() + 1];
-	if(vectorMateriales == NULL)
-		delete[] vectorMateriales;
-	
-	for(int i = 0; i < this -> obtenerCantidadMateriales(); i++)
-		*vectorMateriales = this -> obtenerMateriales();
-		
-	vectorMateriales[this -> obtenerCantidadMateriales()] = nuevoMaterial;
-	
-	if(this -> obtenerCantidadMateriales() != 0){
-		delete[] this -> obtenerMateriales();
+void Jugador::agregarMaterial(Material* nuevoMaterial, int cantidadMateriales) {
+    Material **vectorMateriales = new Material*[cantidadMateriales + 1];
+    copy(materiales, materiales + cantidadMateriales, vectorMateriales);
+	vectorMateriales[cantidadMateriales] = nuevoMaterial;
+	if(cantidadMateriales != 0){
+		delete[] materiales;
 	}
-	
-	this -> establecerMaterial(*vectorMateriales);
-    int cantidadMateriales = this -> obtenerCantidadMateriales();
-	this -> establecerCantidadMateriales(cantidadMateriales++);
+    materiales = vectorMateriales;
 }
-
-
 
 Material* Jugador::buscarMaterial(string nombreMaterial) {
     Material* material = nullptr;

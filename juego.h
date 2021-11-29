@@ -35,6 +35,8 @@ class Juego{
 		Mapa* mapa;
 		TipoEdificio** listaEdificios;
 		Jugador** jugadores;
+		int jugadorActivo;
+		int cantidadMateriales;
 
 		//int cantidadMateriales, cantidadEdificios, cantidadUbicaciones;
 	

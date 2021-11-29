@@ -27,6 +27,7 @@ Juego::Juego (){
 	jugadoresAux[0] = new Jugador("Jugador 1");
 	jugadoresAux[1] = new Jugador("Jugador 2");
 	jugadores = jugadoresAux;
+	cantidadMateriales = 0;
 	leerMateriales();
 	leerOpcionesEdificios();
 	leerMapa();
@@ -51,40 +52,17 @@ void Juego::leerMateriales(){
 		material = new Material;
 		*material = Material(nombre, stoi(cantidadMaterialJugador1));
 
-		jugadores[0] -> agregarMaterial(material);
+		jugadores[0] -> agregarMaterial(material, cantidadMateriales);
 
 		material = new Material;
 		*material = Material(nombre, stoi(cantidadMaterialJugador2));
 
-		jugadores[1] -> agregarMaterial(material);
-
+		jugadores[1] -> agregarMaterial(material, cantidadMateriales);
+		cantidadMateriales ++;
 	}
 	
 	archivoMateriales.close();
 }
-
-/*
-void Juego::agregarMaterial(Material *nuevoMaterial, int jugador){
-
-	Material **vectorMateriales = new Material*[this -> jugadores[jugador] -> obtenerCantidadMateriales() + 1];
-	if(vectorMateriales == NULL)
-		delete[] vectorMateriales;
-	
-	for(int i = 0; i < this -> jugadores[jugador] -> obtenerCantidadMateriales(); i++)
-		*vectorMateriales = this -> jugadores[jugador] -> obtenerMateriales();
-		
-	vectorMateriales[this -> jugadores[jugador] -> obtenerCantidadMateriales()] = nuevoMaterial;
-	
-	if(this -> jugadores[jugador] -> obtenerCantidadMateriales() != 0){
-		delete[] this -> jugadores[jugador] -> obtenerMateriales();
-	}
-	
-	this -> jugadores[jugador] -> establecerMaterial(*vectorMateriales);
-	this -> jugadores[jugador] -> establecerCantidadMateriales((this -> jugadores[jugador] -> obtenerCantidadMateriales())++);
-}
-*/
-
-
 
 void Juego::cerrarMateriales(){
 
