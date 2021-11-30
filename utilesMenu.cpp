@@ -115,12 +115,18 @@ void mostrarSubmenu() {
 }
 
 void procesarOpcionesSubmenu(Juego* juego, int opcion) {
+	int energiaActual = juego -> obtenerJugador() -> obtenerEnergia();
     switch(opcion) {
         case CONSTRUIR_EDIFICIO_POR_NOMBRE:
-			//string nombreIngresado;
-			cout << "Ingrese el nombre del edificio que desea construir" << endl;
-			//cin >> nombreIngresado;
-			//construirEdificio(nombreIngresado);
+			if(energiaActual < ENERGIA_POR_CONSTRUIR_EDIFICIO_POR_NOMBRE){
+				cout << "Su energia actual es de: " << energiaActual << "no le alcanza para realizar esta accion." << endl;
+				opcion = FINALIZAR_TURNO;
+			}
+			else {
+				juego -> obtenerJugador() -> establecerEnergia(energiaActual - ENERGIA_POR_CONSTRUIR_EDIFICIO_POR_NOMBRE);
+				// CONSTUIR EL EDIFICIO
+				//construirEdificio(nombreIngresado);
+			}
 			break;
 
 		case LISTAR_MIS_EDIFICIOS_CONSTRUIDOS:
@@ -128,19 +134,47 @@ void procesarOpcionesSubmenu(Juego* juego, int opcion) {
 			break;
 
 		case DEMOLER_EDIFICIO_POR_COORDENADA:
-			
+			if(energiaActual < ENERGIA_POR_DEMOLER_EDIFICIO_POR_COORDENADA) {
+				cout << "Su energia actual es de: " << energiaActual << "no le alcanza para realizar esta accion." << endl;
+				opcion = FINALIZAR_TURNO;
+			}
+			else {
+				juego -> obtenerJugador() -> establecerEnergia(energiaActual - ENERGIA_POR_DEMOLER_EDIFICIO_POR_COORDENADA);
+				// demolerEdificioPorCoordenada();
+			}
 			break;
 
 		case ATACAR_EDIFICIO_POR_COORDENADA:
-			
+			if(energiaActual < ENERGIA_POR_ATACAR_EDIFICIO_POR_COORDENADA) {
+				cout << "Su energia actual es de: " << energiaActual << "no le alcanza para realizar esta accion." << endl;
+				opcion = FINALIZAR_TURNO;
+			}
+			else {
+				juego -> obtenerJugador() -> establecerEnergia(energiaActual - ENERGIA_POR_ATACAR_EDIFICIO_POR_COORDENADA);
+				// atacarEdificioPorCoordenada();
+			}
 			break;
 
 		case REPARAR_EDIFICIO_POR_COORDENADA:
-			
+			if(energiaActual < ENERGIA_POR_REPARAR_EDIFICIO_POR_COORDENADA) {
+				cout << "Su energia actual es de: " << energiaActual << "no le alcanza para realizar esta accion." << endl;
+				opcion = FINALIZAR_TURNO;
+			}
+			else {
+				juego -> obtenerJugador() -> establecerEnergia(energiaActual - ENERGIA_POR_REPARAR_EDIFICIO_POR_COORDENADA);
+				// repararEdificioPorCoordenada();
+			}
 			break;
 
 		case COMPRAR_BOMBAS:
-			
+			if(energiaActual < ENERGIA_POR_COMPRAR_BOMBA) {
+				cout << "Su energia actual es de: " << energiaActual << "no le alcanza para realizar esta accion." << endl;
+				opcion = FINALIZAR_TURNO;
+			}
+			else {
+				juego -> obtenerJugador() -> establecerEnergia(energiaActual - ENERGIA_POR_COMPRAR_BOMBA);
+				// comprarBomba();
+			}
 			break;
 
 		case CONSULTAR_COORDENADA:
@@ -156,15 +190,22 @@ void procesarOpcionesSubmenu(Juego* juego, int opcion) {
 			break;
 
 		case RECOLECTAR_RECURSOS_PRODUCIDOS:
-			juego -> recolectarRecursos();
+			if(energiaActual < ENERGIA_POR_RECOLECTAR_RECURSOS_PRODUCIDOS) {
+				cout << "Su energia actual es de: " << energiaActual << "no le alcanza para realizar esta accion." << endl;
+				opcion = FINALIZAR_TURNO;
+			}
+			else {
+				juego -> obtenerJugador() -> establecerEnergia(energiaActual - ENERGIA_POR_RECOLECTAR_RECURSOS_PRODUCIDOS);
+				juego -> recolectarRecursos();
+			}
 			break;
 
 		case MOVERSE_A_UNA_COORDENADA:
             break;
 
 		case FINALIZAR_TURNO:
-			int energiaActual = juego -> obtenerJugador() -> obtenerEnergia();
 			juego -> obtenerJugador() -> establecerEnergia(energiaActual + ENERGIA_POR_FINALIZAR_TURNO);
+			cout << "Su energia ahora es: " << juego -> obtenerJugador() -> obtenerEnergia() << endl;
 			if(juego -> obtenerJugadorActivo() == 0)
 				juego -> establecerJugadorActivo(1);
 			else
