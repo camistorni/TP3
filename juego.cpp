@@ -72,13 +72,12 @@ void Juego::leerMateriales(){
 		
 		material = new Material;
 		*material = Material(nombre, stoi(cantidadMaterialJugador1));
-
 		jugadores[0] -> agregarMaterial(material, cantidadMateriales);
 
 		material = new Material;
 		*material = Material(nombre, stoi(cantidadMaterialJugador2));
-
 		jugadores[1] -> agregarMaterial(material, cantidadMateriales);
+
 		cantidadMateriales ++;
 	}
 	
@@ -90,17 +89,17 @@ void Juego::cerrarMateriales(){
 	ofstream archivoMateriales(PATH_MATERIALES);
 	
 	for(int i = 0; i < this -> jugadores[0] -> obtenerCantidadMateriales(); i++){
-		archivoMateriales << this -> jugadores[0] -> obtenerMaterial(i).obtenerNombreMaterial() << ' ' << 
+		archivoMateriales << this -> jugadores[0] -> obtenerMaterial(i).obtenerNombreMaterial() << " " << 
 		this -> jugadores[0] -> obtenerMaterial(i).obtenerCantidadMaterial() << " " << 
 		this -> jugadores[1] -> obtenerMaterial(i).obtenerCantidadMaterial() << endl;
 
-		//delete this -> jugadores[0] -> obtenerMaterial(i);
-		//delete this -> jugadores[1] -> obtenerMaterial(i);
+		delete this -> jugadores[0] -> obtenerMateriales()[i];
+		delete this -> jugadores[1] -> obtenerMateriales()[i];
 	}
 	
-	//delete[] this -> jugadores[0] -> obtenerMateriales();
-	// this -> jugadores[0] -> establecerMateriales() = nullptr;
-	//delete[] this -> jugadores[1] -> obtenerMateriales();
+	delete[] this -> jugadores[0] -> obtenerMateriales();
+	//this -> jugadores[0] -> establecerMateriales() = nullptr;
+	delete[] this -> jugadores[1] -> obtenerMateriales();
 	
 }
 
@@ -425,7 +424,6 @@ bool Juego::verificarCoordenadas(int fila, int columna){
 		cout << "La columna ingresada está fuera de rango. No se puede construir el edificio" << endl;
 		return false;
 	}
-
 
 	return true;
 }

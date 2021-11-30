@@ -30,6 +30,7 @@ void Mapa::inicializarMapa(int cantFilas, int cantColumnas){
 int Mapa::obtenerCantidadFilas(){
     return cantidadFilas;
 }
+
 int Mapa::obtenerCantidadColumnas(){
     return cantidadColumnas;
 }

@@ -13,7 +13,7 @@ void procesarOpcionesMenu(Juego* juego, int opcion);
 
 // Pre: -
 // Post: Establece el jugador activo entre 0 y 1 para ver quien tiene el primer turno
-void comenzarPartida(Juego* juego);
+void elegirJugador(Juego* juego);
 
 void procesarOpcionesSubmenu(Juego* juego, int opcion);
 

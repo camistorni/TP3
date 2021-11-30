@@ -2,6 +2,8 @@
 #include "utilesMenu.h"
 #include "juego.h"
 #include "opciones.h"
+#include "constantesJugador.h"
+#include "mensajes.h"
 
 void mostrarMenu() {
 
@@ -9,16 +11,32 @@ void mostrarMenu() {
 	cout << TXT_ITALIC << TXT_LIGHT_AQUA_123 << "\t            ¡BIENVENIDOS A ANDYPOLIS!" << END_COLOR << endl << endl;
 	cout << "                        " << TXT_UNDERLINE << "Menú de opciones" << END_COLOR << endl << endl;
 	cout << "            ╔═══════════════════════════════════════╗" << endl;
+	cout << "            ║ 1. Modificar edificio por nombre      ║" << endl;
+	cout << "            ║ 2. Listar todos los edificios         ║" << endl;
+	cout << "            ║ 3. Mostrat mapa                       ║" << endl;
+	cout << "            ║ 4. Comenzar partida                   ║" << endl;
+	cout << "            ║ 5. Guardar y salir                    ║" << endl;
+	cout << "            ╚═══════════════════════════════════════╝" << endl << endl;
+}
+
+void mostrarSubmenu() {
+	cout << endl << endl;
+	cout << TXT_ITALIC << TXT_LIGHT_AQUA_123 << "\t            ¡BIENVENIDOS A ANDYPOLIS!" << END_COLOR << endl << endl;
+	cout << "                        " << TXT_UNDERLINE << "Menú de opciones" << END_COLOR << endl << endl;
+	cout << "            ╔═══════════════════════════════════════╗" << endl;
 	cout << "            ║ 1. Construir edificio por nombre      ║" << endl;
-	cout << "            ║ 2. Listar los edificios construidos   ║" << endl;
-	cout << "            ║ 3. Listar todos los edificios         ║" << endl;
-	cout << "            ║ 4. Demoler un edificio por coordenada ║" << endl;
-	cout << "            ║ 5. Mostrar mapa                       ║" << endl;
-	cout << "            ║ 6. Consultar coordenada               ║" << endl;
-	cout << "            ║ 7. Mostrar inventario                 ║" << endl;
-	cout << "            ║ 8. Recolectar recursos producidos     ║" << endl;
-	cout << "            ║ 9. LLuvia de recursos                 ║" << endl;
-	cout << "            ║ 10. Guardar y salir                   ║" << endl;
+	cout << "            ║ 2. Listar mis edificios construidos   ║" << endl;
+	cout << "            ║ 3. Demoler un edificio por coordenada ║" << endl;
+	cout << "            ║ 4. Atacar un edificio por coordenada  ║" << endl;
+	cout << "            ║ 5. Reparar un edificio por coordenada ║" << endl;
+	cout << "            ║ 6. Comprar bombas                     ║" << endl;
+	cout << "            ║ 7. Consultar coordenada               ║" << endl;
+	cout << "            ║ 8. Mostrar inventario                 ║" << endl;
+	cout << "            ║ 9. Mostrar objetivos                  ║" << endl;
+	cout << "            ║ 10. Recolectar recursos producidos    ║" << endl;
+	cout << "            ║ 11. Moverse a una coordenada          ║" << endl;
+	cout << "            ║ 12. Finalizar turno                   ║" << endl;
+	cout << "            ║ 13. Guardar y salir                   ║" << endl;
 	cout << "            ╚═══════════════════════════════════════╝" << endl << endl;
 }
 
@@ -105,19 +123,11 @@ void procesarOpcionesMenu(Juego* juego, int opcion) {
             break;
 
         case MOSTRAR_MAPA:
-            //mostrarMapa();
+			juego -> obtenerMapa() -> mostrarMapa();
             break;
 
         case COMENZAR_PARTIDA:
-			int fila = -1, columna = -1;
-			// Se hace dos veces, una para cada jugador, hay que ver como indicar de quien es cada posicion
-			// Tambien hay que chequear si las coordenadas son validas o volver a pedirlas
-			juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
-			juego -> verificarCoordenadas(fila, columna);
-			juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
-			juego -> verificarCoordenadas(fila, columna);
-
-            comenzarPartida(juego);
+			comenzarPartida(juego);
             break;
 
         case GUARDAR_Y_SALIR:
@@ -125,13 +135,49 @@ void procesarOpcionesMenu(Juego* juego, int opcion) {
             break;
 
         default:
-            cout << "ERROR" << endl;
+            cout << MJE_ERROR_OPCION << endl;
             break;
 	}
 }
 
 void comenzarPartida(Juego* juego) {
+
+	seleccionarJugador(juego);
+	solicitarCoordenadas(juego);
+
+	if(juego -> obtenerJugadorActivo() == 0)
+		juego -> establecerJugadorActivo(1);
+	else 
+		juego -> establecerJugadorActivo(0);
+
+	solicitarCoordenadas(juego);
+
+	elegirJugador(juego);
+}
+
+void elegirJugador(Juego* juego) {
 	juego -> establecerJugadorActivo(rand() % 2);
+}
+
+void seleccionarJugador(Juego* juego) {
+	int opcion;
+	cout << "¿Que jugador desea ser? Seleccione 1 o 2" << endl;
+	cin >> opcion;
+	while(opcion != 1 && opcion != 2) {
+		cout << "La opcion ingresada es incorrecta, por favor ingrese nuevamente." << endl;
+		cin >> opcion;
+	}
+	juego -> establecerJugadorActivo(opcion - 1);
+}
+
+void solicitarCoordenadas(Juego* juego) {
+	int fila = -1, columna = -1;
+
+	juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
+	while(juego -> verificarCoordenadas(fila, columna) == false)
+		juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
+	
+	juego -> obtenerJugador() -> establecerCoordenadas(fila, columna);
 }
 
 void procesarOpcionesSubmenu(Juego* juego, int opcion) {
@@ -143,28 +189,28 @@ void procesarOpcionesSubmenu(Juego* juego, int opcion) {
 			//construirEdificio(nombreIngresado);
 			break;
 
-		case LISTAR_EDIFICIOS_CONSTRUIDOS:
-			juego -> listarEdificiosConstruidos();
+		case LISTAR_MIS_EDIFICIOS_CONSTRUIDOS:
+			//juego -> listarEdificiosConstruidos();
 			break;
 
 		case DEMOLER_EDIFICIO_POR_COORDENADA:
-			//listarEdificios();
+			
 			break;
 
 		case ATACAR_EDIFICIO_POR_COORDENADA:
-			//demolerEdificioCoordenada();
+			
 			break;
 
 		case REPARAR_EDIFICIO_POR_COORDENADA:
-			//mostrarMapa();
+			
 			break;
 
 		case COMPRAR_BOMBAS:
-			//comprarBombas();
+			
 			break;
 
 		case CONSULTAR_COORDENADA:
-            //consultarCoordenada();
+			consultarCoordenada(juego);
 			break;
 
 		case MOSTRAR_INVENTARIO:
@@ -172,6 +218,7 @@ void procesarOpcionesSubmenu(Juego* juego, int opcion) {
 			break;
 
 		case MOSTRAR_OBJETIVOS:
+			mostrarObjetivos(juego);
 			break;
 
 		case RECOLECTAR_RECURSOS_PRODUCIDOS:
@@ -198,11 +245,35 @@ void procesarOpcionesSubmenu(Juego* juego, int opcion) {
 			break;
 
 		default:
-			cout << "ERROR" << endl;
+			cout << MJE_ERROR_OPCION << endl;
 			break;
     }
 }       
-        
+
+void mostrarObjetivos(Juego* juego) {
+	int* objetivos;
+	objetivos = juego -> obtenerJugador() -> obtenerObjetivos();
+
+	for(int i = 0; i < CANTIDAD_OBJETIVOS; i++)
+		imprimirObjetivos(i);
+}
+
+void imprimirObjetivos(int objetivo) {
+	static string objetivoActual[] = {
+		MJE_COMPRAR_ANDYPOLIS,
+		MJE_EDAD_DE_PIEDRA,
+		MJE_BOMBARDERO,
+		MJE_ENERGETICO,
+		MJE_LETRADO,
+		MJE_MINERO,
+		MJE_CANSADO,
+		MJE_CONSTRUCTOR,
+		MJE_ARMADO,
+		MJE_EXTREMISTA
+	}
+	cout << objetivoActual[objetivo] << endl;
+}
+
 void procesarOpciones(Juego* juego, int opcion) {
 	
 	string nombreIngresado;
@@ -228,11 +299,15 @@ void demolerEdificioCoordenada(Juego* juego) {
 	}
 }
 */
-/*
+
 void consultarCoordenada(Juego* juego) {
-	int fila,columna;
-	mapa -> pedirCoordenada(fila,columna);
-	mapa -> obtenerCasillero(fila, columna) -> responder();
+	int fila = -1, columna = -1;
+
+	juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
+	while(juego -> verificarCoordenadas(fila, columna) == false)
+		juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
+	
+	juego -> obtenerMapa() -> obtenerCasillero(fila, columna) -> responder();
 }
-*/
+
 

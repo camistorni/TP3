@@ -1,4 +1,5 @@
 #include "jugador.h"
+#include "constantesJugador.h"
 
 using namespace std;
 
@@ -30,12 +31,21 @@ int Jugador::obtenerEnergia() {
     return energia;
 }
 
-void Jugador::establecerEnergia(int cantidadEnergia) {
-    energia = cantidadEnergia;
+int* Jugador::obtenerObjetivos() {
+    return objetivos;
 }
 
 Material** Jugador::obtenerMateriales() {
     return materiales;
+}
+
+void Jugador::establecerEnergia(int cantidadEnergia) {
+    energia = cantidadEnergia;
+}
+
+void Jugador::establecerCoordenadas(int fila, int columna) {
+    this->ubicacion[0] = fila;
+    this->ubicacion[1] = columna;
 }
 
 void Jugador::agregarMaterial(Material* nuevoMaterial, int cantidadMateriales) {
@@ -61,28 +71,51 @@ Material* Jugador::buscarMaterial(string nombreMaterial) {
 bool Jugador::comprarAndypolis() {
     return comprarAndypolisCumplido || (comprarAndypolisCumplido = (andycoinsRecolectadas >= 100000));
 }
+
 bool Jugador::edadDePiedra() {
     return edadDePiedraCumplido || (edadDePiedraCumplido = (buscarMaterial("piedra") -> obtenerCantidadMaterial() >= 50000));
 }
+
 bool Jugador::bombardero() {
     return bombarderoCumplido || (bombarderoCumplido = (bombasUsadas >= 5));
 }
+
 bool Jugador::energetico() {
     return energeticoCumplido || (energeticoCumplido = (energia == 100));
 }
+
 bool Jugador::minero() {
     return mineroCumplido || (mineroCumplido = (minaConstruida && minaOroConstruida));
 }
+
 bool Jugador::cansado() {
     return cansadoCumplido || (cansadoCumplido = (energia == 0));
 }
+
 bool Jugador::constructor() {
     return constructorCumplido || 
         (constructorCumplido = (minaConstruida && aserraderoConstruido && fabricaConstruida && escuelaConstruida && plantaElectricaConstruida && minaOroConstruida));
 }
+
 bool Jugador::armado() {
     return armadoCumplido || (armadoCumplido = (buscarMaterial("bomba") -> obtenerCantidadMaterial() >= 10));
 }
+
 bool Jugador::extremista() {
     return extremistaCumplido || (extremistaCumplido = (bombasCompradas >= 500));
 }
+
+void Jugador::seleccionarObjetivos() {
+    int objetivosNuevos[3];
+    objetivosNuevos[0] = rand() % 10;
+    objetivosNuevos[1] = rand() % 10;
+    while(objetivosNuevos[1] == objetivosNuevos[0])
+        objetivosNuevos[1] = rand() % 10;
+    objetivosNuevos[2] = rand() % 10;
+    while(objetivosNuevos[2] == objetivosNuevos[0] || objetivosNuevos[2] == objetivosNuevos[1])
+        objetivosNuevos[2] = rand() % 10;
+
+    for(int i = 0; i < CANTIDAD_OBJETIVOS; i++)
+        objetivos[i] = objetivosNuevos[i];
+}
+

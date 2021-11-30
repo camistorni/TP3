@@ -41,14 +41,17 @@ class Jugador {
         ~Jugador();
 
         int obtenerEnergia();
-        void establecerEnergia(int cantidadEnergia);
-
         int obtenerCantidadMateriales();
+        int* obtenerObjetivos();
         Material** obtenerMateriales();
         Material obtenerMaterial(int material);
 
+        void establecerEnergia(int cantidadEnergia);
+        void establecerCoordenadas(int fila, int columna);
         void establecerMaterial(Material* vectorMateriales);
         void establecerCantidadMateriales(int cantidadMateriales);
+
+        void seleccionarObjetivos();
 
         //Precondiciones: Se tiene que haber leído bien el archivo de materiales
 		//Postcondiciones: Agrega el material leído a la lista de materiales disponibles
@@ -67,6 +70,8 @@ class Jugador {
         bool constructor();
         bool armado();
         bool extremista();
+
+        
 };
 
 

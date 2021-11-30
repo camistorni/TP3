@@ -35,5 +35,4 @@ const char TERRENO = 'T';
 // utilesMenu.h
 const int ENERGIA_POR_FINALIZAR_TURNO = 20;
 
-
 #endif
