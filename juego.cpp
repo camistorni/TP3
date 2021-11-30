@@ -413,6 +413,9 @@ void Juego::leerMapa(){
 	archivoMapa.close();
 }
 
+// Falta verificar si hay algo construido para ver si se puede construir un edificio, colocar un material, o 
+// posicionar un jugador
+
 bool Juego::verificarCoordenadas(int fila, int columna){
 	
 	if(fila < 0 || fila > mapa->obtenerCantidadFilas()){

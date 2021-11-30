@@ -5,6 +5,9 @@
 #include "constantesJugador.h"
 #include "mensajes.h"
 
+
+// *************** MENU ***************
+
 void mostrarMenu() {
 
 	cout << endl << endl;
@@ -17,99 +20,6 @@ void mostrarMenu() {
 	cout << "            ║ 4. Comenzar partida                   ║" << endl;
 	cout << "            ║ 5. Guardar y salir                    ║" << endl;
 	cout << "            ╚═══════════════════════════════════════╝" << endl << endl;
-}
-
-void mostrarSubmenu() {
-	cout << endl << endl;
-	cout << TXT_ITALIC << TXT_LIGHT_AQUA_123 << "\t            ¡BIENVENIDOS A ANDYPOLIS!" << END_COLOR << endl << endl;
-	cout << "                        " << TXT_UNDERLINE << "Menú de opciones" << END_COLOR << endl << endl;
-	cout << "            ╔═══════════════════════════════════════╗" << endl;
-	cout << "            ║ 1. Construir edificio por nombre      ║" << endl;
-	cout << "            ║ 2. Listar mis edificios construidos   ║" << endl;
-	cout << "            ║ 3. Demoler un edificio por coordenada ║" << endl;
-	cout << "            ║ 4. Atacar un edificio por coordenada  ║" << endl;
-	cout << "            ║ 5. Reparar un edificio por coordenada ║" << endl;
-	cout << "            ║ 6. Comprar bombas                     ║" << endl;
-	cout << "            ║ 7. Consultar coordenada               ║" << endl;
-	cout << "            ║ 8. Mostrar inventario                 ║" << endl;
-	cout << "            ║ 9. Mostrar objetivos                  ║" << endl;
-	cout << "            ║ 10. Recolectar recursos producidos    ║" << endl;
-	cout << "            ║ 11. Moverse a una coordenada          ║" << endl;
-	cout << "            ║ 12. Finalizar turno                   ║" << endl;
-	cout << "            ║ 13. Guardar y salir                   ║" << endl;
-	cout << "            ╚═══════════════════════════════════════╝" << endl << endl;
-}
-
-void mostrarInventario(Juego* juego) {
-
-	cout << endl << endl;
-	cout << "Lista de materiales propios:" << endl << endl;
-	
-	cout << '\t' << " ═══════════════════════════════ " << endl;
-	cout << '\t' << " Materiales        Cantidades   " << endl;
-	cout << '\t' << " ═══════════════════════════════ " << endl;
-
-	for(int i = 0; i < juego -> obtenerCantidadMateriales(); i++) {
-		cout << '\t' << juego -> obtenerJugador() -> obtenerMateriales()[i] -> obtenerNombreMaterial() << ":\t" << 
-		'\t' << juego -> obtenerJugador() -> obtenerMateriales()[i] -> obtenerNombreMaterial() << endl;
-	}
-}
-
-void construirEdificio(Juego* juego, string nombreIngresado) {
-	int piedraNecesaria, maderaNecesaria, metalNecesario, construidos, cantidadMax;
-	//Verifica que el edificio ingresado exista
-	if(!juego -> verificarEdificio(nombreIngresado, &piedraNecesaria, &maderaNecesaria, &metalNecesario, &construidos, &cantidadMax)){
-		std::cout << "El edificio '" << nombreIngresado << "' no existe" << endl << endl;
-		return;
-	}
-	
-	//Verifica que se tengan todos los materiales
-	if(!juego -> verificarMateriales(nombreIngresado, piedraNecesaria, maderaNecesaria, metalNecesario, construidos, cantidadMax))
-		return;
-	
-	int fila, columna;
-	cout << "¿Donde desea construir su " << nombreIngresado << "? Ingrese la primer coordenada: " << endl;
-	cin >> fila;
-	cout << "Ingrese la segunda coordenada: " << endl;
-	cin >> columna;
-	
-	if(juego -> verificarCoordenadas(fila, columna))
-		return;
-	
-	char respuesta;
-	bool done = false;
-	
-	std::cout << "Todo listo para construir " << nombreIngresado << ", ¿Está seguro que quiere seguir? [y/n]: ";
-	cin >> respuesta;
-	Edificio* edificio;
-	int posicionEdificio;
-	while (respuesta != 'y' && respuesta != 'n') {
-		cout << "Ingrese una opción válida: ";
-		cin >> respuesta;
-	}
-	if (respuesta == 'y') {
-		cout << "El edificio ha sido construido correctamente" << endl << endl;
-		edificio  = new Edificio (fila , columna);
-		juego -> obtenerEdificio(nombreIngresado) -> agregarEdificioConstruido(); // hay que hacer una lista de edificios construdidos para cada jugador
-		//mapa -> obtenerCasillero(fila, columna) -> establecerTipo(nombreIngresado); //agregar metodo de devolver mapa
-		juego -> obtenerJugador() -> buscarMaterial("piedra") -> modificarCantidad(piedraNecesaria);
-		juego -> obtenerJugador() -> buscarMaterial("madera") -> modificarCantidad(piedraNecesaria);
-		juego -> obtenerJugador() -> buscarMaterial("metal") -> modificarCantidad(piedraNecesaria);
-	}
-}
-
-int pedirOpcion() {
-	
-	int opcionElegida = 0;
-	cout << "Ingrese el número de la opción elegida: ";
-	cin >> opcionElegida;
-	
-	while(opcionElegida < 1 || opcionElegida > 10){
-		cout << "La opción elegida no es válida" << endl << "Ingrese una opción válida: ";
-		cin >> opcionElegida;
-	}
-	
-	return opcionElegida;
 }
 
 void procesarOpcionesMenu(Juego* juego, int opcion) {
@@ -178,6 +88,30 @@ void solicitarCoordenadas(Juego* juego) {
 		juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
 	
 	juego -> obtenerJugador() -> establecerCoordenadas(fila, columna);
+}
+
+
+// *************** SUBMENU ***************
+
+void mostrarSubmenu() {
+	cout << endl << endl;
+	cout << TXT_ITALIC << TXT_LIGHT_AQUA_123 << "\t            ¡BIENVENIDOS A ANDYPOLIS!" << END_COLOR << endl << endl;
+	cout << "                        " << TXT_UNDERLINE << "Menú de opciones" << END_COLOR << endl << endl;
+	cout << "            ╔═══════════════════════════════════════╗" << endl;
+	cout << "            ║ 1. Construir edificio por nombre      ║" << endl;
+	cout << "            ║ 2. Listar mis edificios construidos   ║" << endl;
+	cout << "            ║ 3. Demoler un edificio por coordenada ║" << endl;
+	cout << "            ║ 4. Atacar un edificio por coordenada  ║" << endl;
+	cout << "            ║ 5. Reparar un edificio por coordenada ║" << endl;
+	cout << "            ║ 6. Comprar bombas                     ║" << endl;
+	cout << "            ║ 7. Consultar coordenada               ║" << endl;
+	cout << "            ║ 8. Mostrar inventario                 ║" << endl;
+	cout << "            ║ 9. Mostrar objetivos                  ║" << endl;
+	cout << "            ║ 10. Recolectar recursos producidos    ║" << endl;
+	cout << "            ║ 11. Moverse a una coordenada          ║" << endl;
+	cout << "            ║ 12. Finalizar turno                   ║" << endl;
+	cout << "            ║ 13. Guardar y salir                   ║" << endl;
+	cout << "            ╚═══════════════════════════════════════╝" << endl << endl;
 }
 
 void procesarOpcionesSubmenu(Juego* juego, int opcion) {
@@ -274,6 +208,58 @@ void imprimirObjetivos(int objetivo) {
 	cout << objetivoActual[objetivo] << endl;
 }
 
+void mostrarInventario(Juego* juego) {
+
+	cout << endl << endl;
+	cout << "Lista de materiales propios:" << endl << endl;
+	
+	cout << '\t' << " ═══════════════════════════════ " << endl;
+	cout << '\t' << " Materiales        Cantidades   " << endl;
+	cout << '\t' << " ═══════════════════════════════ " << endl;
+
+	for(int i = 0; i < juego -> obtenerCantidadMateriales(); i++) {
+		cout << '\t' << juego -> obtenerJugador() -> obtenerMateriales()[i] -> obtenerNombreMaterial() << ":\t" << 
+		'\t' << juego -> obtenerJugador() -> obtenerMateriales()[i] -> obtenerNombreMaterial() << endl;
+	}
+}
+
+void consultarCoordenada(Juego* juego) {
+	int fila = -1, columna = -1;
+
+	juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
+	while(juego -> verificarCoordenadas(fila, columna) == false)
+		juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
+	
+	juego -> obtenerMapa() -> obtenerCasillero(fila, columna) -> responder();
+}
+
+
+// *************** GENERALES ***************
+
+void pedirOpcion(int* opcion) {
+	cout << "Ingrese el numero de la accion que desea realizar." << endl;
+	cin >> *opcion;
+}
+
+void validarOpcionSeleccionada(int& opcionSeleccionada) {
+	bool opcionValida = false;
+	while(opcionValida == false) {
+		if(cin.fail()) {
+			cin.clear();
+			cin.ignore(sizeof(int), '\n');
+			cout << "La opcion elegida no es una opcion valida, por favor seleccione otra opcion" << endl;
+			pedirOpcion(&opcionSeleccionada);
+		}
+		else if(opcionSeleccionada <= 0 || opcionSeleccionada > 13) {
+			cout << "La opcion elegida no es una opcion valida, por favor seleccione otra opcion" << endl;
+			pedirOpcion(&opcionSeleccionada);
+		}
+		else 
+			opcionValida = true;
+	}
+	
+}
+
 void procesarOpciones(Juego* juego, int opcion) {
 	
 	string nombreIngresado;
@@ -283,6 +269,50 @@ void procesarOpciones(Juego* juego, int opcion) {
     else
         procesarOpcionesSubmenu(juego, opcion);
 }
+
+void construirEdificio(Juego* juego, string nombreIngresado) {
+	int piedraNecesaria, maderaNecesaria, metalNecesario, construidos, cantidadMax;
+	//Verifica que el edificio ingresado exista
+	if(!juego -> verificarEdificio(nombreIngresado, &piedraNecesaria, &maderaNecesaria, &metalNecesario, &construidos, &cantidadMax)){
+		std::cout << "El edificio '" << nombreIngresado << "' no existe" << endl << endl;
+		return;
+	}
+	
+	//Verifica que se tengan todos los materiales
+	if(!juego -> verificarMateriales(nombreIngresado, piedraNecesaria, maderaNecesaria, metalNecesario, construidos, cantidadMax))
+		return;
+	
+	int fila, columna;
+	cout << "¿Donde desea construir su " << nombreIngresado << "? Ingrese la primer coordenada: " << endl;
+	cin >> fila;
+	cout << "Ingrese la segunda coordenada: " << endl;
+	cin >> columna;
+	
+	if(juego -> verificarCoordenadas(fila, columna))
+		return;
+	
+	char respuesta;
+	bool done = false;
+	
+	std::cout << "Todo listo para construir " << nombreIngresado << ", ¿Está seguro que quiere seguir? [y/n]: ";
+	cin >> respuesta;
+	Edificio* edificio;
+	int posicionEdificio;
+	while (respuesta != 'y' && respuesta != 'n') {
+		cout << "Ingrese una opción válida: ";
+		cin >> respuesta;
+	}
+	if (respuesta == 'y') {
+		cout << "El edificio ha sido construido correctamente" << endl << endl;
+		edificio  = new Edificio (fila , columna);
+		juego -> obtenerEdificio(nombreIngresado) -> agregarEdificioConstruido(); // hay que hacer una lista de edificios construdidos para cada jugador
+		//mapa -> obtenerCasillero(fila, columna) -> establecerTipo(nombreIngresado); //agregar metodo de devolver mapa
+		juego -> obtenerJugador() -> buscarMaterial("piedra") -> modificarCantidad(piedraNecesaria);
+		juego -> obtenerJugador() -> buscarMaterial("madera") -> modificarCantidad(piedraNecesaria);
+		juego -> obtenerJugador() -> buscarMaterial("metal") -> modificarCantidad(piedraNecesaria);
+	}
+}
+
 
 /*
 void demolerEdificioCoordenada(Juego* juego) {
@@ -299,15 +329,5 @@ void demolerEdificioCoordenada(Juego* juego) {
 	}
 }
 */
-
-void consultarCoordenada(Juego* juego) {
-	int fila = -1, columna = -1;
-
-	juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
-	while(juego -> verificarCoordenadas(fila, columna) == false)
-		juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
-	
-	juego -> obtenerMapa() -> obtenerCasillero(fila, columna) -> responder();
-}
 
 
