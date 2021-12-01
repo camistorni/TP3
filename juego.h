@@ -29,6 +29,7 @@ class Juego{
 
 		//Costructor 
 		Juego();
+		~Juego();
 
 		int obtenerCantidadMateriales();
 		Jugador* obtenerJugador();

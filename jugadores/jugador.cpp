@@ -5,13 +5,9 @@ using namespace std;
 
 Jugador::Jugador(std::string nombreJugador) {
     nombre = nombreJugador;
-    edificiosContruidos; new std::string * [0];
+    edificiosContruidos = *new std::string * [0];
     energia = 50;
     andycoinsRecolectadas = bombasCompradas = bombasUsadas = 0;
-
-    int objetivosAux[10]={0,1,2,3,4,5,6,7,8,9};
-  
-
     comprarAndypolisCumplido = 
     edadDePiedraCumplido = 
     bombarderoCumplido =
@@ -22,6 +18,7 @@ Jugador::Jugador(std::string nombreJugador) {
     constructorCumplido =
     armadoCumplido = 
     extremistaCumplido = false;
+    seleccionarObjetivos();
 };
 
 

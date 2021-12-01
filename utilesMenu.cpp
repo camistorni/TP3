@@ -2,8 +2,9 @@
 #include "utilesMenu.h"
 #include "juego.h"
 #include "opciones.h"
-#include "constantesJugador.h"
+#include "jugadores/constantesJugador.h"
 #include "mensajes.h"
+using namespace std;
 
 
 // *************** MENU ***************
@@ -24,24 +25,23 @@ void mostrarMenu() {
 
 void procesarOpcionesMenu(Juego* juego, int opcion) {
     switch(opcion) {
-        case MODIFICAR_EDIFICIO_POR_NOMBRE:
+        case MENU_MODIFICAR_EDIFICIO_POR_NOMBRE:
             //modificarEdificioPorNombre();
             break;
 
-        case LISTAR_EDIFICIOS:
+        case MENU_LISTAR_EDIFICIOS:
         	juego -> listarEdificios();
             break;
 
-        case MOSTRAR_MAPA:
+        case MENU_MOSTRAR_MAPA:
 			juego -> obtenerMapa() -> mostrarMapa();
             break;
 
-        case COMENZAR_PARTIDA:
+        case MENU_COMENZAR_PARTIDA:
 			comenzarPartida(juego);
             break;
 
-        case GUARDAR_Y_SALIR:
-            opcion = SALIR;
+        case MENU_GUARDAR_Y_SALIR:
             break;
 
         default:
@@ -117,10 +117,9 @@ void mostrarSubmenu() {
 void procesarOpcionesSubmenu(Juego* juego, int opcion) {
 	int energiaActual = juego -> obtenerJugador() -> obtenerEnergia();
     switch(opcion) {
-        case CONSTRUIR_EDIFICIO_POR_NOMBRE:
+        case JUGADOR_CONSTRUIR_EDIFICIO_POR_NOMBRE:
 			if(energiaActual < ENERGIA_POR_CONSTRUIR_EDIFICIO_POR_NOMBRE){
 				cout << "Su energia actual es de: " << energiaActual << "no le alcanza para realizar esta accion." << endl;
-				opcion = FINALIZAR_TURNO;
 			}
 			else {
 				juego -> obtenerJugador() -> establecerEnergia(energiaActual - ENERGIA_POR_CONSTRUIR_EDIFICIO_POR_NOMBRE);
@@ -129,14 +128,13 @@ void procesarOpcionesSubmenu(Juego* juego, int opcion) {
 			}
 			break;
 
-		case LISTAR_MIS_EDIFICIOS_CONSTRUIDOS:
+		case JUGADOR_LISTAR_MIS_EDIFICIOS_CONSTRUIDOS:
 			//juego -> listarEdificiosConstruidos();
 			break;
 
-		case DEMOLER_EDIFICIO_POR_COORDENADA:
+		case JUGADOR_DEMOLER_EDIFICIO_POR_COORDENADA:
 			if(energiaActual < ENERGIA_POR_DEMOLER_EDIFICIO_POR_COORDENADA) {
 				cout << "Su energia actual es de: " << energiaActual << "no le alcanza para realizar esta accion." << endl;
-				opcion = FINALIZAR_TURNO;
 			}
 			else {
 				juego -> obtenerJugador() -> establecerEnergia(energiaActual - ENERGIA_POR_DEMOLER_EDIFICIO_POR_COORDENADA);
@@ -144,10 +142,9 @@ void procesarOpcionesSubmenu(Juego* juego, int opcion) {
 			}
 			break;
 
-		case ATACAR_EDIFICIO_POR_COORDENADA:
+		case JUGADOR_ATACAR_EDIFICIO_POR_COORDENADA:
 			if(energiaActual < ENERGIA_POR_ATACAR_EDIFICIO_POR_COORDENADA) {
 				cout << "Su energia actual es de: " << energiaActual << "no le alcanza para realizar esta accion." << endl;
-				opcion = FINALIZAR_TURNO;
 			}
 			else {
 				juego -> obtenerJugador() -> establecerEnergia(energiaActual - ENERGIA_POR_ATACAR_EDIFICIO_POR_COORDENADA);
@@ -155,10 +152,9 @@ void procesarOpcionesSubmenu(Juego* juego, int opcion) {
 			}
 			break;
 
-		case REPARAR_EDIFICIO_POR_COORDENADA:
+		case JUGADOR_REPARAR_EDIFICIO_POR_COORDENADA:
 			if(energiaActual < ENERGIA_POR_REPARAR_EDIFICIO_POR_COORDENADA) {
 				cout << "Su energia actual es de: " << energiaActual << "no le alcanza para realizar esta accion." << endl;
-				opcion = FINALIZAR_TURNO;
 			}
 			else {
 				juego -> obtenerJugador() -> establecerEnergia(energiaActual - ENERGIA_POR_REPARAR_EDIFICIO_POR_COORDENADA);
@@ -166,10 +162,9 @@ void procesarOpcionesSubmenu(Juego* juego, int opcion) {
 			}
 			break;
 
-		case COMPRAR_BOMBAS:
+		case JUGADOR_COMPRAR_BOMBAS:
 			if(energiaActual < ENERGIA_POR_COMPRAR_BOMBA) {
 				cout << "Su energia actual es de: " << energiaActual << "no le alcanza para realizar esta accion." << endl;
-				opcion = FINALIZAR_TURNO;
 			}
 			else {
 				juego -> obtenerJugador() -> establecerEnergia(energiaActual - ENERGIA_POR_COMPRAR_BOMBA);
@@ -177,22 +172,21 @@ void procesarOpcionesSubmenu(Juego* juego, int opcion) {
 			}
 			break;
 
-		case CONSULTAR_COORDENADA:
+		case JUGADOR_CONSULTAR_COORDENADA:
 			consultarCoordenada(juego);
 			break;
 
-		case MOSTRAR_INVENTARIO:
+		case JUGADOR_MOSTRAR_INVENTARIO:
 			mostrarInventario(juego);
 			break;
 
-		case MOSTRAR_OBJETIVOS:
+		case JUGADOR_MOSTRAR_OBJETIVOS:
 			mostrarObjetivos(juego);
 			break;
 
-		case RECOLECTAR_RECURSOS_PRODUCIDOS:
+		case JUGADOR_RECOLECTAR_RECURSOS_PRODUCIDOS:
 			if(energiaActual < ENERGIA_POR_RECOLECTAR_RECURSOS_PRODUCIDOS) {
 				cout << "Su energia actual es de: " << energiaActual << "no le alcanza para realizar esta accion." << endl;
-				opcion = FINALIZAR_TURNO;
 			}
 			else {
 				juego -> obtenerJugador() -> establecerEnergia(energiaActual - ENERGIA_POR_RECOLECTAR_RECURSOS_PRODUCIDOS);
@@ -200,23 +194,15 @@ void procesarOpcionesSubmenu(Juego* juego, int opcion) {
 			}
 			break;
 
-		case MOVERSE_A_UNA_COORDENADA:
+		case JUGADOR_MOVERSE_A_UNA_COORDENADA:
             break;
 
-		case FINALIZAR_TURNO:
-			juego -> obtenerJugador() -> establecerEnergia(energiaActual + ENERGIA_POR_FINALIZAR_TURNO);
+		case JUGADOR_FINALIZAR_TURNO:
+			juego -> obtenerJugador() -> establecerEnergia((energiaActual + ENERGIA_POR_FINALIZAR_TURNO)%101);
 			cout << "Su energia ahora es: " << juego -> obtenerJugador() -> obtenerEnergia() << endl;
-			if(juego -> obtenerJugadorActivo() == 0)
-				juego -> establecerJugadorActivo(1);
-			else
-				juego -> establecerJugadorActivo(0);
-			break;
+			juego -> establecerJugadorActivo(juego -> obtenerJugadorActivo() ? 0 : 1);
 
-		case GUARDAR_Y_SALIR:
-			opcion = SALIR;
-			break;
-
-		case SALIR:
+		case JUGADOR_GUARDAR_Y_SALIR:
 			break;
 
 		default:
@@ -226,27 +212,9 @@ void procesarOpcionesSubmenu(Juego* juego, int opcion) {
 }       
 
 void mostrarObjetivos(Juego* juego) {
-	int* objetivos;
-	objetivos = juego -> obtenerJugador() -> obtenerObjetivos();
-
+	int* objetivosJugador = juego -> obtenerJugador() -> obtenerObjetivos();
 	for(int i = 0; i < CANTIDAD_OBJETIVOS; i++)
-		imprimirObjetivos(i);
-}
-
-void imprimirObjetivos(int objetivo) {
-	static string objetivoActual[] = {
-		MJE_COMPRAR_ANDYPOLIS,
-		MJE_EDAD_DE_PIEDRA,
-		MJE_BOMBARDERO,
-		MJE_ENERGETICO,
-		MJE_LETRADO,
-		MJE_MINERO,
-		MJE_CANSADO,
-		MJE_CONSTRUCTOR,
-		MJE_ARMADO,
-		MJE_EXTREMISTA
-	}
-	cout << objetivoActual[objetivo] << endl;
+		cout << OBJETIVOS[objetivosJugador[i]] << endl;
 }
 
 void mostrarInventario(Juego* juego) {
@@ -333,19 +301,17 @@ void construirEdificio(Juego* juego, string nombreIngresado) {
 		return;
 	
 	char respuesta;
-	bool done = false;
 	
 	std::cout << "Todo listo para construir " << nombreIngresado << ", ¿Está seguro que quiere seguir? [y/n]: ";
 	cin >> respuesta;
-	Edificio* edificio;
-	int posicionEdificio;
+	//Edificio* edificio;
 	while (respuesta != 'y' && respuesta != 'n') {
 		cout << "Ingrese una opción válida: ";
 		cin >> respuesta;
 	}
 	if (respuesta == 'y') {
 		cout << "El edificio ha sido construido correctamente" << endl << endl;
-		edificio  = new Edificio (fila , columna);
+		//edificio  = new Edificio (fila , columna);
 		juego -> obtenerEdificio(nombreIngresado) -> agregarEdificioConstruido(); // hay que hacer una lista de edificios construdidos para cada jugador
 		//mapa -> obtenerCasillero(fila, columna) -> establecerTipo(nombreIngresado); //agregar metodo de devolver mapa
 		juego -> obtenerJugador() -> buscarMaterial("piedra") -> modificarCantidad(piedraNecesaria);

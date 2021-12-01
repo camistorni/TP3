@@ -28,13 +28,13 @@ Juego::Juego () {
 	leerMateriales();
 	leerOpcionesEdificios();
 	leerMapa();
-	leerUbicaciones();
+	//leerUbicaciones();
 }
 
 Juego::~Juego(){
 	cerrarMateriales();
 	cerrarUbicaciones();
-	cerrarMapa();
+	//cerrarMapa();
 }
 
 int Juego::obtenerCantidadMateriales() {
@@ -88,24 +88,23 @@ void Juego::cerrarMateriales(){
 
 	ofstream archivoMateriales(PATH_MATERIALES);
 	
-	for(int i = 0; i < this -> jugadores[0] -> obtenerCantidadMateriales(); i++){
-		archivoMateriales << this -> jugadores[0] -> obtenerMaterial(i).obtenerNombreMaterial() << " " << 
-		this -> jugadores[0] -> obtenerMaterial(i).obtenerCantidadMaterial() << " " << 
-		this -> jugadores[1] -> obtenerMaterial(i).obtenerCantidadMaterial() << endl;
+	for(int i = 0; i < jugadores[0] -> obtenerCantidadMateriales(); i++){
+		archivoMateriales <<  jugadores[0] -> obtenerMateriales()[i] -> obtenerNombreMaterial() << " " << 
+		jugadores[0] -> obtenerMateriales()[i] -> obtenerCantidadMaterial() << " " << 
+		jugadores[1] -> obtenerMateriales()[i] -> obtenerCantidadMaterial() << endl;
 
-		delete this -> jugadores[0] -> obtenerMateriales()[i];
-		delete this -> jugadores[1] -> obtenerMateriales()[i];
+		delete jugadores[0] -> obtenerMateriales()[i];
+		delete jugadores[1] -> obtenerMateriales()[i];
 	}
 	
-	delete[] this -> jugadores[0] -> obtenerMateriales();
+	delete[] jugadores[0] -> obtenerMateriales();
 	//this -> jugadores[0] -> establecerMateriales() = nullptr;
-	delete[] this -> jugadores[1] -> obtenerMateriales();
+	delete[] jugadores[1] -> obtenerMateriales();
 	
 }
 
 bool Juego::verificarMateriales(string nombreIngresado, int piedraNecesaria, int maderaNecesaria, int metalNecesario, int construidos, int cantidadMax){
 	int error = false;
-	int i = 0;
 	if (jugadores[jugadorActivo] -> buscarMaterial("piedra") -> obtenerCantidadMaterial() < piedraNecesaria) {
 		imprimirMensajeError(nombreIngresado, "piedra", jugadores[jugadorActivo] -> buscarMaterial("piedra") -> obtenerCantidadMaterial(), piedraNecesaria);
 		error = true;
@@ -429,12 +428,6 @@ bool Juego::verificarCoordenadas(int fila, int columna){
 	}
 
 	return true;
-}
-
-//----------------------------------------------------------------------------------------------------------------------------------------------------
-
-void Juego::guardarYSalir(){
-	
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------

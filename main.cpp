@@ -3,29 +3,21 @@
 #include "juego.h"
 #include "edificios/tiposEdificios.h"
 #include "casilleros/casillero.h"
+#include "utilesMenu.h"
 
 int main(){
 	
-	Juego juego;
+	Juego* juego = new Juego();
 	int opcion = 0;
 	
-	juego.mostrarMenu();
-	opcion = juego.pedirOpcion();
+	mostrarMenu();
+	pedirOpcion(&opcion);
 	
 	while(opcion != 10){
-		juego.procesarOpciones(opcion);
-		
-		juego.mostrarMenu();
-		opcion = juego.pedirOpcion();
+		procesarOpciones(juego, opcion);
+		mostrarMenu();
+		pedirOpcion(&opcion);
 	}
-		
-	juego.guardarYSalir();
-	
-	
-
-	cout << "todo ok" << endl;
-	
-
 	
 	return 0;
 }

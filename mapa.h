@@ -15,6 +15,7 @@ class Mapa{
 	
 		//Costructor
 		Mapa();
+		~Mapa();
 		
 		//Precondiciones: -
 		//Postcondicions: Inicializa la memoria del mapa
