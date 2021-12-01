@@ -6,7 +6,9 @@
 
 // Pre: -
 // Post: Muestra el menu principal con sus opciones
-void mostrarMenu();
+void mostrarMenu(Juego* juego);
+
+void mostrarMenuPrincipal();
 
 // Pre: Recibir la opcion seleccionada
 // Post: Procesa la opcion recibida y realiza la accion correspondiente

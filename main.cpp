@@ -11,15 +11,15 @@ int main(){
 	cout << "a" << endl;
 	int opcion = 0;
 	cout << "b" << endl;
-	mostrarMenu();
+	mostrarMenu(juego);
 	cout << "c" << endl;
 	pedirOpcion(&opcion);
 	cout << "d" << endl;
-	while(opcion != 10){
+	while(opcion != 14){
 		cout << "e" << endl;
 		procesarOpciones(juego, opcion);
 		cout << "f" << endl;
-		mostrarMenu();
+		mostrarMenu(juego);
 		cout << "g" << endl;
 		pedirOpcion(&opcion);
 		cout << "h" << endl;

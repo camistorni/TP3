@@ -9,7 +9,12 @@ using namespace std;
 
 // *************** MENU ***************
 
-void mostrarMenu() {
+void mostrarMenu(Juego* juego) {
+	juego -> obtenerJugadorActivo() < 0 ?  mostrarMenuPrincipal() : mostrarSubmenu();
+}
+
+
+void mostrarMenuPrincipal() {
 
 	cout << endl << endl;
 	cout << TXT_ITALIC << TXT_LIGHT_AQUA_123 << "\t            ¡BIENVENIDOS A ANDYPOLIS!" << END_COLOR << endl << endl;
@@ -88,7 +93,7 @@ void solicitarCoordenadas(Juego* juego) {
 	while(juego -> verificarCoordenadas(fila, columna) == false)
 		juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
 	cout << "Hola 3" << endl;
-	juego -> obtenerJugador() -> establecerCoordenadas(fila, columna);
+	//juego -> obtenerJugador() -> establecerCoordenadas(fila, columna);
 	cout << "Hola 4" << endl;
 }
 
