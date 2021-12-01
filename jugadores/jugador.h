@@ -41,7 +41,6 @@ class Jugador {
         ~Jugador();
 
         int obtenerEnergia();
-        int obtenerCantidadMateriales();
         int* obtenerObjetivos();
         Material** obtenerMateriales();
         Material obtenerMaterial(int material);

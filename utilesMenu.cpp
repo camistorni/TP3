@@ -17,7 +17,7 @@ void mostrarMenu() {
 	cout << "            ╔═══════════════════════════════════════╗" << endl;
 	cout << "            ║ 1. Modificar edificio por nombre      ║" << endl;
 	cout << "            ║ 2. Listar todos los edificios         ║" << endl;
-	cout << "            ║ 3. Mostrat mapa                       ║" << endl;
+	cout << "            ║ 3. Mostrar mapa                       ║" << endl;
 	cout << "            ║ 4. Comenzar partida                   ║" << endl;
 	cout << "            ║ 5. Guardar y salir                    ║" << endl;
 	cout << "            ╚═══════════════════════════════════════╝" << endl << endl;
@@ -82,12 +82,14 @@ void seleccionarJugador(Juego* juego) {
 
 void solicitarCoordenadas(Juego* juego) {
 	int fila = -1, columna = -1;
-
+	cout << "Hola 1" << endl;
 	juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
+	cout << "Hola 2" << endl;
 	while(juego -> verificarCoordenadas(fila, columna) == false)
 		juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
-	
+	cout << "Hola 3" << endl;
 	juego -> obtenerJugador() -> establecerCoordenadas(fila, columna);
+	cout << "Hola 4" << endl;
 }
 
 
@@ -278,7 +280,7 @@ void procesarOpciones(Juego* juego, int opcion) {
     else
         procesarOpcionesSubmenu(juego, opcion);
 }
-
+/*
 void construirEdificio(Juego* juego, string nombreIngresado) {
 	int piedraNecesaria, maderaNecesaria, metalNecesario, construidos, cantidadMax;
 	//Verifica que el edificio ingresado exista
@@ -320,7 +322,7 @@ void construirEdificio(Juego* juego, string nombreIngresado) {
 	}
 }
 
-
+*/
 /*
 void demolerEdificioCoordenada(Juego* juego) {
 	int fila, columna;

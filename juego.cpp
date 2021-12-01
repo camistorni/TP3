@@ -21,13 +21,21 @@ using namespace std;
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
 Juego::Juego () {
+	cout << "aa" << endl;
 	Jugador* jugadoresAux[2] = {new Jugador("Jugador 1"), new Jugador("Jugador 2")};
+	cout << "ab" << endl;
 	jugadores = jugadoresAux;
+	cout << "ac" << endl;
 	cantidadMateriales = 0;
+	cout << "ad" << endl;
 	jugadorActivo = -1;
+	cout << "ae" << endl;
 	leerMateriales();
+	cout << "af" << endl;
 	leerOpcionesEdificios();
+	cout << "ag" << endl;
 	leerMapa();
+	cout << "ah" << endl;
 	//leerUbicaciones();
 }
 
@@ -88,7 +96,7 @@ void Juego::cerrarMateriales(){
 
 	ofstream archivoMateriales(PATH_MATERIALES);
 	
-	for(int i = 0; i < jugadores[0] -> obtenerCantidadMateriales(); i++){
+	for(int i = 0; i < cantidadMateriales; i++){
 		archivoMateriales <<  jugadores[0] -> obtenerMateriales()[i] -> obtenerNombreMaterial() << " " << 
 		jugadores[0] -> obtenerMateriales()[i] -> obtenerCantidadMaterial() << " " << 
 		jugadores[1] -> obtenerMateriales()[i] -> obtenerCantidadMaterial() << endl;

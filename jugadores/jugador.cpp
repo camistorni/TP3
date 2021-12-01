@@ -1,24 +1,36 @@
+#include <iostream>
 #include "jugador.h"
 #include "constantesJugador.h"
 
 using namespace std;
 
 Jugador::Jugador(std::string nombreJugador) {
+    cout << "ba" << endl;
     nombre = nombreJugador;
+    cout << "bb" << endl;
     edificiosContruidos = *new std::string * [0];
+    cout << "bc" << endl;
     energia = 50;
+    cout << "bd" << endl;
     andycoinsRecolectadas = bombasCompradas = bombasUsadas = 0;
-    comprarAndypolisCumplido = 
-    edadDePiedraCumplido = 
-    bombarderoCumplido =
-    energeticoCumplido = 
-    letradoCumplido =
-    mineroCumplido = 
-    cansadoCumplido = 
-    constructorCumplido =
-    armadoCumplido = 
+    cout << "be" << endl;
+    comprarAndypolisCumplido = false;
+    edadDePiedraCumplido = false;
+    bombarderoCumplido = false;
+    energeticoCumplido = false;
+    letradoCumplido = false;
+    mineroCumplido = false;
+    cansadoCumplido = false;
+    constructorCumplido = false;
+    armadoCumplido = false;
     extremistaCumplido = false;
+    cout << "bf" << endl;
+    // HAY QUE LIBERAR ESTO
+    objetivos = new int[3];
     seleccionarObjetivos();
+    // HAY QUE LIBERAR ESTO
+    ubicacion = new int[2];
+    cout << "bg" << endl;
 };
 
 
@@ -41,8 +53,14 @@ void Jugador::establecerEnergia(int cantidadEnergia) {
 }
 
 void Jugador::establecerCoordenadas(int fila, int columna) {
-    this->ubicacion[0] = fila;
-    this->ubicacion[1] = columna;
+    cout << "establecerCoordenadas 1" << endl;
+    //ubicacion = new int[2];
+    cout << "fila: " << fila << " columna: " << columna << endl;
+    cout << "ubicacion" << ubicacion[0] << endl;
+    ubicacion[0] = fila;
+    cout << "establecerCoordenadas 2" << endl;
+    ubicacion[1] = columna;
+    cout << "establecerCoordenadas 3" << endl;
 }
 
 void Jugador::agregarMaterial(Material* nuevoMaterial, int cantidadMateriales) {
@@ -103,16 +121,30 @@ bool Jugador::extremista() {
 }
 
 void Jugador::seleccionarObjetivos() {
+    cout << "ca" << endl;
     int objetivosNuevos[3];
+    cout << "cb" << endl;
     objetivosNuevos[0] = rand() % 10;
+    cout << "cc" << endl;
     objetivosNuevos[1] = rand() % 10;
+    cout << "cd" << endl;
     while(objetivosNuevos[1] == objetivosNuevos[0])
         objetivosNuevos[1] = rand() % 10;
+    cout << "ce" << endl;
     objetivosNuevos[2] = rand() % 10;
+    cout << "cf" << endl;
     while(objetivosNuevos[2] == objetivosNuevos[0] || objetivosNuevos[2] == objetivosNuevos[1])
         objetivosNuevos[2] = rand() % 10;
-
-    for(int i = 0; i < CANTIDAD_OBJETIVOS; i++)
+    cout << "cg" << endl;
+    cout << objetivos[0] << endl;
+    cout << "ALDU" << endl;
+    for(int i = 0; i < CANTIDAD_OBJETIVOS; i++) {
+        cout << "ch" << "i:" << i << endl;
         objetivos[i] = objetivosNuevos[i];
+    }
+
+    cout << "ci" << endl;
+        
+    
 }
 
