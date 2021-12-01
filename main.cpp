@@ -8,23 +8,23 @@
 int main(){
 	
 	Juego* juego = new Juego();
-	cout << "a" << endl;
+	Jugador** jugadores = juego -> obtenerJugadores();
+	cout << "en el main la energia del 0 es " << jugadores[0] -> obtenerEnergia() << endl;
+	cout << "en el main la energia del 1 es " << jugadores[1] -> obtenerEnergia() << endl;
+	cout << "en el main la energia del 0 es " << jugadores[0] -> obtenerEnergia() << endl;
+
 	int opcion = 0;
-	cout << "b" << endl;
 	mostrarMenu(juego);
-	cout << "c" << endl;
 	pedirOpcion(&opcion);
-	cout << "d" << endl;
 	while(opcion != 14){
-		cout << "e" << endl;
+		cout << "pre procesarOpciones" << endl;
+		
+		
 		procesarOpciones(juego, opcion);
-		cout << "f" << endl;
+		cout << "post procesarOpciones" << endl;
 		mostrarMenu(juego);
-		cout << "g" << endl;
 		pedirOpcion(&opcion);
-		cout << "h" << endl;
 	}
-	cout << "i" << endl;
 	
 	return 0;
 }

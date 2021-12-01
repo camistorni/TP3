@@ -21,22 +21,19 @@ using namespace std;
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
 Juego::Juego () {
-	cout << "aa" << endl;
 	Jugador* jugadoresAux[2] = {new Jugador("Jugador 1"), new Jugador("Jugador 2")};
-	cout << "ab" << endl;
 	jugadores = jugadoresAux;
-	cout << "ac" << endl;
+	cout << "la energia en el constructor del 1 es " << jugadores[1] ->obtenerEnergia() << endl;
 	cantidadMateriales = 0;
-	cout << "ad" << endl;
 	jugadorActivo = -1;
-	cout << "ae" << endl;
 	leerMateriales();
-	cout << "af" << endl;
 	leerOpcionesEdificios();
-	cout << "ag" << endl;
 	leerMapa();
-	cout << "ah" << endl;
 	//leerUbicaciones();
+}
+
+Jugador** Juego::obtenerJugadores(){
+	return jugadores;
 }
 
 Juego::~Juego(){

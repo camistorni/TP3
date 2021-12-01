@@ -4,6 +4,7 @@
 #include "opciones.h"
 #include "jugadores/constantesJugador.h"
 #include "mensajes.h"
+
 using namespace std;
 
 
@@ -29,6 +30,7 @@ void mostrarMenuPrincipal() {
 }
 
 void procesarOpcionesMenu(Juego* juego, int opcion) {
+	
     switch(opcion) {
         case MENU_MODIFICAR_EDIFICIO_POR_NOMBRE:
             //modificarEdificioPorNombre();
@@ -56,7 +58,7 @@ void procesarOpcionesMenu(Juego* juego, int opcion) {
 }
 
 void comenzarPartida(Juego* juego) {
-
+	cout << "comenzarPartida" << endl;
 	seleccionarJugador(juego);
 	solicitarCoordenadas(juego);
 
@@ -87,14 +89,10 @@ void seleccionarJugador(Juego* juego) {
 
 void solicitarCoordenadas(Juego* juego) {
 	int fila = -1, columna = -1;
-	cout << "Hola 1" << endl;
 	juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
-	cout << "Hola 2" << endl;
 	while(juego -> verificarCoordenadas(fila, columna) == false)
 		juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
-	cout << "Hola 3" << endl;
 	//juego -> obtenerJugador() -> establecerCoordenadas(fila, columna);
-	cout << "Hola 4" << endl;
 }
 
 
@@ -122,7 +120,9 @@ void mostrarSubmenu() {
 }
 
 void procesarOpcionesSubmenu(Juego* juego, int opcion) {
+	cout << "a" << endl;
 	int energiaActual = juego -> obtenerJugador() -> obtenerEnergia();
+	cout << "b" << endl;
     switch(opcion) {
         case JUGADOR_CONSTRUIR_EDIFICIO_POR_NOMBRE:
 			if(energiaActual < ENERGIA_POR_CONSTRUIR_EDIFICIO_POR_NOMBRE){
@@ -180,7 +180,9 @@ void procesarOpcionesSubmenu(Juego* juego, int opcion) {
 			break;
 
 		case JUGADOR_CONSULTAR_COORDENADA:
+			cout << "c" << endl;
 			consultarCoordenada(juego);
+			cout << "d" << endl;
 			break;
 
 		case JUGADOR_MOSTRAR_INVENTARIO:
@@ -277,10 +279,8 @@ void validarOpcionSeleccionada(int& opcionSeleccionada) {
 }
 
 void procesarOpciones(Juego* juego, int opcion) {
-	
 	string nombreIngresado;
-	
-    if(juego -> obtenerJugadorActivo() < 0) 
+    if(juego -> obtenerJugadorActivo() < 0)
         procesarOpcionesMenu(juego, opcion);
     else
         procesarOpcionesSubmenu(juego, opcion);

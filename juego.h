@@ -34,6 +34,7 @@ class Juego{
 		int obtenerCantidadMateriales();
 		Jugador* obtenerJugador();
 		int obtenerJugadorActivo();
+		Jugador** obtenerJugadores();
 		void establecerJugadorActivo(int jugador);
 		TipoEdificio* obtenerEdificio(std::string nombreEdificio);
 		Mapa* obtenerMapa();
