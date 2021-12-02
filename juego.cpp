@@ -21,9 +21,9 @@ using namespace std;
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
 Juego::Juego () {
-	Jugador* jugadoresAux[2] = {new Jugador("Jugador 1"), new Jugador("Jugador 2")};
-	jugadores = jugadoresAux;
-	cout << "la energia en el constructor del 1 es " << jugadores[1] ->obtenerEnergia() << endl;
+	jugadores = new Jugador*[2];
+	jugadores[0] = new Jugador("Jugador 1");
+	jugadores[1] = new Jugador("Jugador 2");
 	cantidadMateriales = 0;
 	jugadorActivo = -1;
 	leerMateriales();

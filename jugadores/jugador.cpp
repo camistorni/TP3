@@ -29,8 +29,7 @@ Jugador::Jugador(std::string nombreJugador) {
 
 Jugador::~Jugador() {}
 
-int Jugador::
-obtenerEnergia() {
+int Jugador::obtenerEnergia() {
     return energia;
 }
 

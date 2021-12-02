@@ -8,10 +8,13 @@
 int main(){
 	
 	Juego* juego = new Juego();
+
 	Jugador** jugadores = juego -> obtenerJugadores();
-	cout << "en el main la energia del 0 es " << jugadores[0] -> obtenerEnergia() << endl;
-	cout << "en el main la energia del 1 es " << jugadores[1] -> obtenerEnergia() << endl;
-	cout << "en el main la energia del 0 es " << jugadores[0] -> obtenerEnergia() << endl;
+	cout << "en el main la energia del 2 es " << jugadores[1] -> obtenerEnergia() << endl;
+	cout << "en el main la energia del 1 es " << jugadores[0] -> obtenerEnergia() << endl;
+	cout << "en el main la energia del 1 es " << jugadores[0] -> obtenerEnergia() << endl;
+	cout << "en el main la energia del 2 es " << jugadores[1] -> obtenerEnergia() << endl;
+	cout << "en el main la energia del 1 es " << jugadores[0] -> obtenerEnergia() << endl;
 
 	int opcion = 0;
 	mostrarMenu(juego);
