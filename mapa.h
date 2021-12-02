@@ -46,6 +46,8 @@ class Mapa{
       	Casillero* obtenerCasillero(int fila, int columna);
 
 
+		void imprimirMapa(int fila, int columna);
+
 		//Precondiciones: -
 		//Postcondicions: Muestra un dibujo del mapa 
 		void mostrarMapa ();

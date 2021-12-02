@@ -7,7 +7,7 @@
 
 CasilleroConstruible::CasilleroConstruible(int fila, int columna, char caracter):
 Casillero(fila, columna, caracter){
-    caracterColor = CARACTER_COLOR_TERRENO;
+    caracterColor = COLOR_TERRENO;
     tipo = "construible";
     this -> tipoEdificio = "-1";
     caracterContenido = CARACTER_COLOR_TERRENO;

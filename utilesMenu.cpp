@@ -10,11 +10,6 @@ using namespace std;
 
 // *************** MENU ***************
 
-void mostrarMenu(Juego* juego) {
-	juego -> obtenerJugadorActivo() < 0 ?  mostrarMenuPrincipal() : mostrarSubmenu(juego);
-}
-
-
 void mostrarMenuPrincipal() {
 
 	cout << endl << endl;
@@ -51,9 +46,9 @@ void procesarOpcionesMenu(Juego* juego, int opcion) {
         case MENU_GUARDAR_Y_SALIR:
             break;
 
-        default:
+        /*default:
             cout << MJE_ERROR_OPCION << endl;
-            break;
+            break;*/
 	}
 }
 
@@ -280,6 +275,10 @@ void consultarCoordenada(Juego* juego) {
 
 // *************** GENERALES ***************
 
+void mostrarMenu(Juego* juego) {
+	juego -> obtenerJugadorActivo() < 0 ?  mostrarMenuPrincipal() : mostrarSubmenu(juego);
+}
+
 void pedirOpcion(int* opcion) {
 	cout << "Ingrese el numero de la accion que desea realizar." << endl;
 	cin >> *opcion;
@@ -311,6 +310,7 @@ void procesarOpciones(Juego* juego, int opcion) {
     else
         procesarOpcionesSubmenu(juego, opcion);
 }
+
 /*
 void construirEdificio(Juego* juego, string nombreIngresado) {
 	int piedraNecesaria, maderaNecesaria, metalNecesario, construidos, cantidadMax;
@@ -369,5 +369,3 @@ void demolerEdificioCoordenada(Juego* juego) {
 	}
 }
 */
-
-

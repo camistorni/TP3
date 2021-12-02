@@ -326,7 +326,58 @@ void Juego::cerrarEdificios(){
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
+
+void leerCoordenadas (fstream &archivoUbicaciones, char caracter, int &fila, int &columna){
+    archivoUbicaciones >> caracter;
+    archivoUbicaciones >> fila;
+    archivoUbicaciones >> caracter;
+    archivoUbicaciones >> columna;
+    archivoUbicaciones >> caracter;
+}
+
+void colocarMateriales (fstream &archivoUbicaciones,string &nombre, char caracter, int &fila, int &columna, bool &leyoSeccion){
+	cout << "Materiales" << endl;
+	while(leyoSeccion == false){
+
+        archivoUbicaciones >> nombre;
+        leerCoordenadas(archivoUbicaciones, caracter, fila, columna);
+        if (nombre == "1"){
+            leyoSeccion = true;
+
+        }
+        else {
+            cout << nombre << "-" << fila << "-" << columna << "-" << endl;
+            //agregar material
+        }
+	}
+}
 /*
+void colocarEdificiosPersonaje1 (Jugador* jugador ,fstream &archivoUbicaciones,string &nombre, char caracter, int &fila, int &columna, bool &leyoSeccion){
+	cout << "Jugador 1" << endl;
+    while (leyoSeccion = false){
+        archivoUbicaciones >> nombre;
+        leerCoordenadas(archivoUbicaciones, caracter, fila, columna);
+        if (nombre == "2"){
+            leyoSeccion = true;
+
+        }
+        else {
+            cout << nombre << "-" << fila << "-" << columna << "-" << endl;
+            //agregar edificio de jugador 1
+        }
+    }
+}
+
+void colocarEdificiosPersonaje2 (Jugador* jugador ,fstream &archivoUbicaciones,string &nombre, char caracter, int &fila, int &columna){
+
+	cout << "Personaje 2" << endl;
+    while (archivoUbicaciones >> nombre){
+        leerCoordenadas(archivoUbicaciones, caracter, fila, columna);
+        cout << nombre << "-" << fila << "-" << columna << "-" << endl;
+		//agregar edificio de jugador 2
+    }
+}
+
 void Juego::leerUbicaciones(){
 
 	fstream archivoUbicaciones(PATH_UBICACIONES, ios::in);
@@ -335,29 +386,32 @@ void Juego::leerUbicaciones(){
 	int posicion_edificio;
 
 	char caracter;
-	int fila = '0';
-	int columna = '0';
-	string tipoEdificio;
+	int fila = 0;
+	int columna = 0;
+	string nombre = "0";
+
+    bool leyoSeccion = false;
+
+	colocarMateriales (archivoUbicaciones,nombre, caracter, fila, columna, leyoSeccion);
 	
-	while(archivoUbicaciones >> tipoEdificio){
-		archivoUbicaciones >> caracter;
-		archivoUbicaciones >> fila;
-		archivoUbicaciones >> caracter;
-		archivoUbicaciones >> columna;
-		archivoUbicaciones >> caracter;
+	//colocar jugador 1 
+	cout << "Se coloco jugador 1" << endl;
+	cout << nombre << "-" << fila << "-" << columna << "-" << endl;
 
+    leyoSeccion = false;
 
-		edificio  = new Edificio (fila , columna);
-		posicion_edificio = identificarEdificio(tipoEdificio);
+	colocarEdificiosPersonaje1 (jugadores[0] ,archivoUbicaciones, nombre, caracter, fila, columna, leyoSeccion);
 
-		listaEdificios[posicion_edificio] -> agregarEdificioConstruido(edificio);
-		mapa -> obtenerCasillero(fila, columna) -> establecerTipo(tipoEdificio);
+	//colocar jugador 2
+	cout << "Se coloco jugador 2" << endl;
+	cout << nombre << "-" << fila << "-" << columna << "-" << endl;
 
+	colocarEdificiosPersonaje2 (jugadores[2] ,archivoUbicaciones, nombre, caracter, fila, columna);
 
-	}
 	archivoUbicaciones.close();
+
 }
-*/
+
 int Juego::identificarEdificio(string tipoEdficio){
 
 	int posicionEdificio = 0;
@@ -368,7 +422,7 @@ int Juego::identificarEdificio(string tipoEdficio){
 	
 	return posicionEdificio;
 }
-
+*/
 void Juego::cerrarUbicaciones(){
 
 	ofstream archivoUbicaciones(PATH_UBICACIONES);

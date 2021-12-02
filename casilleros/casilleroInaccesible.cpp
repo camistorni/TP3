@@ -6,7 +6,7 @@
 
 CasilleroInaccesible::CasilleroInaccesible(int fila, int columna, char caracter):
 Casillero(fila, columna, caracter){
-    caracterColor = CARACTER_COLOR_LAGO;
+    caracterColor = COLOR_LAGO;
     tipo = "inaccesible";
     caracterContenido = CARACTER_COLOR_LAGO;
 }

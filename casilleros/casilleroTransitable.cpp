@@ -7,7 +7,7 @@
 
 CasilleroTransitable::CasilleroTransitable(int fila, int columna, char caracter):
 Casillero(fila, columna, caracter){
-    caracterColor = CARACTER_COLOR_CAMINO;
+    caracterColor = COLOR_CAMINO;
     caracterContenido = CARACTER_COLOR_CAMINO;
     tipo = "transitable";
 }
