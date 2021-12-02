@@ -99,11 +99,11 @@ void Mapa::identificarContenido (Casillero* casillero){
 
 
 
-void Mapa::mostrarMapa(){
+void Mapa::mostrarMapa() {
 
-	for(int i = 0; i < cantidadFilas; i++){
-		for(int j = 0; j < cantidadColumnas; j++){
-            identificarContenido(casilleros[i][j]);
+	for(int i = 0; i < cantidadFilas; i++) {
+		for(int j = 0; j < cantidadColumnas; j++) {
+			identificarContenido(casilleros[i][j]);
 			cout << casilleros[i][j] -> obtenerCaracterContenido();
 		}
 		cout << endl;

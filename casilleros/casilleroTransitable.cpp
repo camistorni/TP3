@@ -10,7 +10,6 @@ Casillero(fila, columna, caracter){
     caracterColor = CARACTER_COLOR_CAMINO;
     caracterContenido = CARACTER_COLOR_CAMINO;
     tipo = "transitable";
-    
 }
 
 std::string CasilleroTransitable::obtenerTipo(){

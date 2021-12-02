@@ -11,7 +11,7 @@ using namespace std;
 // *************** MENU ***************
 
 void mostrarMenu(Juego* juego) {
-	juego -> obtenerJugadorActivo() < 0 ?  mostrarMenuPrincipal() : mostrarSubmenu();
+	juego -> obtenerJugadorActivo() < 0 ?  mostrarMenuPrincipal() : mostrarSubmenu(juego);
 }
 
 
@@ -98,9 +98,9 @@ void solicitarCoordenadas(Juego* juego) {
 
 // *************** SUBMENU ***************
 
-void mostrarSubmenu() {
+void mostrarSubmenu(Juego* juego) {
+	mostrarInformacion(juego);
 	cout << endl << endl;
-	cout << TXT_ITALIC << TXT_LIGHT_AQUA_123 << "\t            ¡BIENVENIDOS A ANDYPOLIS!" << END_COLOR << endl << endl;
 	cout << "                        " << TXT_UNDERLINE << "Menú de opciones" << END_COLOR << endl << endl;
 	cout << "            ╔═══════════════════════════════════════╗" << endl;
 	cout << "            ║ 1. Construir edificio por nombre      ║" << endl;
@@ -120,9 +120,8 @@ void mostrarSubmenu() {
 }
 
 void procesarOpcionesSubmenu(Juego* juego, int opcion) {
-	cout << "a" << endl;
+
 	int energiaActual = juego -> obtenerJugador() -> obtenerEnergia();
-	cout << "b" << endl;
     switch(opcion) {
         case JUGADOR_CONSTRUIR_EDIFICIO_POR_NOMBRE:
 			if(energiaActual < ENERGIA_POR_CONSTRUIR_EDIFICIO_POR_NOMBRE){
@@ -173,16 +172,12 @@ void procesarOpcionesSubmenu(Juego* juego, int opcion) {
 			if(energiaActual < ENERGIA_POR_COMPRAR_BOMBA) {
 				cout << "Su energia actual es de: " << energiaActual << "no le alcanza para realizar esta accion." << endl;
 			}
-			else {
+			else if(comprarBomba(juego) == true)
 				juego -> obtenerJugador() -> establecerEnergia(energiaActual - ENERGIA_POR_COMPRAR_BOMBA);
-				// comprarBomba();
-			}
 			break;
 
 		case JUGADOR_CONSULTAR_COORDENADA:
-			cout << "c" << endl;
 			consultarCoordenada(juego);
-			cout << "d" << endl;
 			break;
 
 		case JUGADOR_MOSTRAR_INVENTARIO:
@@ -210,6 +205,7 @@ void procesarOpcionesSubmenu(Juego* juego, int opcion) {
 			juego -> obtenerJugador() -> establecerEnergia((energiaActual + ENERGIA_POR_FINALIZAR_TURNO)%101);
 			cout << "Su energia ahora es: " << juego -> obtenerJugador() -> obtenerEnergia() << endl;
 			juego -> establecerJugadorActivo(juego -> obtenerJugadorActivo() ? 0 : 1);
+			break;
 
 		case JUGADOR_GUARDAR_Y_SALIR:
 			break;
@@ -218,7 +214,15 @@ void procesarOpcionesSubmenu(Juego* juego, int opcion) {
 			cout << MJE_ERROR_OPCION << endl;
 			break;
     }
-}       
+}
+
+void mostrarInformacion(Juego* juego) {
+	int energiaActual = juego -> obtenerJugador() -> obtenerEnergia();
+	int cantidadAndycoins = juego -> obtenerJugador() -> buscarMaterial("andycoins") -> obtenerCantidadMaterial();
+	cout << endl << '\t' << "Es el turno del Jugador " << juego -> obtenerJugadorActivo() + 1 << endl;
+	cout << '\t' << "Su energia actual es: " << energiaActual << endl;
+	cout << '\t' << "Su cantidad de andycoins actual es: " << cantidadAndycoins << endl << endl;
+}
 
 void mostrarObjetivos(Juego* juego) {
 	int* objetivosJugador = juego -> obtenerJugador() -> obtenerObjetivos();
@@ -231,14 +235,36 @@ void mostrarInventario(Juego* juego) {
 	cout << endl << endl;
 	cout << "Lista de materiales propios:" << endl << endl;
 	
-	cout << '\t' << " ═══════════════════════════════ " << endl;
-	cout << '\t' << " Materiales        Cantidades   " << endl;
-	cout << '\t' << " ═══════════════════════════════ " << endl;
+	cout << '\t' << " ══════════════════════════════════ " << endl;
+	cout << '\t' << " Materiales            Cantidades   " << endl;
+	cout << '\t' << " ══════════════════════════════════ " << endl;
 
 	for(int i = 0; i < juego -> obtenerCantidadMateriales(); i++) {
 		cout << '\t' << juego -> obtenerJugador() -> obtenerMateriales()[i] -> obtenerNombreMaterial() << ":\t" << 
 		'\t' << juego -> obtenerJugador() -> obtenerMateriales()[i] -> obtenerNombreMaterial() << endl;
 	}
+}
+
+bool comprarBomba(Juego* juego) {
+	bool accionRealizada = false;
+	int cantidad = 0;
+	int cantidadAndycoins = 0;
+	cout << "Ingrese la cantidad de bombas que desee comprar" << endl;
+	cin >> cantidad;
+	cantidadAndycoins = juego -> obtenerJugador() -> buscarMaterial("andycoins") -> obtenerCantidadMaterial();
+	int costoBombas = cantidad * COSTO_BOMBA;
+	if(cantidadAndycoins < costoBombas) {
+		cout << "No se pudieron adquirir la cantidad de bombas solicitas debido a que no le alcanzan las andycoins" << endl;
+	}
+	else {
+		juego -> obtenerJugador() -> buscarMaterial("andycoins") -> establecerCantidad(cantidadAndycoins - costoBombas);
+		int cantidadActualBombas = juego -> obtenerJugador() -> buscarMaterial("bombas") -> obtenerCantidadMaterial();
+		juego -> obtenerJugador() -> buscarMaterial("bombas") -> establecerCantidad(cantidadActualBombas + cantidad);
+		cout << "Ud adquirio " << cantidad << " de bombas" << endl;
+		cout << "Ahora cuenta con " << cantidadAndycoins << " de andycoins" << endl;
+		accionRealizada = true;
+	}
+	return accionRealizada;
 }
 
 void consultarCoordenada(Juego* juego) {

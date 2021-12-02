@@ -72,6 +72,7 @@ Material* Jugador::buscarMaterial(string nombreMaterial) {
     while (i < 5 || material == nullptr) {
         if (materiales[i] -> obtenerNombreMaterial() == nombreMaterial)
             material = materiales[i];
+        i++;
     }
     return material;
 }

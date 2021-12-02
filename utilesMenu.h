@@ -33,7 +33,9 @@ void solicitarCoordenadas(Juego* juego);
 
 // Pre: -
 // Post: Muestra el menu secundario con sus opciones
-void mostrarSubmenu();
+void mostrarSubmenu(Juego* juego);
+
+void mostrarInformacion(Juego* juego);
 
 // Pre: Recibir la opcion seleccionada
 // Post: Procesa la opcion recibida y realiza la accion correspondiente
@@ -50,6 +52,11 @@ void imprimirObjetivos(int objetivo);
 // Pre: -
 // Post: Muestra los materiales con sus respectivas cantidades
 void mostrarInventario(Juego* juego);
+
+// Pre: -
+// Post: Devuelve true si se pudo realizar la accion y false en caso contrario. 
+// Si fue posible realizar la accion, se realizan las modificaciones necesarias al jugador
+bool comprarBomba(Juego* juego);
 
 // Pre: -
 // Post: Solicita la coordenada que se quiere consultar, e imprime su informacion
