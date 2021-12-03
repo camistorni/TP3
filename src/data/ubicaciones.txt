@@ -1,0 +1,7 @@
+madera (1, 0)
+1 (0, 0)
+escuela (1, 6)
+escuela (3, 2)
+mina (4, 7)
+2 (2, 7)
+fabrica (7, 0)
