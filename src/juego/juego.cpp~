@@ -22,7 +22,7 @@ Juego::Juego () {
 	jugadores = new Jugador*[2];
 	jugadores[0] = new Jugador("Jugador 1");
 	jugadores[1] = new Jugador("Jugador 2");
-	grafo = new Grafo;
+	grafo = new Grafo();
 	cantidadMateriales = 0;
 	jugadorActivo = -1;
 	leerMateriales();
@@ -429,13 +429,15 @@ void Juego::crearVertices(int filas, int columnas){
 		for(int j = 0; j < columnas; j++){
 			string coordX = to_string(j);
 			string coordY = to_string(i);
-			string coordActual = coordX + coordY;
+			string coordActual = coordX + ',' + coordY;
 			this->grafo->agregarVertice(coordActual);
 		}
 	}
 }
 
-
+void Juego::mostrarGrafo(){
+	this->grafo->mostrarGrafo();
+}
 //crear caminos entre cada coordenada
 void Juego::crearCaminos(){	
 
@@ -584,3 +586,9 @@ void Juego::lluviaElementos(){
 	}
 }
 */
+
+void Juego::guardarYSalir(){
+	cerrarMateriales();
+	//cerrarUbicaciones();
+	this->obtenerMapa()->~Mapa();
+}

@@ -429,21 +429,17 @@ void Juego::crearVertices(int filas, int columnas){
 		for(int j = 0; j < columnas; j++){
 			string coordX = to_string(j);
 			string coordY = to_string(i);
-			string coordActual = coordX + coordY;
+			string coordActual = coordX + ',' + coordY;
 			this->grafo->agregarVertice(coordActual);
 		}
 	}
 }
-
 
 //crear caminos entre cada coordenada
 void Juego::crearCaminos(){	
 
 	int filas = this->obtenerMapa()->obtenerCantidadFilas();
 	int columnas = this->obtenerMapa()->obtenerCantidadColumnas();
-	
-	cout << filas << endl;
-	cout << columnas << endl;
 	
 	crearVertices(filas, columnas);
 	
@@ -584,3 +580,9 @@ void Juego::lluviaElementos(){
 	}
 }
 */
+
+void Juego::guardarYSalir(){
+	cerrarMateriales();
+	//cerrarUbicaciones();
+	this->obtenerMapa()->~Mapa();
+}

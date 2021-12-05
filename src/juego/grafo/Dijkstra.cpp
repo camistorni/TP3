@@ -16,7 +16,6 @@ void Dijkstra::caminoMinimo(int origen, int destino) {
     bool destinoArribado = origen == destino;
     int verticesRecorridos = 1;
     while(!destinoArribado){
-        mostrarIteracion(verticesRecorridos - 1);
         minimoVertice = verticeMinimaDistancia();
         destinoArribado = minimoVertice == destino;
 
