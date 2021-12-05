@@ -18,7 +18,7 @@ class Juego{
 
 	private:
 		Mapa* mapa;
-		Grafo grafo;
+		Grafo *grafo;
 		Edificio** listaEdificios;
 		Jugador** jugadores;
 		int jugadorActivo;

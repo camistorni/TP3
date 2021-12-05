@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Nodo::Nodo(tipo clave, string datos){
+Nodo::Nodo(tipo clave, string *datos){
 	this->clave = clave;
 	this->datos = datos;
 	this->der = NULL;
@@ -35,7 +35,7 @@ void Nodo::setClave(tipo clave){
 	this->clave = clave;
 }
 
-void Nodo::setDatos(string datos){
+void Nodo::setDatos(string *datos){
 	this->datos = datos;
 }
 

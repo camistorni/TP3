@@ -13,10 +13,10 @@ int main(){
 		procesarOpciones(juego, opcion);
 		mostrarMenu(juego);
 		pedirOpcion(&opcion);
-	}*/
-	
+	}
+	*/
 	juego->crearCaminos();
-	juego->mostrarCaminoMinimo("0,0", "2, 3");
+	juego->mostrarCaminoMinimo("0,0", "2,3");
 	//juego->guardarYSalir();
 	delete juego;
 	return 0;

@@ -12,7 +12,7 @@ int main(){
 	
 	abb->imprimirOrdenado();
 	cout << endl;
-	abb->eliminarNodo("escuela");
+	abb->eliminarNodo("aserradero");
 	abb->imprimirOrdenado();
 	cout << endl;
 	

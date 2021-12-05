@@ -1,4 +1,4 @@
-CC = g++ -Wall -Werror -Wconversion
+CC = g++ -Wall -Werror -Wconversion -g
 OBJS = main.o mapa.o utilesMenu.o materiales.o jugador.o juego.o edificio.o casilleroConstruible.o casilleroInaccesible.o casilleroTransitable.o casillero.o CaminoMinimo.o Dijkstra.o Grafo.o Vertice.o
 
 andypolis: $(OBJS)

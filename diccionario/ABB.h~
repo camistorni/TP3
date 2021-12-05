@@ -13,7 +13,7 @@ class ABB{
 	private:
 		Nodo* raiz;
 		
-		Nodo *insertarNodo(Nodo *nodo, tipo clave, string datos);
+		Nodo *insertarNodo(Nodo *nodo, tipo clave);
 		void imprimirOrdenado(Nodo *nodo);
 		Nodo *buscar(Nodo *nodo, tipo clave);
 		tipo sucesor(Nodo *nodo);
@@ -25,7 +25,7 @@ class ABB{
 		
 	public:
 		ABB();
-		void insertarNodo(tipo clave, string datos);
+		void insertarNodo(tipo clave);
 		void imprimirOrdenado();
 		bool buscar(tipo clave);
 		tipo sucesor(tipo clave);

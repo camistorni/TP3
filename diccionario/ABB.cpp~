@@ -65,7 +65,7 @@ bool ABB::buscar(tipo clave){
 tipo ABB::encontrarMin(Nodo *nodo){
 	
 	if(nodo == NULL)
-		return NULL;
+		return -1;
 	
 	else if(nodo->obtenerIzq() == NULL)
 		return nodo->obtenerClave();
@@ -83,7 +83,7 @@ tipo ABB::encontrarMin(){
 tipo ABB::encontrarMax(Nodo *nodo){
 	
 	if(nodo == NULL)
-		return NULL;
+		return -1;
 	
 	else if(nodo->obtenerDer() == NULL)
 		return nodo->obtenerClave();
@@ -122,7 +122,7 @@ tipo ABB::sucesor(tipo clave){
 	Nodo *nodo = this->buscar(this->raiz, clave);
 	
 	if(nodo == NULL)
-		return NULL;
+		return -1;
 	else return sucesor(nodo);
 }
 
@@ -151,7 +151,7 @@ tipo ABB::predecesor(tipo clave){
 	Nodo *nodo = this->buscar(this->raiz, clave);
 	
 	if(nodo == NULL)
-		return NULL;
+		return -1;
 	else return predecesor(nodo);
 }
 

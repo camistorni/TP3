@@ -22,6 +22,7 @@ Juego::Juego () {
 	jugadores = new Jugador*[2];
 	jugadores[0] = new Jugador("Jugador 1");
 	jugadores[1] = new Jugador("Jugador 2");
+	grafo = new Grafo();
 	cantidadMateriales = 0;
 	jugadorActivo = -1;
 	leerMateriales();
@@ -429,7 +430,7 @@ void Juego::crearVertices(int filas, int columnas){
 			string coordX = to_string(j);
 			string coordY = to_string(i);
 			string coordActual = coordX + coordY;
-			grafo.agregarVertice(coordActual);
+			this->grafo->agregarVertice(coordActual);
 		}
 	}
 }
@@ -440,6 +441,9 @@ void Juego::crearCaminos(){
 
 	int filas = this->obtenerMapa()->obtenerCantidadFilas();
 	int columnas = this->obtenerMapa()->obtenerCantidadColumnas();
+	
+	cout << filas << endl;
+	cout << columnas << endl;
 	
 	crearVertices(filas, columnas);
 	
@@ -466,16 +470,16 @@ void Juego::crearCaminos(){
 			string derecha = to_string(derechaX) + ',' +to_string(derechaY);
 
 			if(izquierdaX > 0)
-				grafo.agregarCamino(coordActual, izquierda, valoresCaminos(izquierdaX, izquierdaY));
+				this->grafo->agregarCamino(coordActual, izquierda, valoresCaminos(izquierdaX, izquierdaY));
 				
 			if (arribaY > 0)
-				grafo.agregarCamino(coordActual, arriba, valoresCaminos(arribaX, arribaY));
+				this->grafo->agregarCamino(coordActual, arriba, valoresCaminos(arribaX, arribaY));
 				
 			if(derechaX < columnas)
-				grafo.agregarCamino(coordActual, derecha, valoresCaminos(derechaX, derechaY));
+				this->grafo->agregarCamino(coordActual, derecha, valoresCaminos(derechaX, derechaY));
 				
 			if(abajoY < filas)
-				grafo.agregarCamino(coordActual, abajo, valoresCaminos(abajoX, abajoY));
+				this->grafo->agregarCamino(coordActual, abajo, valoresCaminos(abajoX, abajoY));
 		}
 	}
 }
@@ -485,7 +489,7 @@ void Juego::crearCaminos(){
 
 int Juego::valoresCaminos(int x, int y){
 	
-	char casillero = this->obtenerMapa()->obtenerCasillero(x, y)->obtenerCaracter();
+	char casillero = this->obtenerMapa()->obtenerCasillero(x, y)->obtenerTipo();
  
 	if(casillero == 'C')
 		return 4;
@@ -504,8 +508,8 @@ int Juego::valoresCaminos(int x, int y){
 }
 
 void Juego::mostrarCaminoMinimo(string origen, string destino){
-	grafo.usarDijkstra();
-	grafo.caminoMinimo(origen, destino);
+	grafo->usarDijkstra();
+	grafo->caminoMinimo(origen, destino);
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
