@@ -542,9 +542,6 @@ int Juego::valoresCaminos(int x, int y){
  
 	if(casillero == 'C')
 		return 4;
-	
-	if(casillero == 'B')
-		return 0;
 		
 	if((casillero == 'L' && obtenerJugadorActivo() == 0) || (casillero == 'M' && obtenerJugadorActivo() == 1))
 		return 2;
@@ -554,6 +551,9 @@ int Juego::valoresCaminos(int x, int y){
 	
 	if(casillero == 'T')
 		return 25;
+	
+	//default: betun
+	return 0;
 }
 
 void Juego::mostrarCaminoMinimo(int x1, int y1, int x2, int y2){

@@ -55,8 +55,6 @@ public:
 
     //post: imprime por pantalla el grafo
     void mostrarGrafo();
-    
-    void mostrarCamino(int origen, int destino);
 
     //post: selecciona el algortimo de Dijkstra para calcular el camino mínimo
     void usarDijkstra();

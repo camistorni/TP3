@@ -3,6 +3,7 @@
 #include <string>
 #include "Lista.h"
 #include "Vertice.h"
+#include "CaminoMinimo.h"
 
 using namespace std;
 
@@ -54,8 +55,9 @@ public:
 
     //post: imprime por pantalla el grafo
     void mostrarGrafo();
-    
-    void mostrarCamino(int origen, int destino);
+
+    //post: selecciona el algortimo de Floyd para calcular el camino mínimo
+    void usarFloyd();
 
     //post: selecciona el algortimo de Dijkstra para calcular el camino mínimo
     void usarDijkstra();

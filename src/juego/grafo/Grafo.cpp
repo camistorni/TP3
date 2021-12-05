@@ -129,9 +129,6 @@ void Grafo::caminoMinimo(int origen, int destino) {
     algoritmoCaminoMinimo -> caminoMinimo(origen, destino);
 }
 
-void Grafo::mostrarCamino(int origen, int destino){
-	algoritmoCaminoMinimo -> mostrarRecorrido(origen, destino);
-}
 
 void Grafo::usarDijkstra() {
     delete algoritmoCaminoMinimo;

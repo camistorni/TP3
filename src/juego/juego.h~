@@ -159,8 +159,8 @@ class Juego{
 		
 		void crearVertices(int fila, int columna);
 		void crearCaminos();
-		void esquinas(int i, int j);
-		void bordes(int i, int j);
+		void esquinas(int i, int j, int filas, int columnas);
+		void bordes(int i, int j, int filas, int columnas);
 		int valoresCaminos(int x, int y);
 		void mostrarCaminoMinimo(int x1, int y1, int x2, int y2);
 		

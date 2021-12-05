@@ -5,6 +5,3 @@ CaminoMinimo::CaminoMinimo(Lista<Vertice> *vertices, int **matrizAdyacencia) {
     this -> matrizAdyacencia = matrizAdyacencia;
     cantidadVertices = vertices -> obtenerCantidadDeElementos();
 }
-
-void CaminoMinimo::mostrarRecorrido(int origen, int destino){
-}

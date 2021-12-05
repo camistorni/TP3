@@ -447,94 +447,41 @@ void Juego::crearCaminos(){
 		for(int j = 0; j < columnas; j++){
 			string coordX = to_string(j);
 			string coordY = to_string(i);
-			string coordActual = coordX + coordY;
+			string coordActual = coordX + ',' + coordY;
 			
-			string coordXAnterior = to_string(j - 1) + coordY;
-			string coordYAnterior = coordX + to_string(i - 1);
-			string coordXSiguiente = to_string(j + 1) + coordY;
-			string coordYSiguiente = coordX + to_string(i + 1);
-			
-			esquinas(i, j, filas, columnas);
-			bordes(i, j, filas, columnas);
-			
-			grafo.agregarCamino(coordActual, coordXAnterior, valoresCaminos(j-1, i));
-			grafo.agregarCamino(coordActual, coordXSiguiente, valoresCaminos(j+1, i));
-			grafo.agregarCamino(coordActual, coordYAnterior, valoresCaminos(j, i-1));
-			grafo.agregarCamino(coordActual, coordYSiguiente, valoresCaminos(j, i+1));
+			int arribaX = j;
+			int arribaY = i - 1;
+			string arriba = to_string(arribaX) + ',' + to_string(arribaY);
+
+			int abajoX = j;
+			int abajoY = i + 1;
+			string abajo = to_string(abajoX) + ',' + to_string(abajoY);
+
+			int izquierdaX = j - 1;
+			int izquierdaY = i;
+			string izquierda = to_string(izquierdaX) + ',' + to_string(izquierdaY);
+
+			int derechaX = j + 1;
+			int derechaY = i;
+			string derecha = to_string(derechaX) + ',' +to_string(derechaY);
+
+			if(izquierdaX > 0)
+				grafo.agregarCamino(coordActual, izquierda, valoresCaminos(izquierdaX, izquierdaY));
+				
+			if (arribaY > 0)
+				grafo.agregarCamino(coordActual, arriba, valoresCaminos(arribaX, arribaY));
+				
+			if(derechaX < columnas)
+				grafo.agregarCamino(coordActual, derecha, valoresCaminos(derechaX, derechaY));
+				
+			if(abajoY < filas)
+				grafo.agregarCamino(coordActual, abajo, valoresCaminos(abajoX, abajoY));
 		}
 	}
 }
 
 
-void Juego::esquinas(int i, int j, int filas, int columnas){
 
-	string coordX = to_string(j);
-	string coordY = to_string(i);
-	string coordActual = coordX + coordY;
-	
-	string coordXAnterior = to_string(j - 1) + coordY;
-	string coordYAnterior = coordX + to_string(i - 1);
-	string coordXSiguiente = to_string(j + 1) + coordY;
-	string coordYSiguiente = coordX + to_string(i + 1);
-	
-	//caso esquina superior izquierda del mapa
-	if(i == 0 && j == 0){
-		grafo.agregarCamino(coordActual, coordXSiguiente, valoresCaminos(j+1, i));
-		grafo.agregarCamino(coordActual, coordYSiguiente, valoresCaminos(j, i+1));
-	}
-	//caso esquina superior derecha del mapa
-	if(i == 0 && j == columnas - 1){
-		grafo.agregarCamino(coordActual, coordXAnterior, valoresCaminos(j-1, i));
-		grafo.agregarCamino(coordActual, coordYSiguiente, valoresCaminos(j, i+1));
-	}
-	//caso esquina inferior izquierda
-	if(i == filas - 1 && j == 0){
-		grafo.agregarCamino(coordActual, coordXSiguiente, valoresCaminos(j+1, i));
-		grafo.agregarCamino(coordActual, coordYAnterior, valoresCaminos(j, i-1));
-	}
-	//caso esquina inferior derecha
-	if(i == filas - 1 && j == columnas - 1){
-		grafo.agregarCamino(coordActual, coordXAnterior, valoresCaminos(j-1, i));
-		grafo.agregarCamino(coordActual, coordYAnterior, valoresCaminos(j, i-1));
-	}
-}
-
-
-void Juego::bordes(int i, int j, int filas, int columnas){
-	string coordX = to_string(j);
-	string coordY = to_string(i);
-	string coordActual = coordX + coordY;
-	
-	string coordXAnterior = to_string(j - 1) + coordY;
-	string coordYAnterior = coordX + to_string(i - 1);
-	string coordXSiguiente = to_string(j + 1) + coordY;
-	string coordYSiguiente = coordX + to_string(i + 1);
-			
-	//caso borde inferior
-	if((i == filas - 1 && j != 0) || (i == filas - 1 && j != columnas - 1)){
-		grafo.agregarCamino(coordActual, coordXAnterior, valoresCaminos(j-1, i));
-		grafo.agregarCamino(coordActual, coordXSiguiente, valoresCaminos(j+1, i));
-		grafo.agregarCamino(coordActual, coordYAnterior, valoresCaminos(j, i-1));
-	}
-	//caso borde superior
-	if((i == 0 && j != 0) || (i == 0 && j != columnas - 1)){
-		grafo.agregarCamino(coordActual, coordXAnterior, valoresCaminos(j-1, i));
-		grafo.agregarCamino(coordActual, coordXSiguiente, valoresCaminos(j+1, i));
-		grafo.agregarCamino(coordActual, coordYSiguiente, valoresCaminos(j, i+1));
-	}
-	//caso borde izquierdo
-	if((i != 0 && j == 0) || (i != filas - 1 && j == 0)){
-		grafo.agregarCamino(coordActual, coordXSiguiente, valoresCaminos(j+1, i));
-		grafo.agregarCamino(coordActual, coordYAnterior, valoresCaminos(j, i-1));
-		grafo.agregarCamino(coordActual, coordYSiguiente, valoresCaminos(j, i+1));
-	}
-	//caso borde derecho
-	if((i != 0 && j == columnas - 1) || (i != filas - 1 && j == columnas - 1)){
-		grafo.agregarCamino(coordActual, coordXAnterior, valoresCaminos(j-1, i));
-		grafo.agregarCamino(coordActual, coordYAnterior, valoresCaminos(j, i-1));
-		grafo.agregarCamino(coordActual, coordYSiguiente, valoresCaminos(j, i+1));
-	}
-}
 
 int Juego::valoresCaminos(int x, int y){
 	
@@ -556,10 +503,9 @@ int Juego::valoresCaminos(int x, int y){
 	return 0;
 }
 
-void Juego::mostrarCaminoMinimo(int x1, int y1, int x2, int y2){
-	int coordOrigen = x1*10 + y1;
-	int coordDestino = x2*10 + y2;
-	this->grafo.mostrarCamino(coordOrigen, coordDestino);
+void Juego::mostrarCaminoMinimo(string origen, string destino){
+	grafo.usarDijkstra();
+	grafo.caminoMinimo(origen, destino);
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------

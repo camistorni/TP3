@@ -26,6 +26,8 @@ void Dijkstra::caminoMinimo(int origen, int destino) {
         }
         verticesRecorridos++;
     }
+
+    mostrarRecorrido(origen, destino);
 }
 
 int Dijkstra::verticeMinimaDistancia() {

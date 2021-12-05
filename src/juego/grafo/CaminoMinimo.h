@@ -22,8 +22,6 @@ public:
     virtual void caminoMinimo(int origen, int destino) = 0;
 
     virtual ~CaminoMinimo() = default;
-    
-    virtual void mostrarRecorrido(int origen, int destino);
 };
 
 
