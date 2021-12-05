@@ -1,5 +1,5 @@
 CC = g++ -Wall -Werror -Wconversion
-OBJS = main.o mapa.o utilesMenu.o materiales.o jugador.o juego.o edificio.o casilleroConstruible.o casilleroInaccesible.o casilleroTransitable.o casillero.o
+OBJS = main.o mapa.o utilesMenu.o materiales.o jugador.o juego.o edificio.o casilleroConstruible.o casilleroInaccesible.o casilleroTransitable.o casillero.o CaminoMinimo.o Dijkstra.o Grafo.o Vertice.o
 
 andypolis: $(OBJS)
 	$(CC) -o andypolis $(OBJS)
@@ -37,6 +37,18 @@ casilleroTransitable.o: src/mapa/casilleros/casilleroTransitable/casilleroTransi
 
 casillero.o: src/mapa/casilleros/casillero.cpp
 	$(CC) -o casillero.o -c src/mapa/casilleros/casillero.cpp
+
+CaminoMinimo.o: src/juego/grafo/CaminoMinimo.cpp
+	$(CC) -o CaminoMinimo.o -c src/juego/grafo/CaminoMinimo.cpp
+
+Dijkstra.o: src/juego/grafo/Dijkstra.cpp
+	$(CC) -o Dijkstra.o -c src/juego/grafo/Dijkstra.cpp
+	
+Grafo.o: src/juego/grafo/Grafo.cpp
+	$(CC) -o Grafo.o -c src/juego/grafo/Grafo.cpp
+
+Vertice.o: src/juego/grafo/Vertice.cpp
+	$(CC) -o Vertice.o -c src/juego/grafo/Vertice.cpp
 
 valgrind:
 	valgrind --tool=memcheck --error-exitcode=1 --leak-check=full --show-leak-kinds=all ./andypolis
