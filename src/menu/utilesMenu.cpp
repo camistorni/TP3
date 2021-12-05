@@ -54,7 +54,6 @@ void procesarOpcionesMenu(Juego* juego, int opcion) {
 }
 
 void comenzarPartida(Juego* juego) {
-	cout << "comenzarPartida" << endl;
 	seleccionarJugador(juego);
 	solicitarCoordenadas(juego);
 
@@ -195,6 +194,9 @@ void procesarOpcionesSubmenu(Juego* juego, int opcion) {
 			break;
 
 		case JUGADOR_MOVERSE_A_UNA_COORDENADA:
+			juego -> crearCaminos();
+			//int* ubicacionActual = juego -> obtenerJugador() -> obtenerUbicacion();
+			juego -> mostrarCaminoMinimo("1, 1", "2, 3");
             break;
 
 		case JUGADOR_FINALIZAR_TURNO:
@@ -277,7 +279,7 @@ void consultarCoordenada(Juego* juego) {
 // *************** GENERALES ***************
 
 void mostrarMenu(Juego* juego) {
-	juego -> obtenerJugadorActivo() < 0 ?  mostrarMenuPrincipal() : mostrarSubmenu(juego);
+	(juego -> obtenerJugadorActivo() < 0 && juego -> esPartidaNueva() == true)	?  mostrarMenuPrincipal() : mostrarSubmenu(juego);
 }
 
 void pedirOpcion(int* opcion) {

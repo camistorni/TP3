@@ -23,6 +23,7 @@ class Juego{
 		Jugador** jugadores;
 		int jugadorActivo;
 		int cantidadEdificios, cantidadMateriales;
+		bool partidaNueva;
 
 		//int cantidadMateriales, cantidadEdificios, cantidadUbicaciones;
 	
@@ -39,6 +40,7 @@ class Juego{
 		void establecerJugadorActivo(int jugador);
 		Edificio* obtenerEdificio(std::string nombreEdificio);
 		Mapa* obtenerMapa();
+		bool esPartidaNueva();
 		
 		//Precondiciones: -
 		//Postcondiciones: Guarda los datos de todos los archivos

@@ -24,6 +24,7 @@ Juego::Juego () {
 	jugadores[1] = new Jugador("Jugador 2");
 	cantidadMateriales = 0;
 	jugadorActivo = -1;
+	partidaNueva = false;
 	leerMateriales();
 	//leerOpcionesEdificios();
 	leerMapa();
@@ -283,7 +284,7 @@ void Juego::recolectarRecursos(){
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
-void leerCoordenadas (fstream &archivoUbicaciones, int* fila, int* columna){
+void leerCoordenadas (fstream &archivoUbicaciones, int* fila, int* columna) {
 	char aux;
     archivoUbicaciones >> aux;
     archivoUbicaciones >> *fila;
@@ -292,7 +293,7 @@ void leerCoordenadas (fstream &archivoUbicaciones, int* fila, int* columna){
     archivoUbicaciones >> aux;
 }
 
-void colocarMateriales (fstream &archivoUbicaciones, Mapa* mapa){
+void colocarMateriales (fstream &archivoUbicaciones, Mapa* mapa) {
 	cout << "Materiales:" << endl;
 	int fila, columna;
 	std::string nombre;
@@ -313,10 +314,11 @@ void colocarMateriales (fstream &archivoUbicaciones, Mapa* mapa){
 		}
     }
 }
-void colocarPesonaje (fstream &archivoUbicaciones, Mapa* mapa, int jugador) {
+
+void colocarJugador (fstream &archivoUbicaciones, Mapa* mapa, int jugador) {
 	int fila, columna;
     leerCoordenadas(archivoUbicaciones, &fila, &columna);
-	Casillero*  casillero = mapa -> obtenerCasillero(fila, columna);
+	Casillero* casillero = mapa -> obtenerCasillero(fila, columna);
 	if (casillero -> obtenerCaracter() == CARACTER_VACIO){
 		cout << "Se colocó al Jugador " << jugador + 1 << " en la posición (" << fila << ", " << columna << ")" << endl;
 		casillero -> setearJugador(jugador);
@@ -325,8 +327,7 @@ void colocarPesonaje (fstream &archivoUbicaciones, Mapa* mapa, int jugador) {
 	}
 }
 
-
-void colocarEdificiosPersonaje (fstream &archivoUbicaciones, Juego* juego, int jugador){
+void colocarEdificiosJugador (fstream &archivoUbicaciones, Juego* juego, int jugador) {
 	int fila, columna;
 	std::string nombre;
 	while(archivoUbicaciones >> nombre && nombre != "2"){
@@ -346,14 +347,26 @@ void colocarEdificiosPersonaje (fstream &archivoUbicaciones, Juego* juego, int j
     }
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 
-void Juego::leerUbicaciones(){
+bool Juego::esPartidaNueva() {
+	return partidaNueva;
+}
+
+void Juego::leerUbicaciones() {
 	fstream archivoUbicaciones(PATH_UBICACIONES, ios::in);
-	colocarMateriales(archivoUbicaciones, mapa);
-	colocarPesonaje(archivoUbicaciones, mapa, 0);
-	colocarEdificiosPersonaje(archivoUbicaciones, this, 0);
-	colocarPesonaje(archivoUbicaciones, mapa, 1);
-	colocarEdificiosPersonaje(archivoUbicaciones, this, 1);
+	if(!archivoUbicaciones.is_open())
+		partidaNueva = true;
+	else {
+		partidaNueva = false;
+		jugadorActivo = 0;
+		colocarMateriales(archivoUbicaciones, mapa);
+		colocarJugador(archivoUbicaciones, mapa, 0);
+		colocarEdificiosJugador(archivoUbicaciones, this, 0);
+		colocarJugador(archivoUbicaciones, mapa, 1);
+		colocarEdificiosJugador(archivoUbicaciones, this, 1);
+	}
+	
 	archivoUbicaciones.close();
 }
 

@@ -42,6 +42,7 @@ class Jugador {
 
         int obtenerEnergia();
         int* obtenerObjetivos();
+        int* obtenerUbicacion();
         Material** obtenerMateriales();
         Material obtenerMaterial(int material);
 

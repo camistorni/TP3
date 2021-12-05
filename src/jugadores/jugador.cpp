@@ -37,6 +37,10 @@ int* Jugador::obtenerObjetivos() {
     return objetivos;
 }
 
+int* Jugador::obtenerUbicacion() {
+    return ubicacion;
+}
+
 Material** Jugador::obtenerMateriales() {
     return materiales;
 }
