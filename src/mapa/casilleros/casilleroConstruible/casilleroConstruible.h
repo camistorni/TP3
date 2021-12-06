@@ -9,8 +9,8 @@ class CasilleroConstruible: public Casillero{
 	private:
 		bool construido;
 		Edificio* edificio;
-		int estadoEdifio;
-		int propietarioEdificio;
+		int estadoEdifio; // 0 no hay nada, 1 dañado, 2 construido
+		int propietarioEdificio; // dice de quien es el edificio
 	public:
 		CasilleroConstruible();
 		~CasilleroConstruible();

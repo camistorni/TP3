@@ -8,7 +8,7 @@ Material::Material(string nombreMaterial, int cantidadMaterial){
 	this -> nombreMaterial = nombreMaterial;
 	this -> cantidadMaterial = cantidadMaterial;
 }
-string Material::obtenerNombreMaterial(){
+string Material::obtenerNombreMaterial() {
 	return this -> nombreMaterial;
 }
 

@@ -51,6 +51,7 @@ class Jugador {
         void establecerMaterial(Material* vectorMateriales);
         void establecerCantidadMateriales(int cantidadMateriales);
 
+        void agregarEnergia(int energiaAgregada);
         void seleccionarObjetivos();
 
         //Precondiciones: Se tiene que haber leído bien el archivo de materiales

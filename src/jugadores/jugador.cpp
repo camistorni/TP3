@@ -19,15 +19,15 @@ Jugador::Jugador(std::string nombreJugador) {
     constructorCumplido = 
     armadoCumplido = 
     extremistaCumplido = false;
-    // HAY QUE LIBERAR ESTO
     objetivos = new int[3];
     seleccionarObjetivos();
-    // HAY QUE LIBERAR ESTO
     ubicacion = new int[2];
 };
 
-
-Jugador::~Jugador() {}
+Jugador::~Jugador() {
+    delete[] objetivos;
+    delete[] ubicacion;
+}
 
 int Jugador::obtenerEnergia() {
     return energia;
@@ -47,6 +47,13 @@ Material** Jugador::obtenerMateriales() {
 
 void Jugador::establecerEnergia(int cantidadEnergia) {
     energia = cantidadEnergia;
+}
+
+void Jugador::agregarEnergia(int energiaAgregada) {
+    if(energia + energiaAgregada <= CANTIDAD_MAXIMA_ENERGIA)
+        energia += energiaAgregada;
+    else
+        energia = CANTIDAD_MAXIMA_ENERGIA;
 }
 
 void Jugador::establecerCoordenadas(int fila, int columna) {
