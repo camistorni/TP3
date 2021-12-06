@@ -33,15 +33,19 @@ Juego::Juego () {
 
 Juego::~Juego() {
 	cerrarMateriales();	
+	//cerrarUbicaciones();
+	//cerrarMapa();
 	for(int i = 0; i < 2; i++) {
 		delete jugadores[i];
 	}
 	delete[] jugadores;
 	jugadores = NULL;
-	
-	
-	//cerrarUbicaciones();
-	//cerrarMapa();
+	delete mapa;
+	//mapa = NULL;
+	/*for(int j = 0; j < cantidadEdificios; j++) {
+		delete listaEdificios[j];
+	}
+	delete[] listaEdificios;*/
 }
 
 Jugador** Juego::obtenerJugadores(){

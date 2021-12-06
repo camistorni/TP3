@@ -1,6 +1,7 @@
 los grafos no funcionan
 si existe un archivo con ubicaciones.txt el programa tiene que empezar directo con el submenu
 las funciones de cerrar todos los archivos menos materiales
+si no existe el archivo de materiales, escribirlo con todos los valores en 0
 falta:
     MENU:   
         modificar edificio por nombre

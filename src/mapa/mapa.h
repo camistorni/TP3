@@ -9,7 +9,6 @@ class Mapa{
 		  int cantidadFilas;
 		  int cantidadColumnas;
 		  Casillero*** casilleros;
-
 		
 	public:
 	

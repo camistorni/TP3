@@ -3,8 +3,10 @@
 #include "casillero.h"
 
 
-Casillero::Casillero(){}
-Casillero::~Casillero(){}
+Casillero::Casillero() {}
+Casillero::~Casillero() {
+    std::cout << "en el destructor de casillero" << std::endl;
+}
 
 void Casillero::setearTipo(char tipo){
     this -> tipo = tipo;

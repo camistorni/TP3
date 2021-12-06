@@ -18,6 +18,16 @@ Mapa::Mapa(int cantFilas, int cantColumnas){
     }
 }
 
+Mapa::~Mapa(){
+	for(int i = 0; i < cantidadFilas; i++) {
+		for(int j = 0; j < cantidadColumnas; j++) {
+			delete casilleros[i][j];
+		}
+		delete[] casilleros[i];
+	}
+	delete [] casilleros;
+};
+
 int Mapa::obtenerCantidadFilas(){
     return cantidadFilas;
 }
@@ -112,10 +122,4 @@ void Mapa::pedirCoordenada(int &fila, int &columna){
 
 }
 
-Mapa::~Mapa(){
 
-    for (int i = 0; i < cantidadFilas; i ++){
-        delete [] casilleros [i];
-    }
-    delete [] casilleros;
-};

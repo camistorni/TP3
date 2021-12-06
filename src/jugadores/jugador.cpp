@@ -6,7 +6,7 @@ using namespace std;
 
 Jugador::Jugador(std::string nombreJugador) {
     nombre = nombreJugador;
-    edificiosContruidos = *new std::string * [0];
+    edificiosContruidos = new string[0];
     energia = 50;
     andycoinsRecolectadas = bombasCompradas = bombasUsadas = 0;
     comprarAndypolisCumplido = 
@@ -25,6 +25,7 @@ Jugador::Jugador(std::string nombreJugador) {
 };
 
 Jugador::~Jugador() {
+    delete[] edificiosContruidos;
     delete[] objetivos;
     delete[] ubicacion;
 }
