@@ -8,34 +8,39 @@ using namespace std;
 
 ABB::ABB(){
 	this->raiz = NULL;
+	this->cantidadNodos = 0;
 }
 
-
-Nodo* ABB::insertarNodo(Nodo *nodo, tipo clave, string datos){
+NodoAbb* ABB::insertarNodo(NodoAbb *nodo, tipo clave, int* datos){
 
 	if(nodo == NULL)
-		nodo = new Nodo(clave, datos);
+		nodo = new NodoAbb(clave, datos);
 		
 	else if(clave < nodo->obtenerClave())
 		nodo->setIzq(insertarNodo(nodo->obtenerIzq(), clave, datos), nodo);
 	
 	else
 		nodo->setDer(insertarNodo(nodo->obtenerDer(), clave, datos), nodo);
-
+	
 	return nodo;
 }
 
 
-void ABB::insertarNodo(tipo clave, string datos){
+void ABB::insertarNodo(tipo clave, int* datos){
 	this->raiz = insertarNodo(this->raiz, clave, datos);
+	cantidadNodos++;
 }
 
 
-void ABB::imprimirOrdenado(Nodo *nodo){
+void ABB::imprimirOrdenado(NodoAbb *nodo){
 	
 	if(nodo != NULL){
 		imprimirOrdenado(nodo->obtenerIzq());
-		cout << nodo->obtenerClave() << ": " << nodo->obtenerDatos() << endl;
+		cout << nodo->obtenerClave() << ": ";
+		
+		for(int i = 0; i < 3; i++)
+			cout << nodo->obtenerDatos()[i] << ' ';
+		cout << endl;
 		imprimirOrdenado(nodo->obtenerDer());
 	}
 }
@@ -44,8 +49,25 @@ void ABB::imprimirOrdenado(){
 	imprimirOrdenado(this->raiz);
 }
 
+void ABB::imprimirTablaOrdenada(NodoAbb *nodo){
+	
+	if(nodo != NULL){
+		imprimirTablaOrdenada(nodo->obtenerIzq());
+		long espacio = largo - nodo->obtenerClave().length();
+		cout << "             " << nodo->obtenerClave() << setw(10);
+		
+		for(int i = 0; i < 3; i++)
+			cout << nodo->obtenerDatos()[i] << setw(16);
+		cout << endl;
+		imprimirTablaOrdenada(nodo->obtenerDer());
+	}
+}
 
-Nodo* ABB::buscar(Nodo *nodo, tipo clave){
+void ABB::imprimirTablaOrdenada(){
+	imprimirTablaOrdenada(this->raiz);
+}
+
+NodoAbb* ABB::buscar(NodoAbb *nodo, tipo clave){
 	
 	if(nodo == NULL || nodo->obtenerClave() == clave)
 		return nodo;
@@ -57,15 +79,15 @@ Nodo* ABB::buscar(Nodo *nodo, tipo clave){
 }
 
 
-bool ABB::buscar(tipo clave){
-	Nodo *buscado = buscar(this->raiz, clave);
-	return buscado != NULL;
+NodoAbb* ABB::buscar(tipo clave){
+	NodoAbb *buscado = buscar(this->raiz, clave);
+	return buscado;
 }
 
-tipo ABB::encontrarMin(Nodo *nodo){
+tipo ABB::encontrarMin(NodoAbb *nodo){
 	
 	if(nodo == NULL)
-		return -1;
+		return NULL;
 	
 	else if(nodo->obtenerIzq() == NULL)
 		return nodo->obtenerClave();
@@ -80,10 +102,10 @@ tipo ABB::encontrarMin(){
 }
 
 
-tipo ABB::encontrarMax(Nodo *nodo){
+tipo ABB::encontrarMax(NodoAbb *nodo){
 	
 	if(nodo == NULL)
-		return -1;
+		return NULL;
 	
 	else if(nodo->obtenerDer() == NULL)
 		return nodo->obtenerClave();
@@ -99,12 +121,12 @@ tipo ABB::encontrarMax(){
 }
 
 
-tipo ABB::sucesor(Nodo *nodo){
+tipo ABB::sucesor(NodoAbb *nodo){
 	if(nodo->obtenerDer() != NULL)
 		return encontrarMin(nodo->obtenerDer());
 	
-	Nodo *sucesor = NULL;
-	Nodo *ancestro = this->raiz;
+	NodoAbb *sucesor = NULL;
+	NodoAbb *ancestro = this->raiz;
 	
 	while(ancestro != nodo){
 		if(nodo->obtenerClave() < ancestro->obtenerClave()){
@@ -119,20 +141,20 @@ tipo ABB::sucesor(Nodo *nodo){
 }
 
 tipo ABB::sucesor(tipo clave){
-	Nodo *nodo = this->buscar(this->raiz, clave);
+	NodoAbb *nodo = this->buscar(this->raiz, clave);
 	
 	if(nodo == NULL)
-		return -1;
+		return NULL;
 	else return sucesor(nodo);
 }
 
 
-tipo ABB::predecesor(Nodo *nodo){
+tipo ABB::predecesor(NodoAbb *nodo){
 	if(nodo->obtenerIzq() != NULL)
 		return encontrarMax(nodo->obtenerIzq());
 	
-	Nodo *sucesor = NULL;
-	Nodo *ancestro = this->raiz;
+	NodoAbb *sucesor = NULL;
+	NodoAbb *ancestro = this->raiz;
 	
 	while(ancestro != nodo){
 		if(nodo->obtenerClave() < ancestro->obtenerClave()){
@@ -148,15 +170,15 @@ tipo ABB::predecesor(Nodo *nodo){
 }
 
 tipo ABB::predecesor(tipo clave){
-	Nodo *nodo = this->buscar(this->raiz, clave);
+	NodoAbb *nodo = this->buscar(this->raiz, clave);
 	
 	if(nodo == NULL)
-		return -1;
+		return NULL;
 	else return predecesor(nodo);
 }
 
 
-Nodo* ABB::eliminarNodo(Nodo *nodo, tipo clave){
+NodoAbb* ABB::eliminarNodo(NodoAbb *nodo, tipo clave){
 	
 	if(nodo == NULL)
 		return NULL;
@@ -168,7 +190,7 @@ Nodo* ABB::eliminarNodo(Nodo *nodo, tipo clave){
 		}else if(nodo->hijoDerecho()){
 			nodo->obtenerDer()->setPadre(nodo->obtenerPadre());
 			
-			Nodo *aux = nodo;
+			NodoAbb *aux = nodo;
 			nodo = aux->obtenerDer();
 			delete aux;
 		}
@@ -176,7 +198,7 @@ Nodo* ABB::eliminarNodo(Nodo *nodo, tipo clave){
 		else if(nodo->hijoIzquierdo()){
 			nodo->obtenerIzq()->setPadre(nodo->obtenerPadre());
 			
-			Nodo *aux = nodo;
+			NodoAbb *aux = nodo;
 			nodo = aux->obtenerIzq();
 			delete aux;
 		}
@@ -200,9 +222,10 @@ Nodo* ABB::eliminarNodo(Nodo *nodo, tipo clave){
 
 void ABB::eliminarNodo(tipo clave){
 	this->raiz = eliminarNodo(this->raiz, clave);
+	cantidadNodos--;
 }
 
-void ABB::cerrarDiccionario(Nodo *nodo){
+void ABB::cerrarDiccionario(NodoAbb *nodo){
 	if(nodo != NULL){
 		this->cerrarDiccionario(nodo->obtenerIzq());
 		this->cerrarDiccionario(nodo->obtenerDer());

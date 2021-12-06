@@ -8,6 +8,7 @@
 #include "../edificios/edificio.h"
 #include "../jugadores/jugador.h"
 #include "grafo/Grafo.h"
+#include "../diccionario/ABB.h"
 
 #include <iostream>
 #include "../constantes/constantes.h"
@@ -19,6 +20,7 @@ class Juego{
 	private:
 		Mapa* mapa;
 		Grafo *grafo;
+		ABB *abb;
 		Edificio** listaEdificios;
 		Jugador** jugadores;
 		int jugadorActivo;
@@ -31,7 +33,7 @@ class Juego{
 		//Costructor 
 		Juego();
 		~Juego();
-		void mostrarGrafo();
+
 		int obtenerCantidadMateriales();
 		Jugador* obtenerJugador();
 		int obtenerJugadorActivo();

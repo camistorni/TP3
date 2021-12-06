@@ -11,7 +11,7 @@ Edificio* Parser::procesarEntrada(){
     
     Edificio* edificio;
     
-    if (this -> edificio() == "aserradero"){
+   /* if (this -> edificio() == "aserradero"){
         edificio = new Aserradero();
     }
     else if (this -> edificio() == "escuela"){

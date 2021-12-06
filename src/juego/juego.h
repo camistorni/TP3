@@ -8,6 +8,7 @@
 #include "../edificios/edificio.h"
 #include "../jugadores/jugador.h"
 #include "grafo/Grafo.h"
+#include "../diccionario/ABB.h"
 
 #include <iostream>
 #include "../constantes/constantes.h"
@@ -19,6 +20,7 @@ class Juego{
 	private:
 		Mapa* mapa;
 		Grafo *grafo;
+		ABB *abb;
 		Edificio** listaEdificios;
 		Jugador** jugadores;
 		int jugadorActivo;
@@ -157,9 +159,20 @@ class Juego{
 		//Postcondiciones: Guarda los edificios en el archivo "edificios" y elimina la lista. Guarda los materiales en el archivo "materiales" y elimina la lista. Guarda las ubicaciones en el archivo "ubicaciones" y elimina la lista. Libera la memoria utilizada para el mapa
 		void guardarYSalir();
 		
+		//PRE: -
+		//POS: Crea los vértices del grafo
 		void crearVertices(int fila, int columna);
+		
+		//PRE: Los vértices deben estar bien agregados
+		//POS: Crea caminos entre cada vértice del grafo
 		void crearCaminos();
+		
+		//PRE: -
+		//POS: Devuelve los valores de cada casillero del mapa
 		int valoresCaminos(int x, int y);
+		
+		//PRE: -
+		//POS: Imprime el camino minimo ingresado
 		void mostrarCaminoMinimo(string origen, string destino);
 		
 		

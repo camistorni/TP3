@@ -1,5 +1,5 @@
 CC = g++ -Wall -Werror -Wconversion -g
-OBJS = main.o mapa.o utilesMenu.o materiales.o jugador.o juego.o edificio.o casilleroConstruible.o casilleroInaccesible.o casilleroTransitable.o casillero.o CaminoMinimo.o Dijkstra.o Grafo.o Vertice.o
+OBJS = main.o mapa.o utilesMenu.o materiales.o jugador.o juego.o edificio.o casilleroConstruible.o casilleroInaccesible.o casilleroTransitable.o casillero.o CaminoMinimo.o Dijkstra.o Grafo.o Vertice.o parser.o ABB.o nodo.o
 
 andypolis: $(OBJS)
 	$(CC) -o andypolis $(OBJS)
@@ -49,6 +49,15 @@ Grafo.o: src/juego/grafo/Grafo.cpp
 
 Vertice.o: src/juego/grafo/Vertice.cpp
 	$(CC) -o Vertice.o -c src/juego/grafo/Vertice.cpp
+	
+parser.o: src/edificios/parser.cpp
+	$(CC) -o parser.o -c src/edificios/parser.cpp
+
+ABB.o: src/diccionario/ABB.cpp
+	$(CC) -o ABB.o -c src/diccionario/ABB.cpp
+
+nodo.o: src/diccionario/nodo.cpp
+	$(CC) -o nodo.o -c src/diccionario/nodo.cpp
 
 valgrind:
 	valgrind --tool=memcheck --error-exitcode=1 --leak-check=full --show-leak-kinds=all ./andypolis

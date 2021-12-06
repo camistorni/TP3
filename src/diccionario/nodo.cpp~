@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Nodo::Nodo(tipo clave, string *datos){
+NodoAbb::NodoAbb(tipo clave, int* datos){
 	this->clave = clave;
 	this->datos = datos;
 	this->der = NULL;
@@ -12,65 +12,65 @@ Nodo::Nodo(tipo clave, string *datos){
 }
 
 
-tipo Nodo::obtenerClave(){
+tipo NodoAbb::obtenerClave(){
 	return clave;
 }
 
-string Nodo::obtenerDatos(){
+string NodoAbb::obtenerDatos(){
 	return datos;
 }
-Nodo* Nodo::obtenerDer(){
+NodoAbb* NodoAbb::obtenerDer(){
 	return der;
 }
 
-Nodo* Nodo::obtenerIzq(){
+NodoAbb* NodoAbb::obtenerIzq(){
 	return izq;
 }
 
-Nodo* Nodo::obtenerPadre(){
+NodoAbb* NodoAbb::obtenerPadre(){
 	return padre;
 }
 
-void Nodo::setClave(tipo clave){
+void NodoAbb::setClave(tipo clave){
 	this->clave = clave;
 }
 
-void Nodo::setDatos(string *datos){
+void NodoAbb::setDatos(string datos){
 	this->datos = datos;
 }
 
-void Nodo::setDer(Nodo *der, Nodo *padre){
+void NodoAbb::setDer(NodoAbb *der, NodoAbb *padre){
 	this->der = der;
 	this->padre = padre;
 }
 
-void Nodo::setDer(Nodo *der){
+void NodoAbb::setDer(NodoAbb *der){
 	this->der = der;
 }
 
-void Nodo::setIzq(Nodo *izq, Nodo *padre){
+void NodoAbb::setIzq(NodoAbb *izq, NodoAbb *padre){
 	this->izq = izq;
 	this->padre = padre;
 }
 
-void Nodo::setIzq(Nodo *izq){
+void NodoAbb::setIzq(NodoAbb *izq){
 	this->izq = izq;
 }
 
-void Nodo::setPadre(Nodo *padre){
+void NodoAbb::setPadre(NodoAbb *padre){
 	this->padre = padre;
 }
 
 
-bool Nodo::esHoja(){
+bool NodoAbb::esHoja(){
 	return (this->obtenerDer() == NULL && this->obtenerIzq() == NULL);
 }
 
-bool Nodo::hijoDerecho(){
+bool NodoAbb::hijoDerecho(){
 	return (this->obtenerDer() != NULL && this->obtenerIzq() == NULL);
 }
 
-bool Nodo::hijoIzquierdo(){
+bool NodoAbb::hijoIzquierdo(){
 	return (this->obtenerDer() == NULL && this->obtenerIzq() != NULL);
 }
 

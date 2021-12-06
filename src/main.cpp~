@@ -14,10 +14,10 @@ int main(){
 		mostrarMenu(juego);
 		pedirOpcion(&opcion);
 	}*/
-	
-	juego->crearCaminos();
-	juego->mostrarGrafo();
-	juego->mostrarCaminoMinimo("0,0", "2,3");
+	juego->leerOpcionesEdificios();
+	juego->listarEdificios();
+	//juego->crearCaminos();
+	//juego->mostrarCaminoMinimo("0,0", "2,3");
 	//juego->guardarYSalir();
 	//juego->guardarYSalir();
 	return 0;

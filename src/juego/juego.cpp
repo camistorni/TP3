@@ -13,6 +13,8 @@
 #include "../mapa/casilleros/casilleroInaccesible/casilleroInaccesible.h"
 #include "../mapa/casilleros/casilleroTransitable/casilleroTransitable.h"
 #include "../constantes/constantes.h"
+#include "../diccionario/ABB.h"
+#include "../diccionario/nodo.h"
 
 using namespace std;
 
@@ -23,6 +25,7 @@ Juego::Juego () {
 	jugadores[0] = new Jugador("Jugador 1");
 	jugadores[1] = new Jugador("Jugador 2");
 	grafo = new Grafo();
+	abb = new ABB();
 	cantidadMateriales = 0;
 	jugadorActivo = -1;
 	leerMateriales();
@@ -134,10 +137,10 @@ bool Juego::verificarMateriales(string nombreIngresado, int piedraNecesaria, int
 void Juego::leerOpcionesEdificios(){
 /////////////////////////// Revisar cuando esté el diccionario //////////////77///
 
-	/*
+	
 	fstream archivoEdificios(PATH_EDIFICIOS, ios::in);
 
-	Edificio* edificio;
+	//Edificio* edificio;
     string lecturaEdificios[CANT_CARACTERISTICAS_EDIFICIOS];
 
 
@@ -150,41 +153,51 @@ void Juego::leerOpcionesEdificios(){
 		
 		
 		Parser parser = Parser(lecturaEdificios);
-		edificio = parser.procesarEntrada();
+		//edificio = parser.procesarEntrada();
+		int *datosEdificios = new int;
+		datosEdificios[0] = parser.piedra();
+		datosEdificios[1] = parser.madera();
+		datosEdificios[2] = parser.metal();
+		
+		this->abb->insertarNodo(parser.edificio(), datosEdificios);
 
-
-		agregarEdificio(edificio);
+		//agregarEdificio(edificio);
 
 	}
 	
 	archivoEdificios.close();
-	*/
 }
 
 bool Juego::verificarEdificio(string nombreIngresado, int *piedraNecesaria, int *maderaNecesaria, int *metalNecesario, int *construidos, int *cantidadMax){
-
-	//////////////////////////////// Diccionario etc
+	////////////////Falta cant max y construidos por jugador///////////////
+	
 	/*
 	bool existe = false;
-	int i = 0;
-	while(!existe || i < cantidadEdificios) {
+	
+	for(int i = 0; i < cantidadEdificios; i++){
 		//Verifica que exista el edificio ingresado
-		if(listaEdificios[i]->obtenerTipo() == nombreIngresado){
-			*piedraNecesaria = listaEdificios[i]->obtenerPiedra();
-			*maderaNecesaria = listaEdificios[i]->obtenerMadera();
-			*metalNecesario = listaEdificios[i]->obtenerMetal();
-			*construidos = listaEdificios[i]->obtenerCantConstruidos();
+		if(this->abb->buscar(nombreIngresado)->obtenerClave() == nombreIngresado){
+			*piedraNecesaria = this->abb->buscar(nombreIngresado)->obtenerDatos()[0];
+			*maderaNecesaria = this->abb->buscar(nombreIngresado)->obtenerDatos()[1];
+			*metalNecesario = this->abb->buscar(nombreIngresado)->obtenerDatos()[2];
+			
+			*construidos = listaEdificios[i]->obtenerCantConstruidos(); 
 			*cantidadMax = listaEdificios[i]->obtenerCantMaxConstruido();
 			existe = true;
 		}
+	}
+	
+	if(!existe){
+		cout << "El edificio '" << nombreIngresado << "' no existe" << endl << endl;
+		return false;
 	}
 	*/
 	return true;
 }
 
 void Juego::listarEdificiosConstruidos(){
-/////////////////////////// Revisar cuando esté el diccionario //////////////77///
-
+	////////////////////Arreglar cantidad construidos y edificios construidos ///////////////////
+	////////////////////Falta alguna manera de imprimir solo nombres/////////////////////////////
 /*
 	int construidosTotal = 0;
 	long nombreMasLargo = 0;
@@ -198,15 +211,15 @@ void Juego::listarEdificiosConstruidos(){
 	std::cout << "            ═════════════════════════════════════════════════════════" << endl;
 	
 	for(int i = 0; i < this ->cantidadEdificios; i++){
-		nombre = listaEdificios[i]->obtenerTipo().length();
+		nombre = this->abb->obtenerNodo(i)->obtenerClave().length();
 		if(nombre > nombreMasLargo)
 			nombreMasLargo = nombre;
 	}
 	for(int i = 0; i < this ->cantidadEdificios; i++){
 		if(this -> listaEdificios[i] -> obtenerCantConstruidos() != 0){
 		
-			long espacio = nombreMasLargo - listaEdificios[i]->obtenerTipo().length();
-			std::cout << "             " << listaEdificios[i]->obtenerTipo();
+			long espacio = nombreMasLargo - this->abb->obtenerNodo(i)->obtenerClave().length();
+			std::cout << "             " << this->abb->obtenerNodo(i)->obtenerClave();
 			std::cout << setw(8 + (int)espacio);
 			std::cout << this -> listaEdificios[i] -> obtenerCantConstruidos() << setw(20);
 			
@@ -219,7 +232,7 @@ void Juego::listarEdificiosConstruidos(){
 	}
 	std::cout << endl << endl;
 	std::cout << "Cantidad total de edificios construidos: " << construidosTotal << endl << endl;
-*/
+	*/
 }
 
 void Juego::agregarEdificio(Edificio* edificio){
@@ -244,39 +257,48 @@ void Juego::agregarEdificio(Edificio* edificio){
 }
 
 void Juego::listarEdificios(){
-/////////////////////////// Revisar cuando esté el diccionario //////////////77///
-
-	/*
+/////////////////////////// Falta max const y brinda material/////////////////////
+	
 	cout << endl << endl;
 	cout << "Lista de edificios:" << endl << endl;
 	cout << "            ══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════" << endl;
 	cout << "             Nombre\t\tPiedra\t\tMadera\t\tMetal\t\tConstruidos\tTodavía puede construir\t\t¿Brinda material?"<< endl;
 	cout << "            ══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════" << endl;
 	
-	long nombreMasLargo = 0;
+	abb->imprimirTablaOrdenada();
+	
+	/*long nombreMasLargo = 0;
 	long nombre = 0;
 	for(int i = 0; i < this -> cantidadEdificios; i++){
-		nombre = this -> listaEdificios[i] -> obtenerTipo().length();
+		nombre = this->abb->obtenerNodo(i).obtenerClave().length();
 		if(nombre > nombreMasLargo)
 			nombreMasLargo = nombre;
-	}	
+	}*/
+	
+	/*
 	for(int i = 0; i < this->cantidadEdificios; i++){
-		long espacio = nombreMasLargo - this -> listaEdificios[i] -> obtenerTipo().length();
-		cout << "             " << this -> listaEdificios[i] -> obtenerTipo();
+		long espacio = nombreMasLargo - this->abb->obtenerNodo(i).obtenerClave().length();
+		cout << "             " << this->abb->obtenerNodo(i).obtenerClave();
 		cout << setw(5 + (int)espacio);
-		cout << this -> listaEdificios[i] -> obtenerPiedra() << setw(16);
-		cout << this -> listaEdificios[i] -> obtenerMadera() << setw(16);
-		cout << this -> listaEdificios[i] -> obtenerMetal() << setw(23);
-		cout << this -> listaEdificios[i] -> obtenerCantMaxConstruido() - this -> listaEdificios[i] -> obtenerCantConstruidos() << endl;
-	}
-	*/
+		cout << this->abb->obtenerNodo(i).obtenerDatos()[0] << setw(16);
+		cout << this->abb->obtenerNodo(i).obtenerDatos()[1] << setw(16);
+		cout << this->abb->obtenerNodo(i).obtenerDatos()[2] << setw(23);
+		//cout << this -> listaEdificios[i] -> obtenerCantMaxConstruido() - this -> listaEdificios[i] -> obtenerCantConstruidos() << endl;
+		
+		if(this -> listaEdificios[i] -> brindaMaterial())
+			cout << " Sí"  << endl;
+		else
+			cout << "No" << endl;
+	}*/
+	cout << endl << endl;
+	
 }
 
 void Juego::recolectarRecursos(){
 	/*
 	for(int i = 0; i < this -> cantidadEdificios; i++){
 		if(this -> listaEdificios[i] -> brindaMaterial())
-			agregarRecursos(this -> listaEdificios[i] -> obtenerTipo());		
+			agregarRecursos(this->abb->obtenerNodo(i).obtenerClave());		
 	}
 	*/
 	cout << "Se recolectaron todos los recursos disponibles" << endl;
