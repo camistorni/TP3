@@ -67,6 +67,14 @@ void Mapa::mostrarMapa() {
 }
 
 
+string obtenerCoordenadaJugador(){
+	for(int i = 0; i < cantidadFilas; i++){
+		for(int j = 0; j < cantidadColumnas; j++){
+			
+		}
+	
+	}
+}
 Casillero* Mapa::obtenerCasillero(int fila, int columna){
 	return casilleros[fila][columna];
 }

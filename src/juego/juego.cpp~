@@ -67,10 +67,12 @@ Mapa* Juego::obtenerMapa() {
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
 void Juego::leerMateriales(){
-
-	fstream archivoMateriales(PATH_MATERIALES, ios::in);
 	
 	Material *material;
+	
+	fstream archivoMateriales(PATH_MATERIALES, ios::in);
+	
+	
 	string nombre, cantidadMaterialJugador1, cantidadMaterialJugador2;
 	
 	while(archivoMateriales >> nombre){
@@ -196,7 +198,8 @@ bool Juego::verificarEdificio(string nombreIngresado, int *piedraNecesaria, int 
 }
 
 void Juego::listarEdificiosConstruidos(){
-	////////////////////Areglar cantidad construidos y edificios construidos ///////////////////
+	////////////////////Arreglar cantidad construidos y edificios construidos ///////////////////
+	////////////////////Falta alguna manera de imprimir solo nombres/////////////////////////////
 /*
 	int construidosTotal = 0;
 	long nombreMasLargo = 0;
@@ -303,6 +306,16 @@ void Juego::recolectarRecursos(){
 	cout << "Se recolectaron todos los recursos disponibles" << endl;
 }
 
+
+void Juego::cerrarEdificios(){
+
+	for(int i = 0; i < this->cantidadEdificios; i++)
+		delete this->listaEdificios[i];
+   
+	delete[] this->listaEdificios;
+}
+
+
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
 void leerCoordenadas (fstream &archivoUbicaciones, int* fila, int* columna){
@@ -396,8 +409,8 @@ void Juego::cerrarUbicaciones(){
 	}
 	cerrarEdificios();
 	archivoUbicaciones.close();
-}
-*/
+}*/
+
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
 void Juego::leerMapa(){
@@ -424,8 +437,6 @@ void Juego::leerMapa(){
 	archivoMapa.close();
 }
 
-// Falta verificar si hay algo construido para ver si se puede construir un edificio, colocar un material, o 
-// posicionar un jugador
 
 bool Juego::verificarCoordenadas(int fila, int columna){
 	
@@ -435,9 +446,13 @@ bool Juego::verificarCoordenadas(int fila, int columna){
 	}
 	
 	if(columna < 0 || columna > mapa->obtenerCantidadColumnas()){
-		cout << "La columna ingresada está fuera de rango. No se puede construir el edificio" << endl;
+		cout << "La columna " << columna << " ingresada está fuera de rango. No se puede construir el edificio" << endl;
 		return false;
 	}
+	if(mapa->obtenerCasillero(fila, columna)->obtenerCaracter() != CARACTER_VACIO){
+		cout << "El casillero (" << fila << "," << columna << ") está ocupado" << endl;
+		return false;
+	}	
 
 	return true;
 }
@@ -525,10 +540,32 @@ int Juego::valoresCaminos(int x, int y){
 }
 
 void Juego::mostrarCaminoMinimo(string origen, string destino){
-	grafo->usarDijkstra();
-	grafo->caminoMinimo(origen, destino);
+	const char* destino2 = destino.c_str();
+	int destinoX = destino2[0] - '0';
+	int destinoY = destino2[2] - '0';
+	
+	if(verificarCoordenadas(destinoX, destinoY)){
+		grafo->usarDijkstra();
+		grafo->caminoMinimo(origen, destino);
+	}
 }
 
+
+string Juego::obtenerCoordenadaJugador(){
+	/*for(int i = 0; i < mapa->obtenerCantidadFilas(); i++){
+		for(int j = 0; j < mapa->obtenerCantidadColumnas(); j++){
+			if((mapa->obtenerCasillero(i, j)->obtenerCaracter() - '0') == obtenerJugadorActivo()){
+				return (to_string(j) + ',' + to_string(i));
+			}
+		}
+	}*/
+	return "0,0";
+}
+
+void Juego::cerrarMapa(){
+	mapa->~Mapa();
+	delete mapa;
+}
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
 void Juego::imprimirMensajeError(string nombre_edificio, string material, int cantidad, int cantidadNecesaria){
@@ -605,5 +642,5 @@ void Juego::lluviaElementos(){
 void Juego::guardarYSalir(){
 	cerrarMateriales();
 	//cerrarUbicaciones();
-	this->obtenerMapa()->~Mapa();
+	cerrarMapa();
 }

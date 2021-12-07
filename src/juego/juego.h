@@ -175,6 +175,8 @@ class Juego{
 		//POS: Imprime el camino minimo ingresado
 		void mostrarCaminoMinimo(string origen, string destino);
 		
+		string obtenerCoordenadaJugador();
+		
 		
 };
 

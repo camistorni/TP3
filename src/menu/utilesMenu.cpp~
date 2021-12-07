@@ -45,6 +45,7 @@ void procesarOpcionesMenu(Juego* juego, int opcion) {
             break;
 
         case MENU_GUARDAR_Y_SALIR:
+        	juego -> guardarYSalir();
             break;
 
         /*default:
@@ -211,6 +212,7 @@ void procesarOpcionesSubmenu(Juego* juego, int opcion) {
 			break;
 
 		case JUGADOR_GUARDAR_Y_SALIR:
+			juego->guardarYSalir();
 			break;
 
 		default:
