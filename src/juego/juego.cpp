@@ -270,6 +270,7 @@ void Juego::listarEdificios(){
 	cout << "             Nombre\t\tPiedra\t\tMadera\t\tMetal\t\tConstruidos\tTodavía puede construir\t\t¿Brinda material?"<< endl;
 	cout << "            ══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════" << endl;
 	
+	cout << setw(16);
 	abb->imprimirTablaOrdenada();
 
 

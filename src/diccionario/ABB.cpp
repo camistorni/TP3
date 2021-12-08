@@ -50,19 +50,19 @@ void ABB::imprimirOrdenado(){
 }
 
 void ABB::imprimirTablaOrdenada(NodoAbb *nodo){
-	
 	if(nodo != NULL){
+
 		imprimirTablaOrdenada(nodo->obtenerIzq());
 
 		long espacio =  obtenerMayorLongitud() - nodo -> obtenerClave().length();
-		cout <<  "             " << nodo->obtenerClave() << setw(10);
 
-		cout << setw(5 + (int)espacio);
+		cout << nodo -> obtenerClave()  << setw(13 + (int)espacio);;
 
 		
 		for(int i = 0; i < 3; i++)
-			cout << nodo->obtenerDatos()[i] << setw(16);
+			cout << nodo -> obtenerDatos()[i];
 		cout << endl;
+
 		imprimirTablaOrdenada(nodo->obtenerDer());
 	}
 }
