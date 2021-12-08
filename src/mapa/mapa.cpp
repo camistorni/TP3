@@ -18,12 +18,35 @@ Mapa::Mapa(int cantFilas, int cantColumnas){
     }
 }
 
+Mapa::~Mapa(){
+	for(int i = 0; i < cantidadFilas; i++) {
+		for(int j = 0; j < cantidadColumnas; j++) {
+			delete casilleros[i][j];
+		}
+		delete[] casilleros[i];
+	}
+	delete [] casilleros;
+};
+
 int Mapa::obtenerCantidadFilas(){
     return cantidadFilas;
 }
 
 int Mapa::obtenerCantidadColumnas(){
     return cantidadColumnas;
+}
+
+int* Mapa::obtenerPosicionJugador(int jugador) {
+	int aux[2];
+	for(int i = 0; i < cantidadFilas; i++) {
+		for(int j = 0; j < cantidadColumnas; j++) {
+			if(casilleros[i][j] -> obtenerJugador() == jugador)
+				aux[0] = i;
+				aux[i] = j;
+		}
+	}
+
+	return aux;
 }
 
 char Mapa::tipoCasillero(int fila, int columna){
@@ -111,10 +134,4 @@ void Mapa::pedirCoordenada(int &fila, int &columna){
 
 }
 
-Mapa::~Mapa(){
 
-    for (int i = 0; i < cantidadFilas; i ++){
-        delete [] casilleros [i];
-    }
-    delete [] casilleros;
-};

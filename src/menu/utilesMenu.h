@@ -11,7 +11,7 @@ void mostrarMenuPrincipal();
 
 // Pre: Recibir la opcion seleccionada
 // Post: Procesa la opcion recibida y realiza la accion correspondiente
-void procesarOpcionesMenu(Juego* juego, int opcion);
+void procesarOpcionesMenu(Juego* juego, int& opcion);
 
 // Pre: -
 // Post: Se encarga de realizar todas las acciones correspondientes a comenzar la partida
@@ -39,7 +39,7 @@ void mostrarInformacion(Juego* juego);
 
 // Pre: Recibir la opcion seleccionada
 // Post: Procesa la opcion recibida y realiza la accion correspondiente
-void procesarOpcionesSubmenu(Juego* juego, int opcion);
+void procesarOpcionesSubmenu(Juego* juego, int& opcion);
 
 // Pre: -
 // Post: Muestra por pantalla los objetivos activos del jugador actual

@@ -2,6 +2,7 @@
 #define CONSTANTESJUGADOR_H
 
 const int CANTIDAD_OBJETIVOS = 3;
+const int CANTIDAD_MAXIMA_ENERGIA = 100;
 
 enum objetivos_t {
     COMPRAR_ANDYPOLIS = 1,

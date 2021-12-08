@@ -25,6 +25,7 @@ class Juego{
 		Jugador** jugadores;
 		int jugadorActivo;
 		int cantidadEdificios, cantidadMateriales;
+		bool partidaNueva;
 
 		//int cantidadMateriales, cantidadEdificios, cantidadUbicaciones;
 	
@@ -41,7 +42,13 @@ class Juego{
 		void establecerJugadorActivo(int jugador);
 		Edificio* obtenerEdificio(std::string nombreEdificio);
 		Mapa* obtenerMapa();
+		bool esPartidaNueva();
 		
+
+		// Pre: -
+		// Post: Guarda los edificios en el archivo "edificios" y elimina la lista. Guarda los materiales en el archivo "materiales" y elimina la lista. Guarda las ubicaciones en el archivo "ubicaciones" y elimina la lista. Libera la memoria utilizada para el mapa
+		void guardarYSalir();
+
 		//Precondiciones: -
 		//Postcondiciones: Guarda los datos de todos los archivos
 		void leerArchivos();
@@ -154,10 +161,6 @@ class Juego{
 		//Precondiciones: La opcion ingresada debe ser válida
 		//Postcondiciones: Procesa la opcion ingresada por el usuario
 		void procesarOpciones(int opcion);
-
-		//Precondiciones: -
-		//Postcondiciones: Guarda los edificios en el archivo "edificios" y elimina la lista. Guarda los materiales en el archivo "materiales" y elimina la lista. Guarda las ubicaciones en el archivo "ubicaciones" y elimina la lista. Libera la memoria utilizada para el mapa
-		void guardarYSalir();
 		
 		//PRE: -
 		//POS: Crea los vértices del grafo

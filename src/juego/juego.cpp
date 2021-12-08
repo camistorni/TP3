@@ -28,20 +28,32 @@ Juego::Juego () {
 	abb = new ABB();
 	cantidadMateriales = 0;
 	jugadorActivo = -1;
+	partidaNueva = false;
 	leerMateriales();
 	//leerOpcionesEdificios();
 	leerMapa();
 	leerUbicaciones();
 }
 
-Jugador** Juego::obtenerJugadores(){
-	return jugadores;
-}
-
-Juego::~Juego(){
-	//cerrarMateriales();
+Juego::~Juego() {
+	cerrarMateriales();	
 	//cerrarUbicaciones();
 	//cerrarMapa();
+	for(int i = 0; i < 2; i++) {
+		delete jugadores[i];
+	}
+	delete[] jugadores;
+	jugadores = NULL;
+	delete mapa;
+	//mapa = NULL;
+	/*for(int j = 0; j < cantidadEdificios; j++) {
+		delete listaEdificios[j];
+	}
+	delete[] listaEdificios;*/
+}
+
+Jugador** Juego::obtenerJugadores(){
+	return jugadores;
 }
 
 int Juego::obtenerCantidadMateriales() {
@@ -64,9 +76,15 @@ Mapa* Juego::obtenerMapa() {
 	return mapa;
 }
 
+bool Juego::esPartidaNueva() {
+	return partidaNueva;
+}
+
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
-void Juego::leerMateriales(){
+void Juego::leerMateriales() {
+
+	fstream archivoMateriales(PATH_MATERIALES, ios::in);
 	
 	Material *material;
 	
@@ -75,7 +93,7 @@ void Juego::leerMateriales(){
 	
 	string nombre, cantidadMaterialJugador1, cantidadMaterialJugador2;
 	
-	while(archivoMateriales >> nombre){
+	while(archivoMateriales >> nombre) {
 		archivoMateriales >> cantidadMaterialJugador1;
 		archivoMateriales >> cantidadMaterialJugador2;
 		
@@ -87,28 +105,28 @@ void Juego::leerMateriales(){
 		*material = Material(nombre, stoi(cantidadMaterialJugador2));
 		jugadores[1] -> agregarMaterial(material, cantidadMateriales);
 
-		cantidadMateriales ++;
+		cantidadMateriales++;
 	}
-	
 	archivoMateriales.close();
 }
 
-void Juego::cerrarMateriales(){
-
+void Juego::cerrarMateriales() {
 	ofstream archivoMateriales(PATH_MATERIALES);
-	
-	for(int i = 0; i < cantidadMateriales; i++){
-		archivoMateriales <<  jugadores[0] -> obtenerMateriales()[i] -> obtenerNombreMaterial() << " " << 
-		jugadores[0] -> obtenerMateriales()[i] -> obtenerCantidadMaterial() << " " << 
-		jugadores[1] -> obtenerMateriales()[i] -> obtenerCantidadMaterial() << endl;
-
-		delete jugadores[0] -> obtenerMateriales()[i];
-		delete jugadores[1] -> obtenerMateriales()[i];
+	if(archivoMateriales.is_open()) {
+		for(int i = 0; i < cantidadMateriales; i++){
+			archivoMateriales <<  jugadores[0] -> obtenerMateriales()[i] -> obtenerNombreMaterial() << " " << 
+			jugadores[0] -> obtenerMateriales()[i] -> obtenerCantidadMaterial() << " " << 
+			jugadores[1] -> obtenerMateriales()[i] -> obtenerCantidadMaterial() << endl;
+			
+			delete jugadores[0] -> obtenerMateriales()[i];
+			delete jugadores[1] -> obtenerMateriales()[i];
+		}
+		
+		delete[] jugadores[0] -> obtenerMateriales();
+		//this -> jugadores[0] -> establecerMateriales() = nullptr;
+		delete[] jugadores[1] -> obtenerMateriales();
 	}
 	
-	delete[] jugadores[0] -> obtenerMateriales();
-	//this -> jugadores[0] -> establecerMateriales() = nullptr;
-	delete[] jugadores[1] -> obtenerMateriales();
 	
 }
 
@@ -318,7 +336,7 @@ void Juego::cerrarEdificios(){
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
-void leerCoordenadas (fstream &archivoUbicaciones, int* fila, int* columna){
+void leerCoordenadas (fstream &archivoUbicaciones, int* fila, int* columna) {
 	char aux;
     archivoUbicaciones >> aux;
     archivoUbicaciones >> *fila;
@@ -327,7 +345,7 @@ void leerCoordenadas (fstream &archivoUbicaciones, int* fila, int* columna){
     archivoUbicaciones >> aux;
 }
 
-void colocarMateriales (fstream &archivoUbicaciones, Mapa* mapa){
+void colocarMateriales (fstream &archivoUbicaciones, Mapa* mapa) {
 	cout << "Materiales:" << endl;
 	int fila, columna;
 	std::string nombre;
@@ -348,10 +366,11 @@ void colocarMateriales (fstream &archivoUbicaciones, Mapa* mapa){
 		}
     }
 }
-void colocarPesonaje (fstream &archivoUbicaciones, Mapa* mapa, int jugador) {
+
+void colocarJugador (fstream &archivoUbicaciones, Mapa* mapa, int jugador) {
 	int fila, columna;
     leerCoordenadas(archivoUbicaciones, &fila, &columna);
-	Casillero*  casillero = mapa -> obtenerCasillero(fila, columna);
+	Casillero* casillero = mapa -> obtenerCasillero(fila, columna);
 	if (casillero -> obtenerCaracter() == CARACTER_VACIO){
 		cout << "Se colocó al Jugador " << jugador + 1 << " en la posición (" << fila << ", " << columna << ")" << endl;
 		casillero -> setearJugador(jugador);
@@ -360,8 +379,7 @@ void colocarPesonaje (fstream &archivoUbicaciones, Mapa* mapa, int jugador) {
 	}
 }
 
-
-void colocarEdificiosPersonaje (fstream &archivoUbicaciones, Juego* juego, int jugador){
+void colocarEdificiosJugador (fstream &archivoUbicaciones, Juego* juego, int jugador) {
 	int fila, columna;
 	std::string nombre;
 	while(archivoUbicaciones >> nombre && nombre != "2"){
@@ -381,19 +399,26 @@ void colocarEdificiosPersonaje (fstream &archivoUbicaciones, Juego* juego, int j
     }
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 
-void Juego::leerUbicaciones(){
+void Juego::leerUbicaciones() {
 	fstream archivoUbicaciones(PATH_UBICACIONES, ios::in);
-	colocarMateriales(archivoUbicaciones, mapa);
-	colocarPesonaje(archivoUbicaciones, mapa, 0);
-	colocarEdificiosPersonaje(archivoUbicaciones, this, 0);
-	colocarPesonaje(archivoUbicaciones, mapa, 1);
-	colocarEdificiosPersonaje(archivoUbicaciones, this, 1);
+	if(!archivoUbicaciones.is_open())
+		partidaNueva = true;
+	else {
+		partidaNueva = false;
+		jugadorActivo = 0;
+		colocarMateriales(archivoUbicaciones, mapa);
+		colocarJugador(archivoUbicaciones, mapa, 0);
+		colocarEdificiosJugador(archivoUbicaciones, this, 0);
+		colocarJugador(archivoUbicaciones, mapa, 1);
+		colocarEdificiosJugador(archivoUbicaciones, this, 1);
+	}
+	
 	archivoUbicaciones.close();
 }
-
 /*
-void Juego::cerrarUbicaciones(){
+void Juego::cerrarUbicaciones() {
 
 	ofstream archivoUbicaciones(PATH_UBICACIONES);
 
@@ -413,7 +438,7 @@ void Juego::cerrarUbicaciones(){
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
-void Juego::leerMapa(){
+void Juego::leerMapa() {
 	fstream archivoMapa(PATH_MAPA, ios::in);	
 	if(!(archivoMapa.is_open())) {
         cout  << "No se pudo abrir el archivo " << PATH_MAPA << endl;
@@ -438,7 +463,7 @@ void Juego::leerMapa(){
 }
 
 
-bool Juego::verificarCoordenadas(int fila, int columna){
+bool Juego::verificarCoordenadas(int fila, int columna) {
 	
 	if(fila < 0 || fila > mapa->obtenerCantidadFilas()){
 		cout << "La fila ingresada está fuera de rango. No se puede construir el edificio" << endl;
@@ -458,7 +483,7 @@ bool Juego::verificarCoordenadas(int fila, int columna){
 }
 
 //parte de grafos
-void Juego::crearVertices(int filas, int columnas){
+void Juego::crearVertices(int filas, int columnas) {
 
 	//agrega todos los vertices (todas las coordenadas)
 	for(int i = 0; i < filas; i++){
@@ -472,7 +497,7 @@ void Juego::crearVertices(int filas, int columnas){
 }
 
 //crear caminos entre cada coordenada
-void Juego::crearCaminos(){	
+void Juego::crearCaminos() {	
 
 	int filas = this->obtenerMapa()->obtenerCantidadFilas();
 	int columnas = this->obtenerMapa()->obtenerCantidadColumnas();
@@ -516,10 +541,7 @@ void Juego::crearCaminos(){
 	}
 }
 
-
-
-
-int Juego::valoresCaminos(int x, int y){
+int Juego::valoresCaminos(int x, int y) {
 	
 	char casillero = this->obtenerMapa()->obtenerCasillero(x, y)->obtenerTipo();
  

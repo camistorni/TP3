@@ -6,15 +6,20 @@
 using namespace std;
 
 
-CasilleroConstruible::CasilleroConstruible(){
+CasilleroConstruible::CasilleroConstruible() {
     setearTipo(TERRENO);
     setearColor(COLOR_TERRENO);
     setearEnergia(ENERGIA_TERRENO);
-};
-CasilleroConstruible::~CasilleroConstruible(){};
+}
+
+CasilleroConstruible::~CasilleroConstruible() {
+    delete[] edificio;
+}
+
 std::string CasilleroConstruible::obtenerEdificio(){
     return edificio -> obtenerTipo();
-};
+}
+
 void CasilleroConstruible::responder(){
     if (estadoEdifio){
         cout << "Soy un casillero construible y tengo construido un " << obtenerTipo() << endl;
@@ -22,7 +27,8 @@ void CasilleroConstruible::responder(){
     else {
         cout << "Soy un casillero construible vacio" << endl;
     }
-};
+}
+
 void CasilleroConstruible::agregarEdifico(std::string nombre, int jugador){
     estadoEdifio = 2;
     propietarioEdificio = jugador;

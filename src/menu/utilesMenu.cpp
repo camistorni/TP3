@@ -25,7 +25,7 @@ void mostrarMenuPrincipal() {
 	cout << "            ╚═══════════════════════════════════════╝" << endl << endl;
 }
 
-void procesarOpcionesMenu(Juego* juego, int opcion) {
+void procesarOpcionesMenu(Juego* juego, int& opcion) {
 	
     switch(opcion) {
         case MENU_MODIFICAR_EDIFICIO_POR_NOMBRE:
@@ -46,7 +46,7 @@ void procesarOpcionesMenu(Juego* juego, int opcion) {
 
         case MENU_GUARDAR_Y_SALIR:
             break;
-
+		
         /*default:
             cout << MJE_ERROR_OPCION << endl;
             break;*/
@@ -54,7 +54,6 @@ void procesarOpcionesMenu(Juego* juego, int opcion) {
 }
 
 void comenzarPartida(Juego* juego) {
-	cout << "comenzarPartida" << endl;
 	seleccionarJugador(juego);
 	solicitarCoordenadas(juego);
 
@@ -115,7 +114,7 @@ void mostrarSubmenu(Juego* juego) {
 	cout << "            ╚═══════════════════════════════════════╝" << endl << endl;
 }
 
-void procesarOpcionesSubmenu(Juego* juego, int opcion) {
+void procesarOpcionesSubmenu(Juego* juego, int& opcion) {
 
 	int energiaActual = juego -> obtenerJugador() -> obtenerEnergia();
     switch(opcion) {
@@ -205,14 +204,11 @@ void procesarOpcionesSubmenu(Juego* juego, int opcion) {
             break;
 
 		case JUGADOR_FINALIZAR_TURNO:
-			juego -> obtenerJugador() -> establecerEnergia((energiaActual + ENERGIA_POR_FINALIZAR_TURNO)%101);
+			juego -> obtenerJugador() -> agregarEnergia(ENERGIA_POR_FINALIZAR_TURNO);
 			cout << "Su energia ahora es: " << juego -> obtenerJugador() -> obtenerEnergia() << endl;
 			juego -> establecerJugadorActivo(juego -> obtenerJugadorActivo() ? 0 : 1);
 			break;
-
-		case JUGADOR_GUARDAR_Y_SALIR:
-			break;
-
+			
 		default:
 			cout << MJE_ERROR_OPCION << endl;
 			break;
@@ -284,7 +280,7 @@ void consultarCoordenada(Juego* juego) {
 // *************** GENERALES ***************
 
 void mostrarMenu(Juego* juego) {
-	juego -> obtenerJugadorActivo() < 0 ?  mostrarMenuPrincipal() : mostrarSubmenu(juego);
+	(juego -> obtenerJugadorActivo() < 0 && juego -> esPartidaNueva() == true)	?  mostrarMenuPrincipal() : mostrarSubmenu(juego);
 }
 
 void pedirOpcion(int* opcion) {
@@ -318,7 +314,6 @@ void procesarOpciones(Juego* juego, int opcion) {
     else
         procesarOpcionesSubmenu(juego, opcion);
 }
-
 
 void construirEdificio(Juego* juego, string nombreIngresado) {
 	int piedraNecesaria, maderaNecesaria, metalNecesario, construidos, cantidadMax;

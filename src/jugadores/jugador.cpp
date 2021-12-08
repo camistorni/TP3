@@ -6,7 +6,7 @@ using namespace std;
 
 Jugador::Jugador(std::string nombreJugador) {
     nombre = nombreJugador;
-    edificiosContruidos = *new std::string * [0];
+    edificiosContruidos = new string[0];
     energia = 50;
     andycoinsRecolectadas = bombasCompradas = bombasUsadas = 0;
     comprarAndypolisCumplido = 
@@ -19,15 +19,16 @@ Jugador::Jugador(std::string nombreJugador) {
     constructorCumplido = 
     armadoCumplido = 
     extremistaCumplido = false;
-    // HAY QUE LIBERAR ESTO
     objetivos = new int[3];
     seleccionarObjetivos();
-    // HAY QUE LIBERAR ESTO
     ubicacion = new int[2];
 };
 
-
-Jugador::~Jugador() {}
+Jugador::~Jugador() {
+    delete[] edificiosContruidos;
+    delete[] objetivos;
+    delete[] ubicacion;
+}
 
 int Jugador::obtenerEnergia() {
     return energia;
@@ -37,12 +38,23 @@ int* Jugador::obtenerObjetivos() {
     return objetivos;
 }
 
+int* Jugador::obtenerUbicacion() {
+    return ubicacion;
+}
+
 Material** Jugador::obtenerMateriales() {
     return materiales;
 }
 
 void Jugador::establecerEnergia(int cantidadEnergia) {
     energia = cantidadEnergia;
+}
+
+void Jugador::agregarEnergia(int energiaAgregada) {
+    if(energia + energiaAgregada <= CANTIDAD_MAXIMA_ENERGIA)
+        energia += energiaAgregada;
+    else
+        energia = CANTIDAD_MAXIMA_ENERGIA;
 }
 
 void Jugador::establecerCoordenadas(int fila, int columna) {

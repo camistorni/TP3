@@ -9,14 +9,13 @@ class Mapa{
 		  int cantidadFilas;
 		  int cantidadColumnas;
 		  Casillero*** casilleros;
-
 		
 	public:
 	
 		//Costructor
 		Mapa(int cantFilas, int cantColumnas);
 		~Mapa();
-	
+
 		//Precondiciones: -
 		//Postcondicions: Devuelve la cantidad de filas
 		int obtenerCantidadFilas ();
@@ -25,6 +24,8 @@ class Mapa{
 		//Postcondicions: Devuelve la cantidad de columnas
 		int obtenerCantidadColumnas ();
 		
+		int* obtenerPosicionJugador(int jugador);
+
 		//Precondiciones: -
 		//Postcondicions: Devuelve el tipo de casillero
 		char tipoCasillero(int fila, int columna);
