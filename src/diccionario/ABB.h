@@ -71,6 +71,14 @@ class ABB{
 		//PRE: -
 		//POS: Elimina todos los nodos y libera la memoria
 		void cerrarDiccionario();
+
+		//PRE: -
+		//POS: Devuelve un long con el mayor del tamaño de las claves
+		long unsigned int obtenerMayorLongitud();
+
+		//PRE: - 
+		//POS: 
+		void obtenerMayorLongitud(NodoAbb* nodo, long unsigned int &largo);
 };
 
 #endif

@@ -53,7 +53,12 @@ void ABB::imprimirTablaOrdenada(NodoAbb *nodo){
 	
 	if(nodo != NULL){
 		imprimirTablaOrdenada(nodo->obtenerIzq());
-		cout << "             " << nodo->obtenerClave() << setw(10);
+
+		long espacio =  obtenerMayorLongitud() - nodo -> obtenerClave().length();
+		cout <<  "             " << nodo->obtenerClave() << setw(10);
+
+		cout << setw(5 + (int)espacio);
+
 		
 		for(int i = 0; i < 3; i++)
 			cout << nodo->obtenerDatos()[i] << setw(16);
@@ -236,5 +241,24 @@ void ABB::cerrarDiccionario(){
 	this->cerrarDiccionario(this->raiz);
 }
 
+void ABB::obtenerMayorLongitud(NodoAbb* nodo, long unsigned int &largo){
+	if(nodo != NULL){
+		obtenerMayorLongitud(nodo->obtenerIzq(), largo);
 
+
+		if (nodo -> obtenerClave().length() > largo)
+			largo = nodo -> obtenerClave().length();
+		obtenerMayorLongitud(nodo->obtenerDer(), largo);
+	}
+	
+}
+
+long unsigned int ABB::obtenerMayorLongitud(){
+
+	long unsigned int mayorLongitud = 0;
+		
+	obtenerMayorLongitud(raiz, mayorLongitud);
+
+	return mayorLongitud;
+}
 

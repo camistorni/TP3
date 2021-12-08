@@ -29,7 +29,7 @@ Juego::Juego () {
 	cantidadMateriales = 0;
 	jugadorActivo = -1;
 	leerMateriales();
-	//leerOpcionesEdificios();
+	leerOpcionesEdificios();
 	leerMapa();
 	leerUbicaciones();
 }
@@ -137,12 +137,9 @@ bool Juego::verificarMateriales(string nombreIngresado, int piedraNecesaria, int
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
 void Juego::leerOpcionesEdificios(){
-/////////////////////////// Revisar cuando esté el diccionario //////////////77///
-
 	
 	fstream archivoEdificios(PATH_EDIFICIOS, ios::in);
 
-	//Edificio* edificio;
     string lecturaEdificios[CANT_CARACTERISTICAS_EDIFICIOS];
 
 
@@ -155,15 +152,12 @@ void Juego::leerOpcionesEdificios(){
 		
 		
 		Parser parser = Parser(lecturaEdificios);
-		//edificio = parser.procesarEntrada();
 		int *datosEdificios = new int;
 		datosEdificios[0] = parser.piedra();
 		datosEdificios[1] = parser.madera();
 		datosEdificios[2] = parser.metal();
 		
 		this->abb->insertarNodo(parser.edificio(), datosEdificios);
-
-		//agregarEdificio(edificio);
 
 	}
 	
@@ -200,10 +194,13 @@ bool Juego::verificarEdificio(string nombreIngresado, int *piedraNecesaria, int 
 void Juego::listarEdificiosConstruidos(){
 	////////////////////Arreglar cantidad construidos y edificios construidos ///////////////////
 	////////////////////Falta alguna manera de imprimir solo nombres/////////////////////////////
+
+
 /*
 	int construidosTotal = 0;
 	long nombreMasLargo = 0;
 	long nombre = 0;
+*/
 	
 	std::cout << endl << endl;
 	std::cout << "Lista de edificios construidos:" << endl << endl;
@@ -211,12 +208,18 @@ void Juego::listarEdificiosConstruidos(){
 	std::cout << "            ═════════════════════════════════════════════════════════" << endl;
 	std::cout << "             Nombre\t\tCantidad\t\tCoordenadas"<< endl;
 	std::cout << "            ═════════════════════════════════════════════════════════" << endl;
-	
-	for(int i = 0; i < this ->cantidadEdificios; i++){
-		nombre = this->abb->obtenerNodo(i)->obtenerClave().length();
+
+
+
+	///////////////////Metodo de ABB//////////
+	/* 
+	for(int i = 0; i < this -> cantidadEdificios; i++){
+		nombre = this -> abb -> obtenerNodo(i) -> obtenerClave().length();
 		if(nombre > nombreMasLargo)
 			nombreMasLargo = nombre;
 	}
+	*/
+/*
 	for(int i = 0; i < this ->cantidadEdificios; i++){
 		if(this -> listaEdificios[i] -> obtenerCantConstruidos() != 0){
 		
@@ -268,6 +271,8 @@ void Juego::listarEdificios(){
 	cout << "            ══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════" << endl;
 	
 	abb->imprimirTablaOrdenada();
+
+
 	
 	/*long nombreMasLargo = 0;
 	long nombre = 0;
