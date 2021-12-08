@@ -12,6 +12,7 @@ int main(){
 	pedirOpcion(&opcion);
 	
 	while((opcion != JUGADOR_GUARDAR_Y_SALIR) && (juego -> obtenerJugadorActivo() < 0) && (opcion != MENU_GUARDAR_Y_SALIR)) {
+		cout << "Opcion: " << opcion << endl;
 		procesarOpciones(juego, opcion);
 		mostrarMenu(juego);
 		pedirOpcion(&opcion);

@@ -13,7 +13,6 @@ CasilleroConstruible::CasilleroConstruible() {
 }
 
 CasilleroConstruible::~CasilleroConstruible() {
-    cout << "en el destructor de casillero construible" << endl;
     delete[] edificio;
 }
 

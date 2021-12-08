@@ -110,10 +110,6 @@ void Juego::cerrarMateriales() {
 			jugadores[0] -> obtenerMateriales()[i] -> obtenerCantidadMaterial() << " " << 
 			jugadores[1] -> obtenerMateriales()[i] -> obtenerCantidadMaterial() << endl;
 			
-			cout <<  jugadores[0] -> obtenerMateriales()[i] -> obtenerNombreMaterial() << " " << 
-			jugadores[0] -> obtenerMateriales()[i] -> obtenerCantidadMaterial() << " " << 
-			jugadores[1] -> obtenerMateriales()[i] -> obtenerCantidadMaterial() << endl;
-			
 			delete jugadores[0] -> obtenerMateriales()[i];
 			delete jugadores[1] -> obtenerMateriales()[i];
 		}

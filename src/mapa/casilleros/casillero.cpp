@@ -4,9 +4,7 @@
 
 
 Casillero::Casillero() {}
-Casillero::~Casillero() {
-    std::cout << "en el destructor de casillero" << std::endl;
-}
+Casillero::~Casillero() {}
 
 void Casillero::setearTipo(char tipo){
     this -> tipo = tipo;
@@ -34,4 +32,8 @@ int Casillero::obtenerEnergia(int jugadorActivo){
 }
 void Casillero::setearJugador(int jugador){
     this -> jugador = jugador;
+}
+
+int Casillero::obtenerJugador() {
+    return jugador;
 }
