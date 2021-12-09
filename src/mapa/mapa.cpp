@@ -36,16 +36,14 @@ int Mapa::obtenerCantidadColumnas(){
     return cantidadColumnas;
 }
 
-int* Mapa::obtenerPosicionJugador(int jugador) {
-	int aux[2];
+string Mapa::obtenerPosicionJugador(int jugador) {
+	string aux;
 	for(int i = 0; i < cantidadFilas; i++) {
 		for(int j = 0; j < cantidadColumnas; j++) {
 			if(casilleros[i][j] -> obtenerJugador() == jugador)
-				aux[0] = i;
-				aux[i] = j;
+				aux = to_string(i) + "," + to_string(j);
 		}
 	}
-
 	return aux;
 }
 

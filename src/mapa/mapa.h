@@ -24,7 +24,7 @@ class Mapa{
 		//Postcondicions: Devuelve la cantidad de columnas
 		int obtenerCantidadColumnas ();
 		
-		int* obtenerPosicionJugador(int jugador);
+		std::string obtenerPosicionJugador(int jugador);
 
 		//Precondiciones: -
 		//Postcondicions: Devuelve el tipo de casillero

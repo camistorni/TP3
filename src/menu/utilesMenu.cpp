@@ -196,10 +196,12 @@ void procesarOpcionesSubmenu(Juego* juego, int& opcion) {
 		case JUGADOR_MOVERSE_A_UNA_COORDENADA:
 			{
 				string coordenada;
+				string posicionJugador = juego -> obtenerMapa() -> obtenerPosicionJugador(juego -> obtenerJugadorActivo());
 				cout << "Ingrese la coordenada a la que desea moverse (ej: 0,1): ";
 				cin >> coordenada;
-				cout << juego->obtenerCoordenadaJugador() << endl;
-				juego -> mostrarCaminoMinimo(juego->obtenerCoordenadaJugador(), coordenada);
+				string posicionActual = juego -> obtenerMapa() -> obtenerPosicionJugador(juego -> obtenerJugadorActivo());
+				cout << "Posicion Actual: " << posicionActual << endl;
+				juego -> mostrarCaminoMinimo(posicionActual, coordenada);
 			}
             break;
 
@@ -311,8 +313,9 @@ void procesarOpciones(Juego* juego, int opcion) {
 	string nombreIngresado;
     if(juego -> obtenerJugadorActivo() < 0)
         procesarOpcionesMenu(juego, opcion);
-    else
+    else {
         procesarOpcionesSubmenu(juego, opcion);
+	}
 }
 
 void construirEdificio(Juego* juego, string nombreIngresado) {

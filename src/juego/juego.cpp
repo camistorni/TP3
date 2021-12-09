@@ -88,9 +88,6 @@ void Juego::leerMateriales() {
 	
 	Material *material;
 	
-	fstream archivoMateriales(PATH_MATERIALES, ios::in);
-	
-	
 	string nombre, cantidadMaterialJugador1, cantidadMaterialJugador2;
 	
 	while(archivoMateriales >> nombre) {
