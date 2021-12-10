@@ -669,22 +669,52 @@ bool generarAndycoins(Juego* juego, Casillero* casillero) {
 	return generoAndycoins;
 }
 */
+
+// Esta funcion hace rand para generar la cantidad de bolsas de materiales que haya que poner de cada uno
 int generarCantidadMaterial(string nombre) {
 	int cantidad = 0;
-	if(nombre == PIEDRA)
+	if(nombre == PIEDRA)  {
 		cantidad = rand() % 2 + 1;
-	else if(nombre == MADERA)
+		cout << "Cantidad piedra: " << cantidad << endl;
+	}
+	else if(nombre == MADERA) {
 		cantidad = rand() % 3;
-	else if(nombre == METAL)
+		cout << "Cantidad madera: " << cantidad << endl;
+	}
+	else if(nombre == METAL) {
 		cantidad = rand() % 2 + 2;
-	else if(nombre == ANDYCOINS)
+		cout << "Cantidad metal: " << cantidad << endl;
+	}
+		
+	else if(nombre == ANDYCOINS) {
 		cantidad = rand() % 2;
+	}
 
 	return cantidad;
 }
 
+// Esta funcion la hice para ver cuantos transitables hay pero no funciona, se traba despues de obtener casilleros
+int obtenerCantidadTransitables(Juego* juego) {
+	int filas = juego -> obtenerMapa() -> obtenerCantidadFilas();
+	int columnas = juego -> obtenerMapa() -> obtenerCantidadColumnas();
+	int cantidadDisponibles = 0;
+	for(int i = 0; i < filas; i++) {
+		for(int j = 0; j < columnas; j++) {
+			Casillero* casillero = juego -> obtenerMapa() -> obtenerCasillero(filas, columnas);
+			char tipo = casillero -> obtenerTipo();
+			if(tipo == BETUN || tipo == MUELLE || tipo == CAMINO) {
+				if(casillero -> obtenerCaracter() == CARACTER_VACIO)
+					cantidadDisponibles++;
+			}
+		}
+	}
+	return cantidadDisponibles;
+}
+
+// Esta funcion es para generar los materiales, depende del nombre que reciba llama a cantidad material
+// para ver cuantas bolsas tengo que poner de ese
 void generarMaterial(Juego* juego, string nombreMaterial) {
-	cout << "en generar material" << endl;
+	obtenerCantidadTransitables(juego);
 	bool generoMaterial = false;
 	int cantidadMaterial = generarCantidadMaterial(nombreMaterial);
 	int contadorMaterial = 0;
@@ -694,9 +724,9 @@ void generarMaterial(Juego* juego, string nombreMaterial) {
 		int colRandom = rand() % (juego -> obtenerMapa() -> obtenerCantidadColumnas());
 		Casillero* casillero = juego -> obtenerMapa() -> obtenerCasillero(filRandom,colRandom);
 		char tipoCasillero = casillero -> obtenerTipo();
-		cout << "posicion: (" << filRandom << ", " << colRandom << ") tipo casillero : " << tipoCasillero << endl;
+		//cout << "posicion: (" << filRandom << ", " << colRandom << ") tipo casillero : " << tipoCasillero << endl;
 		if(tipoCasillero != LAGO && tipoCasillero != TERRENO) {
-			cout << "Caracter Casillero: " << casillero -> obtenerCaracter() << endl;
+		//	cout << "Caracter Casillero: " << casillero -> obtenerCaracter() << endl;
 			if(casillero -> obtenerCaracter() == CARACTER_VACIO) {
 				Material* material = new Material(nombreMaterial, LLUVIA_PIEDRA);
 				static_cast<CasilleroTransitable *>(casillero) -> depositarMaterial(material);
@@ -708,16 +738,12 @@ void generarMaterial(Juego* juego, string nombreMaterial) {
 	}
 }
 
+// Creo que se esta rompiendo porque pone mas maderas de las que deberia, no entiendo porque
 void Juego::lluviaElementos() {
-	cout << "en lluvia elementos" << endl;
 	generarMaterial(this, PIEDRA);
-	cout << "despues de piedra" << endl;
 	generarMaterial(this, MADERA);
-	cout << "despues de madera" << endl;
 	generarMaterial(this, METAL);
-	cout << "despues de metal" << endl;
 	generarMaterial(this, ANDYCOINS);
-	cout << "despues de andycoins" << endl;
 }
 
 void Juego::guardarYSalir(){
