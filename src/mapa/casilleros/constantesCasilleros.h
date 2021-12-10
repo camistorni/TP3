@@ -7,6 +7,12 @@ const std::string CARACTER_COLOR_CAMINO     = "\033[1;42mC\033[0m";
 const std::string CARACTER_COLOR_BETUN      = "\033[1;42mC\033[0m";
 const std::string CARACTER_COLOR_MUELLE     = "\033[1;42mC\033[0m";
 
+// Para usarlo : cout << TXT_BOLD << "Bold text TXT_BOLD" << END_COLOR << endl;
+const std::string TXT_BOLD = "\033[1m";
+const std::string COLOR_JUGADOR_1 = "\033[38;5;8m";
+const std::string COLOR_JUGADOR_2 = "\033[38;5;16m";
+const std::string COLOR_NEUTRAL = "\033[38;5;7m";
+
 const int ENERGIA_TERRENO = 25;
 const int ENERGIA_LAGO_JUGADOR_1 = 2;
 const int ENERGIA_LAGO_JUGADOR_2 = 5;

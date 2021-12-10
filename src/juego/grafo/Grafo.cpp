@@ -20,12 +20,13 @@ void Grafo::mostrarGrafo() {
 
 void Grafo::agregarCamino(string origen, string destino, int peso) {
     cout << "en agregar camino" << endl;
-    int posicionOrigen = vertices ->obtenerPosicion(origen);
-    int posicionDestino = vertices ->obtenerPosicion(destino);
+    int posicionOrigen = vertices -> obtenerPosicion(origen);
+    int posicionDestino = vertices -> obtenerPosicion(destino);
 
     if(posicionOrigen == POSICION_NO_ENCONTRADA){
         cout << "El vertice " << origen << " no existe en el grafo" << endl;
     }
+    
     if(posicionDestino == POSICION_NO_ENCONTRADA){
         cout << "El vertice " << destino << " no existe en el grafo" << endl;
     }

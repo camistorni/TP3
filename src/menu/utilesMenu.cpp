@@ -109,8 +109,9 @@ void mostrarSubmenu(Juego* juego) {
 	cout << "            ║ 9. Mostrar objetivos                  ║" << endl;
 	cout << "            ║ 10. Recolectar recursos producidos    ║" << endl;
 	cout << "            ║ 11. Moverse a una coordenada          ║" << endl;
-	cout << "            ║ 12. Finalizar turno                   ║" << endl;
-	cout << "            ║ 13. Guardar y salir                   ║" << endl;
+	cout << "            ║ 12. Mostrar mapa                      ║" << endl;
+	cout << "            ║ 13. Finalizar turno                   ║" << endl;
+	cout << "            ║ 14. Guardar y salir                   ║" << endl;
 	cout << "            ╚═══════════════════════════════════════╝" << endl << endl;
 }
 
@@ -205,9 +206,21 @@ void procesarOpcionesSubmenu(Juego* juego, int& opcion) {
 			}
             break;
 
+		case JUGADOR_MOSTRAR_MAPA: 
+			juego -> obtenerMapa() -> mostrarMapa();
+            break;
+
 		case JUGADOR_FINALIZAR_TURNO:
 			juego -> obtenerJugador() -> agregarEnergia(ENERGIA_POR_FINALIZAR_TURNO);
 			cout << "Su energia ahora es: " << juego -> obtenerJugador() -> obtenerEnergia() << endl;
+			cout << "En procesar antes de la lluvia" << endl;
+			if(juego -> obtenerJugadorActivo() == 1) {
+				cout << "En if antes de la lluvia" << endl;
+				juego -> lluviaElementos();
+				cout << "En if despues de la lluvia" << endl;
+			}
+				
+cout << "En procesar despues de la lluvia" << endl;
 			juego -> establecerJugadorActivo(juego -> obtenerJugadorActivo() ? 0 : 1);
 			break;
 			

@@ -3,6 +3,10 @@
 
 // juego.cpp
 const int CANT_CARACTERISTICAS_EDIFICIOS = 5;
+const int LLUVIA_PIEDRA = 100;
+const int LLUVIA_MADERA = 50;
+const int LLUVIA_METAL = 50;
+const int LLUVIA_ANDYCOINS = 250;
 
 // juego.h
 #define PATH_MATERIALES "src/data/materiales.txt"

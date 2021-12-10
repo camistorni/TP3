@@ -29,6 +29,10 @@ void CasilleroConstruible::responder(){
     }
 }
 
+int CasilleroConstruible::obtenerPropietarioEdificio() {
+    return propietarioEdificio;
+}
+
 void CasilleroConstruible::agregarEdifico(std::string nombre, int jugador){
     estadoEdifio = 2;
     propietarioEdificio = jugador;

@@ -6,6 +6,8 @@
 #include "casilleros/casilleroInaccesible/casilleroInaccesible.h"
 #include "casilleros/casilleroTransitable/casilleroTransitable.h"
 #include "../constantes/constantes.h"
+#include "casilleros/constantesCasilleros.h"
+
 using namespace std;
 
 Mapa::Mapa(int cantFilas, int cantColumnas){
@@ -71,9 +73,54 @@ void Mapa::agregarCasillero(int fila, int columna, char caracter){
 	}
 }
 
+/*
+if(hay un jugador)
+	imprimo color 1
+else if(es terreo && propietario)
+	imprimir color
+else
+	negro
+*/
 
-void Mapa::imprimirMapa(int fila, int columna, int index) {
-	cout << casilleros[fila][columna] -> obtenerColor() << "   " << ((index == 1) ? (casilleros[fila][columna] -> obtenerCaracter()) : CARACTER_VACIO) << "   " << END_COLOR;
+void Mapa::imprimirMapa
+(int fila, int columna, int index) {
+	char caracter = casilleros[fila][columna] -> obtenerCaracter();
+	string caracterColor;
+	string stringVacio(1, CARACTER_VACIO);
+	int jugador = casilleros[fila][columna] -> obtenerJugador();
+	int propietario = static_cast<CasilleroConstruible*>(casilleros[fila][columna]) -> obtenerPropietarioEdificio();
+	char tipoCasillero = casilleros[fila][columna] -> obtenerTipo();
+
+	if(jugador != -1)
+		caracterColor = COLOR_NEUTRAL + caracter;
+	else if(jugador == 0)
+		caracterColor = COLOR_JUGADOR_1 + TXT_BOLD + caracter;
+	else if(jugador == 1)
+		caracterColor = COLOR_JUGADOR_2 + TXT_BOLD + caracter;
+	else if(tipoCasillero == TERRENO && propietario == 0)
+		caracterColor = COLOR_JUGADOR_1 + TXT_BOLD + caracter;
+	else if(tipoCasillero == TERRENO && propietario == 1)
+		caracterColor = COLOR_JUGADOR_2 + TXT_BOLD + caracter;
+	else 
+		caracterColor = COLOR_NEUTRAL + caracter;
+/*
+	
+	
+	if(propietario == 0 && tipoCasillero == TERRENO)
+		caracterColor = COLOR_JUGADOR_1 + TXT_BOLD + caracter;
+	else if(propietario == 1)
+		caracterColor = COLOR_JUGADOR_2 + TXT_BOLD + caracter;
+
+	
+	if(casilleros[fila][columna] -> obtenerTipo() == TERRENO) {
+		int propietario = static_cast<CasilleroConstruible*>(casilleros[fila][columna]) -> obtenerPropietarioEdificio();
+		if(propietario == 0)
+			caracterColor = COLOR_JUGADOR_1 + TXT_BOLD + caracter;
+		else if(propietario == 1)
+			caracterColor = COLOR_JUGADOR_2 + TXT_BOLD + caracter;
+	} 
+	*/	
+	cout << casilleros[fila][columna] -> obtenerColor() << "   " << ((index == 1) ? caracterColor : stringVacio) <<  "   " << END_COLOR;
 }
 
 void Mapa::mostrarMapa() {
