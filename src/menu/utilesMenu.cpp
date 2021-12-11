@@ -197,7 +197,7 @@ void procesarOpcionesSubmenu(Juego* juego, int& opcion) {
 		case JUGADOR_MOVERSE_A_UNA_COORDENADA:
 			{
 				string coordenada;
-				string posicionJugador = juego -> obtenerMapa() -> obtenerPosicionJugador(juego -> obtenerJugadorActivo());
+				juego->crearCaminos();
 				cout << "Ingrese la coordenada a la que desea moverse (ej: 0,1): ";
 				cin >> coordenada;
 				string posicionActual = juego -> obtenerMapa() -> obtenerPosicionJugador(juego -> obtenerJugadorActivo());
