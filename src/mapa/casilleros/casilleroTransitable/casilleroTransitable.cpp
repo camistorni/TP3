@@ -34,7 +34,7 @@ void CasilleroTransitable::depositarMaterial(Material* material){
     std::string nombre = material -> obtenerNombreMaterial();
     if(nombre == MADERA) setearCaracter(CARACTER_MADERA);
     if(nombre == PIEDRA) setearCaracter(CARACTER_PIEDRA);
-    if(nombre == METAL) setearCaracter(CARACTER_PIEDRA);
+    if(nombre == METAL) setearCaracter(CARACTER_METAL);
     if(nombre == ANDYCOINS) setearCaracter(CARACTER_ANDYCOINS);
     hayMaterial = true;
     this -> material = material;

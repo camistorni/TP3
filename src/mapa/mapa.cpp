@@ -179,4 +179,25 @@ void Mapa::pedirCoordenada(int &fila, int &columna){
 
 }
 
+int Mapa::casillerosTransitablesVacios(CasilleroTransitable*** casillerosDisponibles){
+	int disponibles = 0;
+	Casillero* casillero;
+	char tipo;
+	for(int i = 0; i < cantidadFilas; i++) {
+		for(int j = 0; j < cantidadColumnas; j++) {
+			if(((tipo = (casillero = casilleros[i][j]) -> obtenerTipo()) != TERRENO) &&
+				(tipo != LAGO) &&
+				(casillero -> obtenerJugador() < 0) &&
+				!(static_cast<CasilleroTransitable*>(casillero) -> hayMaterialDepositado())
+			){
+				CasilleroTransitable** nuevosCasillerosDisponibles = new CasilleroTransitable *[disponibles +1];
+  				copy(*casillerosDisponibles, *casillerosDisponibles + disponibles , nuevosCasillerosDisponibles);
+  				nuevosCasillerosDisponibles[disponibles] = static_cast<CasilleroTransitable*>(casillero);
+  				*casillerosDisponibles = nuevosCasillerosDisponibles;
+				disponibles++;
+			}
+		}
+	}
+	return disponibles;
+}
 

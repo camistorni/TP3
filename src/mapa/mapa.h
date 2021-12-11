@@ -2,6 +2,7 @@
 #define MAPA_H
 
 #include "casilleros/casillero.h"
+#include "casilleros/casilleroTransitable/casilleroTransitable.h"
 
 class Mapa{
 
@@ -48,11 +49,8 @@ class Mapa{
 		//Precondiciones: un numero mayor a 0
 		//Postcondicions: devuelve un numero entre el limite y 0
 		void pedirCoordenada(int &fila, int &columna);
-
 		
-
-	
-
+		int casillerosTransitablesVacios(CasilleroTransitable*** casillerosDisponibles);
 
 		//Precondiciones: -
 		//Postcondiciones: Libera la memoria utilizada por los casilleros

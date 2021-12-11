@@ -5,7 +5,7 @@
 #include <cstdlib>
 
 #include "../materiales/materiales.h"
-#include "../juego/juego.h"
+#include "juego.h"
 #include "../edificios/parser.h"
 #include "../edificios/edificio.h"
 #include "../mapa/casilleros/casillero.h"
@@ -15,6 +15,7 @@
 #include "../constantes/constantes.h"
 #include "../diccionario/ABB.h"
 #include "../diccionario/nodo.h"
+#include "utils/utils.h"
 
 using namespace std;
 
@@ -312,12 +313,18 @@ void Juego::listarEdificios(){
 }
 
 void Juego::recolectarRecursos(){
-	/*
-	for(int i = 0; i < this -> cantidadEdificios; i++){
-		if(this -> listaEdificios[i] -> brindaMaterial())
-			agregarRecursos(this->abb->obtenerNodo(i).obtenerClave());		
+	string nombre;
+	int cantidad;
+	Casillero* casillero;
+	for(int i = 0; i < mapa -> obtenerCantidadFilas(); i++) {
+		for(int j = 0; j < mapa -> obtenerCantidadColumnas(); j++) {
+			if((casillero = mapa -> obtenerCasillero(i, j)) -> obtenerTipo() == TERRENO){
+				if(static_cast<CasilleroConstruible *>(casillero) -> recolectar(&nombre, &cantidad, jugadorActivo)){
+					cout << "Se recolectaron " << cantidad << " de " << nombre << endl;
+				}
+			}
+		}
 	}
-	*/
 	cout << "Se recolectaron todos los recursos disponibles" << endl;
 }
 
@@ -333,74 +340,6 @@ void Juego::cerrarEdificios(){
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
-void leerCoordenadas (ifstream& archivoUbicaciones, int* fila, int* columna) {
-	char aux;
-    archivoUbicaciones >> aux;
-    archivoUbicaciones >> *fila;
-    archivoUbicaciones >> aux;
-    archivoUbicaciones >> *columna;
-    archivoUbicaciones >> aux;
-}
-
-void colocarMateriales (ifstream& archivoUbicaciones, Mapa* mapa) {
-	cout << "Materiales:" << endl;
-	int fila, columna;
-	std::string nombre;
-	while(archivoUbicaciones >> nombre && nombre != "1"){
-    	leerCoordenadas(archivoUbicaciones, &fila, &columna);
-		Casillero* casillero = mapa -> obtenerCasillero(fila, columna);
-		char tipo = casillero -> obtenerTipo();
-		if (tipo != CAMINO && tipo != BETUN && tipo != MUELLE){
-			cout << "No se puede colocar " << nombre << " en el terreno de la posición (" << fila << ", " << columna << ")" << endl;
-		} else {
-			if (casillero -> obtenerCaracter() != CARACTER_VACIO){
-				cout << "No se puede colocar " << nombre << " en la posición (" << fila << ", " << columna << "), esta ya está ocupada " << endl;
-			} else {
-				cout << "Se agregó " << nombre << " en la posición (" << fila << ", " << columna << ")" << endl;
-				Material* material = new Material(nombre, 1);
-				static_cast<CasilleroTransitable *>(casillero) -> depositarMaterial(material);
-			}
-		}
-    }
-}
-
-void colocarJugador (ifstream& archivoUbicaciones, Mapa* mapa, int jugador) {
-	int fila, columna;
-    leerCoordenadas(archivoUbicaciones, &fila, &columna);
-	Casillero* casillero = mapa -> obtenerCasillero(fila, columna);
-	if (casillero -> obtenerCaracter() == CARACTER_VACIO){
-		cout << "Se colocó al Jugador " << jugador + 1 << " en la posición (" << fila << ", " << columna << ")" << endl;
-		casillero -> setearJugador(jugador);
-	} else {
-		cout << "No se pudo colocar al Jugador " << jugador + 1 << " en la posición (" << fila << ", " << columna << ") ya que esta está ocupada." << endl;
-	}
-}
-
-void colocarEdificiosJugador (ifstream& archivoUbicaciones, Juego* juego, int jugador) {
-	int fila, columna;
-	std::string nombre;
-	while(archivoUbicaciones >> nombre && nombre != "2"){
-    	leerCoordenadas(archivoUbicaciones, &fila, &columna);
-		Casillero* casillero = juego -> obtenerMapa() -> obtenerCasillero(fila, columna);
-		char tipo = casillero -> obtenerTipo();
-		if (tipo != TERRENO){
-			cout << "No se puede colocar " << nombre << " en el terreno de la posición (" << fila << ", " << columna << ")" << endl;
-		} else {
-			if (casillero -> obtenerCaracter() != CARACTER_VACIO){
-				cout << "No se puede colocar " << nombre << " en la posición (" << fila << ", " << columna << "), esta ya está ocupada "<< endl;
-			} else {
-				static_cast<CasilleroConstruible*>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> agregarEdifico(nombre, jugador);
-				cout << "Se agregó " << nombre << " en la posición (" << fila << ", " << columna << ") para el Jugador " << jugador + 1 << endl;
-			}
-		}
-    }
-}
-
-//----------------------------------------------------------------------------------------------------------------------------------------------------
-
-bool isEmpty(ifstream& pFile) {
-    return pFile.peek() == std::ifstream::traits_type::eof();
-}
 
 void Juego::leerUbicaciones() {
 	ifstream archivoUbicaciones(PATH_UBICACIONES, ios::in);
@@ -575,179 +514,45 @@ void Juego::mostrarCaminoMinimo(string origen, string destino) {
 	}
 }
 
-void Juego::cerrarMapa(){
-
-}
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
-void Juego::imprimirMensajeError(string nombre_edificio, string material, int cantidad, int cantidadNecesaria){
-	cout << "No hay suficiente " << material << "." << endl;
-	cout << "Hay " << cantidad << " " << material << " disponibles. Se necesitan "<< cantidadNecesaria << " para construir " << nombre_edificio << endl << endl;
-};
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
-/*
-void Juego::aumentarMaterialesDerrumbe(Edificio* edificio){
-	for (int i = 0; i < cantidadMateriales; i++){
-		if (material[i] -> obtenerNombreMaterial() == "piedra"){
-			material[i] -> establecerCantidad(material[i] -> obtenerCantidadMaterial() + edificio -> obtenerPiedra());
-		}
-		else if (material[i] -> obtenerNombreMaterial() == "madera"){
-			material[i] -> establecerCantidad(material[i] -> obtenerCantidadMaterial() + edificio -> obtenerMadera());
-		}
-		else if (material[i] -> obtenerNombreMaterial() == "metal"){
-			material[i] -> establecerCantidad(material[i] -> obtenerCantidadMaterial() + edificio -> obtenerMetal());
-		}
-	}
-}
-*/
-
-/////////////////////////// Revisar cuando esté el diccionario //////////////77///
- /*
-bool generarPiedra(Juego* juego, Casillero* casillero) {
-	bool generoPiedra = false;
-	int cantidadPiedra = rand() % 2 + 1;
-	int contadorPiedra = 0;
-	string nombre = PIEDRA;
-	if(generoPiedra == false) {
-		if(casillero -> obtenerCaracter() == CARACTER_VACIO) {
-			Material* material = new Material(nombre, LLUVIA_PIEDRA);
-			static_cast<CasilleroTransitable *>(casillero) -> depositarMaterial(material);
-			contadorPiedra++;
-			if(contadorPiedra == cantidadPiedra)
-				generoPiedra = true;
-		}
-	}
-}
-
-bool generarMadera(Juego* juego, Casillero* casillero) {
-	bool generoMadera = false;
-	int cantidadMadera = rand() % 3;
-	int contadorMadera = 0;
-	string nombre = MADERA;
-	if(generoMadera == false) {
-		if(casillero -> obtenerCaracter() == CARACTER_VACIO) {
-			Material* material = new Material(nombre, LLUVIA_PIEDRA);
-			static_cast<CasilleroTransitable *>(casillero) -> depositarMaterial(material);
-			contadorMadera++;
-			if(contadorMadera == cantidadMadera)
-				generoMadera = true;
-		}
-	}
-}
-
-bool generarMetal(Juego* juego, Casillero* casillero) {
-	bool generoMetal = false;
-	int cantidadMetal = rand() % 2 + 2;
-	int contadorMetal = 0;
-	string nombre = METAL;
-	if(generoMetal == false) {
-		if(casillero -> obtenerCaracter() == CARACTER_VACIO) {
-			Material* material = new Material(nombre, LLUVIA_PIEDRA);
-			static_cast<CasilleroTransitable *>(casillero) -> depositarMaterial(material);
-			contadorMetal++;
-			if(contadorMetal == cantidadMetal)
-				generoMetal = true;
-		}
-	}
-}
-
-bool generarAndycoins(Juego* juego, Casillero* casillero) {
-	bool generoAndycoins = false;
-	int cantidadAndycoins = rand() % 2;
-	int contadorAndycoins = 0;
-	string nombre = ANDYCOINS;
-	if(generoAndycoins == false) {
-		if(casillero -> obtenerCaracter() == CARACTER_VACIO) {
-			Material* material = new Material(nombre, LLUVIA_PIEDRA);
-			static_cast<CasilleroTransitable *>(casillero) -> depositarMaterial(material);
-			contadorAndycoins++;
-			if(contadorAndycoins == cantidadAndycoins)
-				generoAndycoins = true;
-		}
-	}
-	return generoAndycoins;
-}
-*/
-
-// Esta funcion hace rand para generar la cantidad de bolsas de materiales que haya que poner de cada uno
-int generarCantidadMaterial(string nombre) {
-	int cantidad = 0;
-	if(nombre == PIEDRA)  {
-		cantidad = rand() % 2 + 1;
-		cout << "Cantidad piedra: " << cantidad << endl;
-	}
-	else if(nombre == MADERA) {
-		cantidad = rand() % 3;
-		cout << "Cantidad madera: " << cantidad << endl;
-	}
-	else if(nombre == METAL) {
-		cantidad = rand() % 2 + 2;
-		cout << "Cantidad metal: " << cantidad << endl;
-	}
-		
-	else if(nombre == ANDYCOINS) {
-		cantidad = rand() % 2;
-	}
-
-	return cantidad;
-}
-
-// Esta funcion la hice para ver cuantos transitables hay pero no funciona, se traba despues de obtener casilleros
-int obtenerCantidadTransitables(Juego* juego) {
-	int filas = juego -> obtenerMapa() -> obtenerCantidadFilas();
-	int columnas = juego -> obtenerMapa() -> obtenerCantidadColumnas();
-	int cantidadDisponibles = 0;
-	for(int i = 0; i < filas; i++) {
-		for(int j = 0; j < columnas; j++) {
-			Casillero* casillero = juego -> obtenerMapa() -> obtenerCasillero(filas, columnas);
-			char tipo = casillero -> obtenerTipo();
-			if(tipo == BETUN || tipo == MUELLE || tipo == CAMINO) {
-				if(casillero -> obtenerCaracter() == CARACTER_VACIO)
-					cantidadDisponibles++;
-			}
-		}
-	}
-	return cantidadDisponibles;
-}
-
-// Esta funcion es para generar los materiales, depende del nombre que reciba llama a cantidad material
-// para ver cuantas bolsas tengo que poner de ese
-void generarMaterial(Juego* juego, string nombreMaterial) {
-	obtenerCantidadTransitables(juego);
-	bool generoMaterial = false;
-	int cantidadMaterial = generarCantidadMaterial(nombreMaterial);
-	int contadorMaterial = 0;
-	
-	while(generoMaterial == false) {
-		int filRandom = rand() % (juego -> obtenerMapa() -> obtenerCantidadFilas());
-		int colRandom = rand() % (juego -> obtenerMapa() -> obtenerCantidadColumnas());
-		Casillero* casillero = juego -> obtenerMapa() -> obtenerCasillero(filRandom,colRandom);
-		char tipoCasillero = casillero -> obtenerTipo();
-		//cout << "posicion: (" << filRandom << ", " << colRandom << ") tipo casillero : " << tipoCasillero << endl;
-		if(tipoCasillero != LAGO && tipoCasillero != TERRENO) {
-		//	cout << "Caracter Casillero: " << casillero -> obtenerCaracter() << endl;
-			if(casillero -> obtenerCaracter() == CARACTER_VACIO) {
-				Material* material = new Material(nombreMaterial, LLUVIA_PIEDRA);
-				static_cast<CasilleroTransitable *>(casillero) -> depositarMaterial(material);
-				contadorMaterial++;
-				if(contadorMaterial == cantidadMaterial)
-					generoMaterial = true;
-			}
-		}
-	}
-}
 
 // Creo que se esta rompiendo porque pone mas maderas de las que deberia, no entiendo porque
 void Juego::lluviaElementos() {
-	generarMaterial(this, PIEDRA);
-	generarMaterial(this, MADERA);
-	generarMaterial(this, METAL);
-	generarMaterial(this, ANDYCOINS);
+	CasilleroTransitable** casillerosDisponibles = new CasilleroTransitable*[0];
+	int transitables = mapa -> casillerosTransitablesVacios(&casillerosDisponibles);
+	if (transitables < 3) return;
+	int cantidadMateriales[4] = {1, 3, 2 ,1};
+	string materiales[5] = {PIEDRA, MADERA, METAL, ANDYCOINS, MATERIAL_NULO};
+	string* bolsas = new std::string[3];
+	bolsas[0] = bolsas[1] = METAL;
+	bolsas[2] = PIEDRA;
+	int asignados = 3;
+	int orden[4] = {0, 1, 2 ,3};
+	shuffleInt(orden, asignados);
+	for (int i = 0; i < 5; i++){
+		if (asignados < transitables){
+			int agregados = i < 4 ? (rand()%(1+cantidadMateriales[orden[i]]))%(1 + transitables) : transitables - asignados;
+			string* nuevasBolsas = new std::string[asignados + agregados];
+			copy(bolsas, bolsas + asignados , nuevasBolsas);
+			for (int j = 0; j < agregados; j++)
+				nuevasBolsas[asignados + j] = materiales[i < 4 ? orden[i] : i];
+			asignados += agregados;
+			bolsas = nuevasBolsas;
+		}	
+	}
+	shuffleString(bolsas, asignados);
+	for (int i = 0; i < asignados; i++)
+		if (bolsas[i] != MATERIAL_NULO) {
+			CasilleroTransitable* casillero = casillerosDisponibles[i];
+			casillero -> depositarMaterial(new Material(bolsas[i], valoresLluvia(bolsas[i])));
+		}
 }
 
 void Juego::guardarYSalir(){
 	cerrarMateriales();
 	//cerrarUbicaciones();
-	cerrarMapa();
+	//cerrarMapa();
 }

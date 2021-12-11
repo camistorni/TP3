@@ -21,7 +21,7 @@ class Edificio {
 		
 		//Precondiciones: -
 		//Postcondicions: Espeifica si el edificio brinda materiales o no
-		void recolectarMateriales(std::string* materialProducido, int* cantidadProducida);
+		bool recolectarMateriales(std::string* materialProducido, int* cantidadProducida);
 };
 
 class PlantaElectrica: public Edificio {

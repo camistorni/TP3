@@ -10,7 +10,7 @@ class CasilleroConstruible: public Casillero{
 		bool construido;
 		Edificio* edificio;
 		int estadoEdifio; // 0 no hay nada, 1 dañado, 2 construido
-		int propietarioEdificio; // dice de quien es el edificio
+		int propietarioEdificio = -1; // dice de quien es el edificio
 	public:
 		CasilleroConstruible();
 		~CasilleroConstruible();
@@ -18,6 +18,8 @@ class CasilleroConstruible: public Casillero{
 		void agregarEdifico(std::string nombre, int jugador);
 		void responder();
 		int obtenerPropietarioEdificio();
+		bool recolectar(std::string* materialProducido, int* cantidadProducida, int jugador);
+		
 };
 
 

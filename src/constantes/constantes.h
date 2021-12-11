@@ -34,6 +34,7 @@ const std::string PIEDRA = "piedra";
 const std::string ENERGIA = "energia";
 const std::string BOMBAS = "bombas";
 const std::string ANDYCOINS = "andycoins";
+const std::string MATERIAL_NULO = "matnul";
 
 
 // mapa.cpp

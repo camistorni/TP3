@@ -114,7 +114,6 @@ class Juego{
 		
 		//Precondiciones: -
 		//Postcondiciones: Imprime un mensaje de error si algún material es insuficiente
-		void imprimirMensajeError(string nombreEdificio, string material, int cantidad, int cantidadNecesaria);
 		
 		//Precondiciones: Se debe verificar que haya suficientes materiales, que el edificio ingresado exista, y que las coordenadas estén disponibles
 		//Postcondiciones: Pregunta al usuario si de verdad quiere construir y, si afirma, construye el edificio ingresado y modifica la lista de materiales y edificios
