@@ -19,6 +19,7 @@ void Grafo::mostrarGrafo() {
 }
 
 void Grafo::agregarCamino(string origen, string destino, int peso) {
+    cout << "en agregar camino" << endl;
     int posicionOrigen = vertices -> obtenerPosicion(origen);
     int posicionDestino = vertices -> obtenerPosicion(destino);
 
