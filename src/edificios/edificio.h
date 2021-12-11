@@ -18,6 +18,9 @@ class Edificio {
 		//Precondiciones: -
 		//Postcondicions: Devuelve el nombre del edificio
 		std::string obtenerTipo();
+		void setearNombreEdificio(std::string nombreEdificio);
+		void setearMaterialProducido(std::string materialProducido);
+		void setearCantidadProducida(int cantidadProducida);
 		
 		//Precondiciones: -
 		//Postcondicions: Espeifica si el edificio brinda materiales o no
@@ -27,9 +30,7 @@ class Edificio {
 class PlantaElectrica: public Edificio {
 	using Edificio::Edificio;
 	public:
-		std::string nombreEdifico = PLANTA_ELECTRICA;
-		std::string materialProducido = ENERGIA;
-		int cantidadProducida = PRODUCCION_PLANTA_ELECTRICA;
+		PlantaElectrica();
 };
 class Obelico: public Edificio {
 	using Edificio::Edificio;
@@ -39,37 +40,27 @@ class Obelico: public Edificio {
 class MinaOro: public Edificio {
 	using Edificio::Edificio;
 	public:
-		std::string nombreEdifico = MINA_ORO;
-		std::string materialProducido = ANDYCOINS;
-		int cantidadProducida = PRODUCCION_MINA_ORO;
+		MinaOro();
 };
 class Mina: public Edificio {
 	using Edificio::Edificio;
 	public:
-		std::string nombreEdifico = MINA;
-		std::string materialProducido = PIEDRA;
-		int cantidadProducida = PRODUCCION_MINA;
+		Mina();
 };
 class Fabrica: public Edificio {
 	using Edificio::Edificio;
 	public:
-		std::string nombreEdifico = FABRICA;
-		std::string materialProducido = METAL;
-		int cantidadProducida = PRODUCCION_FABRICA;
+		Fabrica();
 };
 class Escuela: public Edificio {
 	using Edificio::Edificio;
 	public:
-		std::string nombreEdifico = ESCUELA;
-		std::string materialProducido = ANDYCOINS;
-		int cantidadProducida = PRODUCCION_ESCUELA;
+		Escuela();
 };
 class Aserradero: public Edificio {
 	using Edificio::Edificio;
 	public:
-		std::string nombreEdifico = ASERRADERO;
-		std::string materialProducido = MADERA;
-		int cantidadProducida = PRODUCCION_ASERRADERO;
+		Aserradero();
 };
 
 #endif //tiposEdificios_H

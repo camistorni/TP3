@@ -21,8 +21,6 @@ std::string CasilleroConstruible::obtenerEdificio(){
 }
 
 bool CasilleroConstruible::recolectar(std::string* materialProducido, int* cantidadProducida, int jugador){
-    cout << "//////////////////////////"<< endl;
-    cout << "propietarioEdificio: " << propietarioEdificio << " " <<  "jugador: " << jugador << endl;
     return propietarioEdificio != jugador ? false : edificio -> recolectarMateriales(materialProducido, cantidadProducida);
 }
 

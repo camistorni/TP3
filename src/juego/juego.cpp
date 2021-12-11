@@ -321,6 +321,7 @@ void Juego::recolectarRecursos(){
 			if((casillero = mapa -> obtenerCasillero(i, j)) -> obtenerTipo() == TERRENO){
 				if(static_cast<CasilleroConstruible *>(casillero) -> recolectar(&nombre, &cantidad, jugadorActivo)){
 					cout << "Se recolectaron " << cantidad << " de " << nombre << endl;
+					jugadores[jugadorActivo] -> buscarMaterial(nombre) -> agregarCantidad(cantidad);
 				}
 			}
 		}
