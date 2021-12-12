@@ -84,30 +84,45 @@ bool Juego::esPartidaNueva() {
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
+void escribirNuevoArchivoMateriales() {
+	fstream archivoMateriales(PATH_MATERIALES, ios::out);
+	archivoMateriales << " " << MADERA << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
+	archivoMateriales << " " << PIEDRA << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
+	archivoMateriales << " " << METAL << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
+	archivoMateriales << " " << ANDYCOINS << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
+	archivoMateriales << " " << BOMBAS << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
+}
+
 void Juego::leerMateriales() {
 
 	fstream archivoMateriales(PATH_MATERIALES, ios::in);
-	
-	Material *material;
-	
-	string nombre, cantidadMaterialJugador1, cantidadMaterialJugador2;
-	
-	while(archivoMateriales >> nombre) {
-		archivoMateriales >> cantidadMaterialJugador1;
-		archivoMateriales >> cantidadMaterialJugador2;
-		
-		material = new Material;
-		*material = Material(nombre, stoi(cantidadMaterialJugador1));
-		jugadores[0] -> agregarMaterial(material, cantidadMateriales);
 
-		material = new Material;
-		*material = Material(nombre, stoi(cantidadMaterialJugador2));
-		jugadores[1] -> agregarMaterial(material, cantidadMateriales);
+	if(!archivoMateriales.is_open())
+		escribirNuevoArchivoMateriales();
+	else {
+		string nombre, cantidadMaterialJugador1, cantidadMaterialJugador2;
 
-		cantidadMateriales++;
-	}
-	archivoMateriales.close();
+		Material *material;
+
+		while(archivoMateriales >> nombre) {
+			archivoMateriales >> cantidadMaterialJugador1;
+			archivoMateriales >> cantidadMaterialJugador2;
+			
+			material = new Material;
+			*material = Material(nombre, stoi(cantidadMaterialJugador1));
+			jugadores[0] -> agregarMaterial(material, cantidadMateriales);
+
+			material = new Material;
+			*material = Material(nombre, stoi(cantidadMaterialJugador2));
+			jugadores[1] -> agregarMaterial(material, cantidadMateriales);
+
+			cantidadMateriales++;
+		}
+		archivoMateriales.close();
+	}	
 }
+
+
 
 void Juego::cerrarMateriales() {
 	ofstream archivoMateriales(PATH_MATERIALES);

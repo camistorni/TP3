@@ -8,6 +8,8 @@ const int LLUVIA_MADERA = 50;
 const int LLUVIA_METAL = 50;
 const int LLUVIA_ANDYCOINS = 250;
 
+const int CANTIDAD_CERO = 0;
+
 // juego.h
 #define PATH_MATERIALES "src/data/materiales.txt"
 #define PATH_EDIFICIOS "src/data/edificios.txt"

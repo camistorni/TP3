@@ -1,4 +1,4 @@
-si no existe el archivo de materiales, escribirlo con todos los valores en 0
+si no existe el archivo de materiales, escribirlo con todos los valores en 0 - listo
 
 del menú (no funcionan):
 2. listar mis edificios construido
