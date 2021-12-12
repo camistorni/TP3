@@ -5,7 +5,6 @@
 #include "../../../constantes/constantes.h"
 using namespace std;
 
-
 CasilleroConstruible::CasilleroConstruible() {
     setearTipo(TERRENO);
     setearColor(COLOR_TERRENO);

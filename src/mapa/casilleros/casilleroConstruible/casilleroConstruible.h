@@ -4,7 +4,7 @@
 #include "../casillero.h"
 #include "../../../edificios/edificio.h"
 
-class CasilleroConstruible: public Casillero{
+class CasilleroConstruible: public Casillero, public CasilleroTransitable {
 
 	private:
 		bool construido;

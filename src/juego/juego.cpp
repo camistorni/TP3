@@ -500,10 +500,6 @@ void Juego::modificarEdificio(std::string nombre, string material, int nuevoValo
 	abb -> buscar(nombre) -> modificarMaterial(material, nuevoValor);
 }
 
-
-
-
-
 void Juego::guardarYSalir(){
 	cerrarMateriales();
 	//cerrarUbicaciones();
