@@ -7,6 +7,7 @@ class CasilleroInaccesible: public Casillero{
     public:
         CasilleroInaccesible();
         int obtenerEnergia(int jugadorActivo);
+        void responder();
 };
 
 

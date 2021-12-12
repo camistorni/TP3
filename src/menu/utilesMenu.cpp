@@ -5,6 +5,7 @@
 #include "../jugadores/constantesJugador.h"
 #include "../constantes/mensajes.h"
 #include "../mapa/casilleros/casilleroConstruible/casilleroConstruible.h"
+#include "../mapa/casilleros/casilleroInaccesible/casilleroInaccesible.h"
 
 using namespace std;
 
@@ -345,10 +346,15 @@ void consultarCoordenada(Juego* juego) {
 	int fila = -1, columna = -1;
 
 	juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
-	while(juego -> verificarCoordenadas(fila, columna) == false)
-		juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
+
+	Casillero* casillero = juego -> obtenerMapa() -> obtenerCasillero(fila, columna);
+	if(casillero -> obtenerTipo() == TERRENO) 
+		static_cast<CasilleroConstruible*>(casillero) -> responder();
+	else if(casillero -> obtenerTipo() == CAMINO)
+		static_cast<CasilleroTransitable*>(casillero) -> responder();
+	else if(casillero -> obtenerTipo() == LAGO)
+		static_cast<CasilleroInaccesible*>(casillero) -> responder();
 	
-	//juego -> obtenerMapa() -> obtenerCasillero(fila, columna) -> responder();
 }
 
 void atacarEdificioPorCoordenada(Juego* juego){

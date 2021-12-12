@@ -1,16 +1,7 @@
-si no existe el archivo de materiales, escribirlo con todos los valores en 0 - listo
-
 del menú (no funcionan):
 2. listar mis edificios construido
-3. demoler un edificio por coordenada - listo
-5. reparar... - listo
 7. consultar....
-9. objetivos ( ver el progreso y que ganes el juego cuando los cumplas)
+9. objetivos ( ver el progreso y que ganes el juego cuando los cumplas) - casi listo
 11. moverse a una coordenada (falta recolectar los recursos del camino y restar la energia)
-
-después hay que fijarse que el programa checkee que se ingresen datos correctos sino se buggea - listo
-
-hay que sacar las funciones de establecer Energía de procesarOpcionesSubmenu y ponerlas adentro de las 
-funciones con modificarEnergia (fíjate construirEdificio y atacarEdificio) - listo
 
 y las funciones de guardado, la de ubicaciones seguro, no me acuerdo si falta otra

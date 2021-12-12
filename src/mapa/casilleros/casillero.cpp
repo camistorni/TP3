@@ -6,7 +6,9 @@
 Casillero::Casillero() {}
 Casillero::~Casillero() {}
 
-void Casillero::responder() {}
+void Casillero::responder() {
+    std::cout << "En responder " << std::endl;
+}
 
 void Casillero::setearTipo(char tipo) {
     this -> tipo = tipo;

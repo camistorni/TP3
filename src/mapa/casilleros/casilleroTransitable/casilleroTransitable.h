@@ -11,8 +11,9 @@ class CasilleroTransitable: public Casillero{
     public:
         Material* recolectarMaterial();
         void depositarMaterial(Material* material);
-        void responder();
         bool hayMaterialDepositado();
+        void responder();
+        
 
 };
 

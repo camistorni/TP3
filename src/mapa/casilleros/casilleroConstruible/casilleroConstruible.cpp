@@ -25,7 +25,7 @@ bool CasilleroConstruible::recolectar(std::string* materialProducido, int* canti
 
 void CasilleroConstruible::responder(){
     if (estadoEdificio){
-        cout << "Soy un casillero construible y tengo construido un " << obtenerTipo() << endl;
+        cout << "Soy un casillero construible y tengo construido un/a " << obtenerEdificio() << endl;
     }
     else {
         cout << "Soy un casillero construible vacio" << endl;
