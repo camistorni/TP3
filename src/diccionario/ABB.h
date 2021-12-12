@@ -26,6 +26,8 @@ class ABB{
 		tipo encontrarMax(NodoAbb *NodoAbb);
 		NodoAbb *eliminarNodo(NodoAbb *NodoAbb, tipo clave);
 		void cerrarDiccionario(NodoAbb *NodoAbb);
+		void obtenerMayorLongitud(NodoAbb* nodo, long unsigned int &largo);
+
 		
 	public:
 		
@@ -75,10 +77,7 @@ class ABB{
 		//PRE: -
 		//POS: Devuelve un long con el mayor del tamaño de las claves
 		long unsigned int obtenerMayorLongitud();
-
-		//PRE: - 
-		//POS: 
-		void obtenerMayorLongitud(NodoAbb* nodo, long unsigned int &largo);
+ 
 };
 
 #endif

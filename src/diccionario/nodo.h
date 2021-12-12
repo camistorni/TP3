@@ -80,6 +80,10 @@ class NodoAbb{
 		//PRE: -
 		//POS: Devuelve true si el nodo tiene un hijo izquierdo
 		bool hijoIzquierdo();
+
+		//PRE: - 
+		//POS: Devuelve el dato en la posicion dada
+		int obtenerDato (int posicion);
 		
 		
 };

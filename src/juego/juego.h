@@ -176,6 +176,8 @@ class Juego{
 		void mostrarCaminoMinimo(string origen, string destino);
 		
 		string obtenerCoordenadaJugador();
+
+		void imprimirTablaOrdenada(string edificio, long espacio);
 		
 		
 };

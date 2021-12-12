@@ -156,6 +156,7 @@ void Juego::leerOpcionesEdificios(){
 		datosEdificios[0] = parser.piedra();
 		datosEdificios[1] = parser.madera();
 		datosEdificios[2] = parser.metal();
+		datosEdificios[3] = parser.cantMaxConstruido();
 		
 		this->abb->insertarNodo(parser.edificio(), datosEdificios);
 
@@ -267,11 +268,16 @@ void Juego::listarEdificios(){
 	cout << endl << endl;
 	cout << "Lista de edificios:" << endl << endl;
 	cout << "            ══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════" << endl;
-	cout << "             Nombre\t\tPiedra\t\tMadera\t\tMetal\t\tConstruidos\tTodavía puede construir\t\t¿Brinda material?"<< endl;
+	cout << "             Nombre\t\tPiedra\t\tMadera\t\tMetal\t\tConstruidos(1-2)\tTodavía puede construir(1-2)\t\t¿Brinda material?"<< endl;
 	cout << "            ══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════" << endl;
 	
-	cout << setw(16);
-	abb->imprimirTablaOrdenada();
+	long espacio = abb -> obtenerMayorLongitud();
+	imprimirTablaOrdenada("aserradero", espacio);
+	imprimirTablaOrdenada("escuela", espacio);
+	imprimirTablaOrdenada("fabrica", espacio);
+	imprimirTablaOrdenada("mina", espacio);
+	imprimirTablaOrdenada("yacimiento", espacio);
+
 
 
 	
@@ -300,6 +306,30 @@ void Juego::listarEdificios(){
 	}*/
 	cout << endl << endl;
 	
+}
+
+void Juego::imprimirTablaOrdenada(string tipoEdificio, long espacio){
+	int construidos1 = 0;
+	int construidos2 = 0;
+	mapa -> obtenerCantidadEdificios(construidos1, construidos2);
+	
+	NodoAbb* edificio = abb -> buscar(tipoEdificio);
+	
+	cout << "            " << edificio -> obtenerClave();
+	cout << setw(14 + (int)(espacio - edificio -> obtenerClave().length()));
+	
+	cout << edificio -> obtenerDato(0) << setw(16);
+	cout << edificio -> obtenerDatos()[1] << setw(16);
+	cout << edificio -> obtenerDatos()[2] << setw(16);
+
+	cout << construidos1 << "  -  " << construidos2 << setw(20);
+
+	cout <<  edificio -> obtenerDatos()[3] - construidos1;
+	cout << "  -  ";
+	cout <<  edificio -> obtenerDatos()[3] - construidos2;
+	cout << endl;
+
+
 }
 
 void Juego::recolectarRecursos(){

@@ -56,6 +56,9 @@ class Mapa{
 		//Precondiciones: -
 		//Postcondiciones: Libera la memoria utilizada por los casilleros
 		void liberarCasilleros ();
+
+		void obtenerCantidadEdificios(int &cantidad1, int &cantidad2);
+		
 	private:
 		void identificarContenido (Casillero* casillero);
 

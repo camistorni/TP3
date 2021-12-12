@@ -17,6 +17,7 @@ class CasilleroConstruible: public Casillero{
 		std::string obtenerEdificio();
 		void agregarEdifico(std::string nombre, int jugador);
 		void responder();
+		int obtenerPropietario();
 };
 
 

@@ -49,3 +49,7 @@ void CasilleroConstruible::agregarEdifico(std::string nombre, int jugador){
         setearCaracter(CARACTER_plantaElectrica);
     }
 }
+
+int CasilleroConstruible::obtenerPropietario(){
+    return propietarioEdificio;
+}

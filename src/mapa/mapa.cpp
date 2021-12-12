@@ -118,3 +118,22 @@ Mapa::~Mapa(){
     }
     delete [] casilleros;
 };
+
+
+void Mapa::obtenerCantidadEdificios(int &construidos1, int &construidos2){
+	CasilleroConstruible* casilleroConstruido;
+	for (int i = 0; i < cantidadFilas; i ++){
+		for (int j = 0; i < cantidadColumnas; i ++){
+			if (casilleros[i][j] -> obtenerTipo() == TERRENO){
+				casilleroConstruido = static_cast<CasilleroConstruible*>(casilleros[i][j]);
+
+				if (casilleroConstruido -> obtenerPropietario() == 1){
+					construidos1 ++;
+				}
+				else if(casilleroConstruido -> obtenerPropietario() ==2){
+					construidos2 ++;
+				}
+			}
+		}
+	}
+}

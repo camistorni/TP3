@@ -2,6 +2,7 @@
 #include <iostream>
 #include "ABB.h"
 #include "nodo.h"
+#include "../mapa/mapa.h"
 
 using namespace std;
 

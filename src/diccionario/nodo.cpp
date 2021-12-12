@@ -74,4 +74,9 @@ bool NodoAbb::hijoIzquierdo(){
 	return (this->obtenerDer() == NULL && this->obtenerIzq() != NULL);
 }
 
+int NodoAbb::obtenerDato (int posicion){
+	return datos[posicion];
+}
+
+
 
