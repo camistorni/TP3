@@ -2,6 +2,8 @@
 #include <iostream>
 #include "ABB.h"
 #include "nodo.h"
+#include "../constantes/constantes.h"
+
 
 using namespace std;
 
@@ -11,23 +13,23 @@ ABB::ABB(){
 	this->cantidadNodos = 0;
 }
 
-NodoAbb* ABB::insertarNodo(NodoAbb *nodo, tipo clave, int* datos){
+NodoAbb* ABB::insertarNodo(NodoAbb *nodo, tipo clave, Receta *receta){
 
 	if(nodo == NULL)
-		nodo = new NodoAbb(clave, datos);
+		nodo = new NodoAbb(clave, receta);
 		
 	else if(clave < nodo->obtenerClave())
-		nodo->setIzq(insertarNodo(nodo->obtenerIzq(), clave, datos), nodo);
+		nodo->setIzq(insertarNodo(nodo->obtenerIzq(), clave, receta), nodo);
 	
 	else
-		nodo->setDer(insertarNodo(nodo->obtenerDer(), clave, datos), nodo);
+		nodo->setDer(insertarNodo(nodo->obtenerDer(), clave, receta), nodo);
 	
 	return nodo;
 }
 
 
-void ABB::insertarNodo(tipo clave, int* datos){
-	this->raiz = insertarNodo(this->raiz, clave, datos);
+void ABB::insertarNodo(tipo clave, Receta* receta){
+	this->raiz = insertarNodo(this->raiz, clave, receta);
 	cantidadNodos++;
 }
 
@@ -38,8 +40,8 @@ void ABB::imprimirOrdenado(NodoAbb *nodo){
 		imprimirOrdenado(nodo->obtenerIzq());
 		cout << nodo->obtenerClave() << ": ";
 		
-		for(int i = 0; i < 3; i++)
-			cout << nodo->obtenerDatos()[i] << ' ';
+		for(int i = 0; i < 4; i++)
+			cout << nodo->obtenerDatos()->obtenerMaterial(MATERIALES_RECETA[i]) << ' ';
 		cout << endl;
 		imprimirOrdenado(nodo->obtenerDer());
 	}
@@ -55,8 +57,8 @@ void ABB::imprimirTablaOrdenada(NodoAbb *nodo){
 		imprimirTablaOrdenada(nodo->obtenerIzq());
 		cout << "             " << nodo->obtenerClave() << setw(10);
 		
-		for(int i = 0; i < 3; i++)
-			cout << nodo->obtenerDatos()[i] << setw(16);
+		for(int i = 0; i < 4; i++)
+			cout << nodo->obtenerDatos()->obtenerMaterial(MATERIALES_RECETA[i]) << setw(16);
 		cout << endl;
 		imprimirTablaOrdenada(nodo->obtenerDer());
 	}

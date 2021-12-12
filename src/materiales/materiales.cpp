@@ -23,10 +23,6 @@ void Material::establecerCantidad(int cantidad){
 	this -> cantidadMaterial = cantidad;
 }
 
-void Material::modificarCantidad(int cantidadUsada){
-	this -> cantidadMaterial -= cantidadUsada;
-}
-
-void Material::agregarCantidad(int recursoAgregado){
-	this -> cantidadMaterial += recursoAgregado;
+void Material::modificarCantidad(int cantidadAgregada){
+	this -> cantidadMaterial += cantidadAgregada;
 }

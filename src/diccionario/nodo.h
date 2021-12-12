@@ -2,6 +2,7 @@
 #define NODO_H
 
 #include <string>
+#include "receta/receta.h"
 
 using namespace std;
 
@@ -10,7 +11,7 @@ typedef string tipo;
 class NodoAbb{
 	private:
 		tipo clave; //nombre edificio
-		int *datos; //receta edificio
+		Receta* receta; //receta edificio
 		NodoAbb *der;
 		NodoAbb *izq;
 		NodoAbb *padre;
@@ -18,7 +19,7 @@ class NodoAbb{
 	public:
 	
 		//Constructor
-		NodoAbb(tipo clave, int* datos);
+		NodoAbb(tipo clave, Receta* receta);
 		
 		//PRE: -
 		//POS: Devuelve la clave del nodo
@@ -26,7 +27,7 @@ class NodoAbb{
 		
 		//PRE: -
 		//POS: Devuelve un arreglo de datos del nodo
-		int *obtenerDatos();
+		Receta *obtenerDatos();
 		
 		//PRE: -
 		//POS: Devuelve el hijo derecho del nodo
@@ -46,7 +47,7 @@ class NodoAbb{
 		
 		//PRE: -
 		//POS: Modifica los datos del nodo
-		void setDatos(int *datos);
+		void setDatos(Receta *receta);
 		
 		//PRE: -
 		//POS: Modifica el hijo derecho del nodo y a su padre

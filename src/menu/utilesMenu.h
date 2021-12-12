@@ -49,6 +49,8 @@ void mostrarObjetivos(Juego* juego);
 // Post: Imprime por pantalla los objetivos activos del jugador actual
 void imprimirObjetivos(int objetivo);
 
+void atacarEdificioPorCoordenada(Juego* juego);
+
 // Pre: -
 // Post: Muestra los materiales con sus respectivas cantidades
 void mostrarInventario(Juego* juego);

@@ -50,11 +50,8 @@ void Jugador::establecerEnergia(int cantidadEnergia) {
     energia = cantidadEnergia;
 }
 
-void Jugador::agregarEnergia(int energiaAgregada) {
-    if(energia + energiaAgregada <= CANTIDAD_MAXIMA_ENERGIA)
-        energia += energiaAgregada;
-    else
-        energia = CANTIDAD_MAXIMA_ENERGIA;
+void Jugador::modificarEnergia(int energiaAgregada) {
+    energia = (energia + energiaAgregada)%(CANTIDAD_MAXIMA_ENERGIA + 1);
 }
 
 void Jugador::establecerCoordenadas(int fila, int columna) {

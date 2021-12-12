@@ -3,12 +3,12 @@
 
 using namespace std;
 
-NodoAbb::NodoAbb(tipo clave, int* datos){
-	this->clave = clave;
-	this->datos = datos;
-	this->der = NULL;
-	this->izq = NULL;
-	this->padre = NULL;
+NodoAbb::NodoAbb(tipo clave, Receta* receta){
+	this -> clave = clave;
+	this -> receta = receta;
+	this -> der = NULL;
+	this -> izq = NULL;
+	this -> padre = NULL;
 }
 
 
@@ -16,8 +16,8 @@ tipo NodoAbb::obtenerClave(){
 	return clave;
 }
 
-int* NodoAbb::obtenerDatos(){
-	return datos;
+Receta* NodoAbb::obtenerDatos(){
+	return receta;
 }
 NodoAbb* NodoAbb::obtenerDer(){
 	return der;
@@ -32,11 +32,11 @@ NodoAbb* NodoAbb::obtenerPadre(){
 }
 
 void NodoAbb::setClave(tipo clave){
-	this->clave = clave;
+	this -> clave = clave;
 }
 
-void NodoAbb::setDatos(int* datos){
-	this->datos = datos;
+void NodoAbb::setDatos(Receta* receta){
+	this -> receta = receta;
 }
 
 void NodoAbb::setDer(NodoAbb *der, NodoAbb *padre){

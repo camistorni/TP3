@@ -148,10 +148,8 @@ void procesarOpcionesSubmenu(Juego* juego, int& opcion) {
 			if(energiaActual < ENERGIA_POR_ATACAR_EDIFICIO_POR_COORDENADA) {
 				cout << "Su energia actual es de: " << energiaActual << "no le alcanza para realizar esta accion." << endl;
 			}
-			else {
-				juego -> obtenerJugador() -> establecerEnergia(energiaActual - ENERGIA_POR_ATACAR_EDIFICIO_POR_COORDENADA);
-				// atacarEdificioPorCoordenada();
-			}
+			else 
+				atacarEdificioPorCoordenada(juego);
 			break;
 
 		case JUGADOR_REPARAR_EDIFICIO_POR_COORDENADA:
@@ -168,7 +166,7 @@ void procesarOpcionesSubmenu(Juego* juego, int& opcion) {
 			if(energiaActual < ENERGIA_POR_COMPRAR_BOMBA) {
 				cout << "Su energia actual es de: " << energiaActual << "no le alcanza para realizar esta accion." << endl;
 			}
-			else if(comprarBomba(juego) == true)
+			else if(comprarBomba(juego))
 				juego -> obtenerJugador() -> establecerEnergia(energiaActual - ENERGIA_POR_COMPRAR_BOMBA);
 			break;
 
@@ -207,7 +205,7 @@ void procesarOpcionesSubmenu(Juego* juego, int& opcion) {
             break;
 
 		case JUGADOR_FINALIZAR_TURNO:
-			juego -> obtenerJugador() -> agregarEnergia(ENERGIA_POR_FINALIZAR_TURNO);
+			juego -> obtenerJugador() -> modificarEnergia(ENERGIA_POR_FINALIZAR_TURNO);
 			cout << "Su energia ahora es: " << juego -> obtenerJugador() -> obtenerEnergia() << endl;
 			if(juego -> obtenerJugadorActivo() == 1)
 				juego -> lluviaElementos();
@@ -271,6 +269,8 @@ bool comprarBomba(Juego* juego) {
 	return accionRealizada;
 }
 
+
+/// HACER
 void consultarCoordenada(Juego* juego) {
 	int fila = -1, columna = -1;
 
@@ -280,6 +280,42 @@ void consultarCoordenada(Juego* juego) {
 	
 	//juego -> obtenerMapa() -> obtenerCasillero(fila, columna) -> responder();
 }
+
+void atacarEdificioPorCoordenada(Juego* juego){
+	if(juego -> obtenerJugador() -> buscarMaterial(BOMBAS) -> obtenerCantidadMaterial() < 1){
+		cout << "No posee bombas en el inventario. No puede atacar edificios" << endl;
+		return;
+	}
+
+	int fila, columna;
+	cout << "¿Qué edificio desea atacar? Ingrese la primer coordenada: " << endl;
+	cin >> fila;
+	cout << "Ingrese la segunda coordenada: " << endl;
+	cin >> columna;
+
+	Casillero* casillero;
+	int propietario;
+	cout << "terreno: " << juego -> obtenerMapa() -> obtenerCasillero(fila, columna) -> obtenerCaracter() << endl;
+	cout << "propietario: " << static_cast<CasilleroConstruible *>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> obtenerPropietarioEdificio() << endl;
+
+	if (
+		(casillero = juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> obtenerTipo() == TERRENO &&
+		(propietario = static_cast<CasilleroConstruible *>(casillero) -> obtenerPropietarioEdificio()) > -1
+		){
+		if(propietario == juego -> obtenerJugadorActivo()){
+			cout << "No puedes atacar tu propio edifico" << endl;
+		} else {
+			string edificio = static_cast<CasilleroConstruible *>(casillero) -> obtenerEdificio();
+			cout << "Se ha " << ((static_cast<CasilleroConstruible *>(casillero) -> atacarEdificio()) ? "atacado" : "destruido") << " el edificio " << edificio << endl; 
+			juego -> obtenerJugador() -> modificarEnergia(ENERGIA_POR_ATACAR_EDIFICIO_POR_COORDENADA);
+			juego -> obtenerJugador() -> buscarMaterial(BOMBAS) -> modificarCantidad(-1);
+		}
+	} else {
+		cout << "No hay un edificio en ese casillero" << endl;
+	}
+	return;
+}
+
 
 
 // *************** GENERALES ***************
@@ -354,9 +390,9 @@ void construirEdificio(Juego* juego, string nombreIngresado) {
 	if (respuesta == 'y') {
 		cout << "El edificio ha sido construido correctamente" << endl << endl;
 		static_cast<CasilleroConstruible*>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> agregarEdifico(nombreIngresado, juego -> obtenerJugadorActivo());
-		juego -> obtenerJugador() -> buscarMaterial("piedra") -> modificarCantidad(piedraNecesaria);
-		juego -> obtenerJugador() -> buscarMaterial("madera") -> modificarCantidad(piedraNecesaria);
-		juego -> obtenerJugador() -> buscarMaterial("metal") -> modificarCantidad(piedraNecesaria);
+		juego -> obtenerJugador() -> buscarMaterial(PIEDRA) -> modificarCantidad(-piedraNecesaria);
+		juego -> obtenerJugador() -> buscarMaterial(MADERA) -> modificarCantidad(-maderaNecesaria);
+		juego -> obtenerJugador() -> buscarMaterial(METAL) -> modificarCantidad(-metalNecesario);
 	}
 }
 

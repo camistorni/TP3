@@ -19,6 +19,7 @@ class CasilleroConstruible: public Casillero{
 		void responder();
 		int obtenerPropietarioEdificio();
 		bool recolectar(std::string* materialProducido, int* cantidadProducida, int jugador);
+		bool atacarEdificio();
 		
 };
 

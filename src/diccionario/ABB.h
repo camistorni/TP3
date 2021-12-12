@@ -5,6 +5,7 @@
 #include <iostream>
 #include <iomanip>
 #include "nodo.h"
+#include "receta/receta.h"
 
 using namespace std;
 
@@ -16,7 +17,7 @@ class ABB{
 		int cantidadNodos;
 		
 		//Métodos
-		NodoAbb *insertarNodo(NodoAbb *NodoAbb, tipo clave, int *datos);
+		NodoAbb *insertarNodo(NodoAbb *NodoAbb, tipo clave, Receta* receta);
 		void imprimirOrdenado(NodoAbb *NodoAbb);
 		void imprimirTablaOrdenada(NodoAbb *nodo);
 		NodoAbb *buscar(NodoAbb *NodoAbb, tipo clave);
@@ -34,7 +35,7 @@ class ABB{
 		
 		//PRE: Tiene que haberse leído bien el mapa
 		//POS: Agrega un nuevo nodo al arbol. Si el arbolo está vacío crea una raiz
-		void insertarNodo(tipo clave, int* datos);
+		void insertarNodo(tipo clave, Receta* receta);
 		
 		//PRE: -
 		//POS: Imprime todos los nodos y sus datos en orden alfabético

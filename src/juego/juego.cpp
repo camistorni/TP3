@@ -16,6 +16,7 @@
 #include "../diccionario/ABB.h"
 #include "../diccionario/nodo.h"
 #include "utils/utils.h"
+#include "../diccionario/receta/receta.h"
 
 using namespace std;
 
@@ -157,27 +158,19 @@ void Juego::leerOpcionesEdificios(){
 
 	
 	fstream archivoEdificios(PATH_EDIFICIOS, ios::in);
+	string edificio;
+	int piedra, madera, metal, maximoContruibles;
 
-	//Edificio* edificio;
-    string lecturaEdificios[CANT_CARACTERISTICAS_EDIFICIOS];
+    while (archivoEdificios >> edificio){
 
-
-    while (archivoEdificios >> lecturaEdificios[0]){
-
-        archivoEdificios >> lecturaEdificios[1];
-        archivoEdificios >> lecturaEdificios[2];
-        archivoEdificios >> lecturaEdificios[3];
-        archivoEdificios >> lecturaEdificios[4];
+        archivoEdificios >> piedra;
+        archivoEdificios >> madera;
+        archivoEdificios >> metal;
+        archivoEdificios >> maximoContruibles;
 		
+		Receta* receta = new Receta(piedra, madera, metal, maximoContruibles);
 		
-		Parser parser = Parser(lecturaEdificios);
-		//edificio = parser.procesarEntrada();
-		int *datosEdificios = new int;
-		datosEdificios[0] = parser.piedra();
-		datosEdificios[1] = parser.madera();
-		datosEdificios[2] = parser.metal();
-		
-		this->abb->insertarNodo(parser.edificio(), datosEdificios);
+		this->abb->insertarNodo(edificio, receta);
 
 		//agregarEdificio(edificio);
 
@@ -321,7 +314,7 @@ void Juego::recolectarRecursos(){
 			if((casillero = mapa -> obtenerCasillero(i, j)) -> obtenerTipo() == TERRENO){
 				if(static_cast<CasilleroConstruible *>(casillero) -> recolectar(&nombre, &cantidad, jugadorActivo)){
 					cout << "Se recolectaron " << cantidad << " de " << nombre << endl;
-					jugadores[jugadorActivo] -> buscarMaterial(nombre) -> agregarCantidad(cantidad);
+					jugadores[jugadorActivo] -> buscarMaterial(nombre) -> modificarCantidad(cantidad);
 				}
 			}
 		}
