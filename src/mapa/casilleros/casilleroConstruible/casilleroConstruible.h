@@ -13,6 +13,7 @@ class CasilleroConstruible: public Casillero {
 		Material* material; // Solo para cuando se destrye un edificio
 		int estadoEdificio; // 0 no hay nada, 1 dañado, 2 construido
 		int propietarioEdificio = -1; // dice de quien es el edificio
+		
 	public:
 		CasilleroConstruible();
 		~CasilleroConstruible();

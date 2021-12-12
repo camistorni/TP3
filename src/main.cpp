@@ -1,9 +1,10 @@
 #include "materiales/materiales.h"
 #include "edificios/edificio.h"
 #include "juego/juego.h"
-#include "menu/utilesMenu.h"
+#include "menu/Menu.hpp"
 #include "juego/grafo/Grafo.h"
 #include "constantes/opciones.h"
+
 
 #ifdef __linux__
 #define CLR_SCREEN "clear"
@@ -14,9 +15,11 @@
 #endif
 
 int main() {
-	Juego* juego = new Juego();
-	int opcion = MENU_ERROR;
-/*
+	Menu menu;
+
+	menu.iniciarJuego();
+/*	int opcion = MENU_ERROR;
+
 	mostrarMenu(juego);
 	pedirOpcion(&opcion);
 	
@@ -25,7 +28,7 @@ int main() {
 		mostrarMenu(juego);
 		pedirOpcion(&opcion);
 	}
-*/
+
 
 	while((opcion != JUGADOR_GUARDAR_Y_SALIR) || ((juego -> obtenerJugadorActivo() < 0) && (opcion != MENU_GUARDAR_Y_SALIR))) {
 		mostrarMenu(juego);
@@ -34,14 +37,14 @@ int main() {
 		//system(CLR_SCREEN);
 		procesarOpciones(juego, opcion);
 	}
-
+*/
 
 	/*juego->crearCaminos();
 	juego->mostrarCaminoMinimo("0,0", "2, 3");
 	//juego->guardarYSalir();
 	delete juego;*/
 	//juego -> guardarYSalir();
-	delete juego;
+	//delete juego;
 	
 	return 0;
 }
