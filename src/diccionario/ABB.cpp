@@ -40,7 +40,7 @@ void ABB::imprimirOrdenado(NodoAbb *nodo){
 		imprimirOrdenado(nodo->obtenerIzq());
 		cout << nodo->obtenerClave() << ": ";
 		
-		for(int i = 0; i < 4; i++)
+		for(int i = 0; i < 5; i++)
 			cout << nodo->obtenerDatos()->obtenerMaterial(MATERIALES_RECETA[i]) << ' ';
 		cout << endl;
 		imprimirOrdenado(nodo->obtenerDer());
@@ -56,9 +56,9 @@ void ABB::imprimirTablaOrdenada(NodoAbb *nodo){
 	if(nodo != NULL){
 		imprimirTablaOrdenada(nodo->obtenerIzq());
 		cout << "             " << nodo->obtenerClave() << setw(10);
-		
 		for(int i = 0; i < 4; i++)
 			cout << nodo->obtenerDatos()->obtenerMaterial(MATERIALES_RECETA[i]) << setw(16);
+		cout << nodo -> obtenerDatos() -> obtenerProduccion() << endl;
 		cout << endl;
 		imprimirTablaOrdenada(nodo->obtenerDer());
 	}
@@ -80,10 +80,11 @@ NodoAbb* ABB::buscar(NodoAbb *nodo, tipo clave){
 }
 
 
-NodoAbb* ABB::buscar(tipo clave){
-	NodoAbb *buscado = buscar(this->raiz, clave);
-	return buscado;
+Receta* ABB::buscar(tipo clave){
+	NodoAbb* nodo = buscar(raiz, clave);
+	return (nodo == NULL ? NULL : nodo -> obtenerDatos());
 }
+
 
 tipo ABB::encontrarMin(NodoAbb *nodo){
 	
@@ -237,6 +238,3 @@ void ABB::cerrarDiccionario(NodoAbb *nodo){
 void ABB::cerrarDiccionario(){
 	this->cerrarDiccionario(this->raiz);
 }
-
-
-

@@ -32,7 +32,7 @@ Juego::Juego () {
 	jugadorActivo = -1;
 	partidaNueva = false;
 	leerMateriales();
-	//leerOpcionesEdificios();
+	leerOpcionesEdificios();
 	leerMapa();
 	leerUbicaciones();
 }
@@ -129,28 +129,6 @@ void Juego::cerrarMateriales() {
 	
 }
 
-bool Juego::verificarMateriales(string nombreIngresado, int piedraNecesaria, int maderaNecesaria, int metalNecesario, int construidos, int cantidadMax){
-	int error = false;
-	if (jugadores[jugadorActivo] -> buscarMaterial("piedra") -> obtenerCantidadMaterial() < piedraNecesaria) {
-		imprimirMensajeError(nombreIngresado, "piedra", jugadores[jugadorActivo] -> buscarMaterial("piedra") -> obtenerCantidadMaterial(), piedraNecesaria);
-		error = true;
-	}
-	if (jugadores[jugadorActivo] -> buscarMaterial("madera") -> obtenerCantidadMaterial() < piedraNecesaria) {
-		imprimirMensajeError(nombreIngresado, "madera", jugadores[jugadorActivo] -> buscarMaterial("piedra") -> obtenerCantidadMaterial(), piedraNecesaria);
-		error = true;
-	}
-	if (jugadores[jugadorActivo] -> buscarMaterial("metal") -> obtenerCantidadMaterial() < piedraNecesaria) {
-		imprimirMensajeError(nombreIngresado, "metal", jugadores[jugadorActivo] -> buscarMaterial("piedra") -> obtenerCantidadMaterial(), piedraNecesaria);
-		error = true;
-	}
-	if(construidos == cantidadMax){
-		std::cout << "Se ha llegado a la cantidad máxima permitida de: "<< nombreIngresado << ". (Cantidad máxima = " << cantidadMax << "). No se pueden construir más" << endl;
-		error = true;
-	}	
-	return !error;
-}
-
-
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
 void Juego::leerOpcionesEdificios(){
@@ -170,40 +148,47 @@ void Juego::leerOpcionesEdificios(){
 		
 		Receta* receta = new Receta(piedra, madera, metal, maximoContruibles);
 		
-		this->abb->insertarNodo(edificio, receta);
+		abb->insertarNodo(edificio, receta);
 
-		//agregarEdificio(edificio);
-
+		cantidadEdificios++;
 	}
-	
+	Receta* receta;
+	if((receta = abb -> buscar(ASERRADERO)) != NULL) receta -> setearProduccion(MADERA);
+	if((receta = abb -> buscar(MINA)) != NULL) receta -> setearProduccion(PIEDRA);
+	if((receta = abb -> buscar(MINA_ORO)) != NULL) receta -> setearProduccion(ANDYCOINS);
+	if((receta = abb -> buscar(ESCUELA)) != NULL) receta -> setearProduccion(ANDYCOINS);
+	if((receta = abb -> buscar(FABRICA)) != NULL) receta -> setearProduccion(METAL);
+	if((receta = abb -> buscar(PLANTA_ELECTRICA)) != NULL) receta -> setearProduccion(ENERGIA);
+
 	archivoEdificios.close();
 }
 
-bool Juego::verificarEdificio(string nombreIngresado, int *piedraNecesaria, int *maderaNecesaria, int *metalNecesario, int *construidos, int *cantidadMax){
-	////////////////Falta cant max y construidos por jugador///////////////
-	
-	/*
-	bool existe = false;
-	
-	for(int i = 0; i < cantidadEdificios; i++){
-		//Verifica que exista el edificio ingresado
-		if(this->abb->buscar(nombreIngresado)->obtenerClave() == nombreIngresado){
-			*piedraNecesaria = this->abb->buscar(nombreIngresado)->obtenerDatos()[0];
-			*maderaNecesaria = this->abb->buscar(nombreIngresado)->obtenerDatos()[1];
-			*metalNecesario = this->abb->buscar(nombreIngresado)->obtenerDatos()[2];
-			
-			*construidos = listaEdificios[i]->obtenerCantConstruidos(); 
-			*cantidadMax = listaEdificios[i]->obtenerCantMaxConstruido();
-			existe = true;
+bool Juego::verificarEdificio(string nombreIngresado, int* piedraNecesaria, int* maderaNecesaria, int* metalNecesario){
+	bool error = false;
+	Receta* receta = new Receta();
+	if ((receta = abb->buscar(nombreIngresado)) == NULL){
+		cout << "El edificio '" << nombreIngresado << "' no existe" << endl << endl;
+		error = true;
+	} else if(
+		mapa -> edificiosContruidos(nombreIngresado, jugadorActivo) >=
+		abb -> buscar(nombreIngresado) -> obtenerMaterial(MAXIMO_CONSTRUIBLES)
+	) {
+		cout <<"Ya no puedes construir edificios del tipo " << nombreIngresado << endl;
+		error = true;
+	} else {
+		for (size_t i = 0; i < 3; i++){
+			if(obtenerJugador() -> buscarMaterial(MATERIALES_CONSTRUCCION[i]) -> obtenerCantidadMaterial() < receta -> obtenerMaterial(MATERIALES_CONSTRUCCION[i])){
+				cout <<"Te faltan " << receta -> obtenerMaterial(MATERIALES_CONSTRUCCION[i]) - obtenerJugador() -> buscarMaterial(MATERIALES_CONSTRUCCION[i]) ->obtenerCantidadMaterial() << " de " << MATERIALES_CONSTRUCCION[i] << " para contruir el edificio" << endl;
+				error = true;
+			}
 		}
 	}
-	
-	if(!existe){
-		cout << "El edificio '" << nombreIngresado << "' no existe" << endl << endl;
-		return false;
+	if(!error){
+		*piedraNecesaria = receta -> obtenerMaterial(PIEDRA);
+		*maderaNecesaria = receta -> obtenerMaterial(MADERA);
+		*metalNecesario = receta -> obtenerMaterial(METAL);
 	}
-	*/
-	return true;
+	return error;
 }
 
 void Juego::listarEdificiosConstruidos(){
@@ -246,63 +231,17 @@ void Juego::listarEdificiosConstruidos(){
 	*/
 }
 
-void Juego::agregarEdificio(Edificio* edificio){
-
-    Edificio** nuevaListaEdificios = new Edificio*[(this -> cantidadEdificios) + 1];
-    
-    
-    for (int i = 0; i < (this -> cantidadEdificios); i++){
-        nuevaListaEdificios[i] = this -> listaEdificios[i];
-    }
-    
- 
-    nuevaListaEdificios[this -> cantidadEdificios] = edificio;
-
-    if (cantidadEdificios != 0){
-        delete [] listaEdificios;
-    } 
-    
-    this -> listaEdificios = nuevaListaEdificios;
-    this -> cantidadEdificios++;
-	
-}
-
 void Juego::listarEdificios(){
 /////////////////////////// Falta max const y brinda material/////////////////////
 	
 	cout << endl << endl;
 	cout << "Lista de edificios:" << endl << endl;
 	cout << "            ══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════" << endl;
-	cout << "             Nombre\t\tPiedra\t\tMadera\t\tMetal\t\tConstruidos\tTodavía puede construir\t\t¿Brinda material?"<< endl;
+	cout << "             Nombre\t\tPiedra\t\tMadera\t\tMetal\t\tConstruidos permitidos\t\t¿Brinda material?"<< endl;
 	cout << "            ══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════" << endl;
-	
-	abb->imprimirTablaOrdenada();
-	
-	/*long nombreMasLargo = 0;
-	long nombre = 0;
-	for(int i = 0; i < this -> cantidadEdificios; i++){
-		nombre = this->abb->obtenerNodo(i).obtenerClave().length();
-		if(nombre > nombreMasLargo)
-			nombreMasLargo = nombre;
-	}*/
-	
-	/*
-	for(int i = 0; i < this->cantidadEdificios; i++){
-		long espacio = nombreMasLargo - this->abb->obtenerNodo(i).obtenerClave().length();
-		cout << "             " << this->abb->obtenerNodo(i).obtenerClave();
-		cout << setw(5 + (int)espacio);
-		cout << this->abb->obtenerNodo(i).obtenerDatos()[0] << setw(16);
-		cout << this->abb->obtenerNodo(i).obtenerDatos()[1] << setw(16);
-		cout << this->abb->obtenerNodo(i).obtenerDatos()[2] << setw(23);
-		//cout << this -> listaEdificios[i] -> obtenerCantMaxConstruido() - this -> listaEdificios[i] -> obtenerCantConstruidos() << endl;
-		
-		if(this -> listaEdificios[i] -> brindaMaterial())
-			cout << " Sí"  << endl;
-		else
-			cout << "No" << endl;
-	}*/
+	abb -> imprimirTablaOrdenada();
 	cout << endl << endl;
-	
+
 }
 
 void Juego::recolectarRecursos(){
@@ -400,22 +339,21 @@ void Juego::leerMapa() {
 
 
 bool Juego::verificarCoordenadas(int fila, int columna) {
-	
+	bool error = false;
 	if(fila < 0 || fila > mapa->obtenerCantidadFilas()){
 		cout << "La fila ingresada está fuera de rango. No se puede construir el edificio" << endl;
-		return false;
-	}
-	
-	if(columna < 0 || columna > mapa->obtenerCantidadColumnas()){
+		error = true;
+	} else if(columna < 0 || columna > mapa->obtenerCantidadColumnas()){
 		cout << "La columna " << columna << " ingresada está fuera de rango. No se puede construir el edificio" << endl;
-		return false;
-	}
-	if(mapa->obtenerCasillero(fila, columna)->obtenerCaracter() != CARACTER_VACIO){
+		error = true;
+	} else if (mapa->obtenerCasillero(fila, columna) -> obtenerTipo() != TERRENO){
+		cout << "No se puede construir en este tipo de casillero" << endl;
+		error = true;
+	} else if(mapa->obtenerCasillero(fila, columna)->obtenerCaracter() != CARACTER_VACIO){
 		cout << "El casillero (" << fila << "," << columna << ") está ocupado" << endl;
-		return false;
+		error = true;
 	}	
-
-	return true;
+	return error;
 }
 
 //parte de grafos
@@ -511,9 +449,7 @@ void Juego::mostrarCaminoMinimo(string origen, string destino) {
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-//----------------------------------------------------------------------------------------------------------------------------------------------------
-
-// Creo que se esta rompiendo porque pone mas maderas de las que deberia, no entiendo porque
+//------------------------------------------------------------------------------------------
 void Juego::lluviaElementos() {
 	CasilleroTransitable** casillerosDisponibles = new CasilleroTransitable*[0];
 	int transitables = mapa -> casillerosTransitablesVacios(&casillerosDisponibles);
@@ -544,6 +480,14 @@ void Juego::lluviaElementos() {
 			casillero -> depositarMaterial(new Material(bolsas[i], valoresLluvia(bolsas[i])));
 		}
 }
+
+void Juego::modificarEdificio(std::string nombre, string material, int nuevoValor){
+	abb -> buscar(nombre) -> modificarMaterial(material, nuevoValor);
+}
+
+
+
+
 
 void Juego::guardarYSalir(){
 	cerrarMateriales();

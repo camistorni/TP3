@@ -13,7 +13,7 @@ const char CARACTER_plantaElectrica = 'P';
 
 const std::string ASERRADERO        = "aserradero";
 const std::string ESCUELA           = "escuela";
-const std::string FABRICA           = "fábrica";
+const std::string FABRICA           = "fabrica";
 const std::string MINA              = "mina";
 const std::string MINA_ORO          = "mina de oro";
 const std::string OBELISCO          = "obelisco";

@@ -66,8 +66,10 @@ void CasilleroConstruible::agregarEdifico(std::string nombre, int jugador){
 
 bool CasilleroConstruible::atacarEdificio(){
     string tipo = edificio -> obtenerTipo();
-    estadoEdifio -= (tipo == MINA || tipo == FABRICA) ? 1 : 2;
-    delete edificio;
-    setearCaracter(CARACTER_VACIO);
+    estadoEdifio -= ((tipo == MINA || tipo == FABRICA) ? 1 : 2);
+    if(estadoEdifio == 0) {
+        setearCaracter(CARACTER_VACIO);
+        delete edificio;
+    };
     return estadoEdifio > 0;
 };

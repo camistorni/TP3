@@ -17,6 +17,10 @@ void procesarOpcionesMenu(Juego* juego, int& opcion);
 // Post: Se encarga de realizar todas las acciones correspondientes a comenzar la partida
 void comenzarPartida(Juego* juego);
 
+void modificarEdificioPorNombre(Juego* juego);
+
+
+
 // Pre:- 
 // Post: Selecciona un jugador aleatorio entre Jugador 1 y Jugador 2
 void elegirJugador(Juego* juego);
@@ -80,7 +84,7 @@ void procesarOpciones(Juego* juego, int opcion);
 
 // Pre: -
 // Post: -
-void construirEdificio(Juego* juego, string nombreIngresado);
+void construirEdificio(Juego* juego);
 
 
 #endif

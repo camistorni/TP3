@@ -201,3 +201,19 @@ int Mapa::casillerosTransitablesVacios(CasilleroTransitable*** casillerosDisponi
 	return disponibles;
 }
 
+int Mapa::edificiosContruidos(string nombre, int jugador){
+	int construidos = 0;
+	Casillero* casillero;
+	char tipo;
+	for(int i = 0; i < cantidadFilas; i++) {
+		for(int j = 0; j < cantidadColumnas; j++) {
+			if(((tipo = (casillero = casilleros[i][j]) -> obtenerTipo()) == TERRENO) &&
+				(static_cast<CasilleroConstruible*>(casillero) -> obtenerPropietarioEdificio() == jugador) &&
+				(static_cast<CasilleroConstruible*>(casillero) -> obtenerEdificio() == nombre)
+			){
+				construidos ++;
+			}
+		}
+	}
+	return construidos;
+}

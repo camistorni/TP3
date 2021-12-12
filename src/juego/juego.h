@@ -102,11 +102,7 @@ class Juego{
 
 		//Precondiciones: -
 		//Postcondiciones: Verifica que exista el edificio ingresado y, si existe, guarda los datos del edificio en las variables ingresadas
-		bool verificarEdificio(string nombreIngresado, int *piedraNecesaria, int *maderaNecesaria, int *metalNecesario, int *construidos, int *cantidadMax);
-		
-		//Precondiciones: -
-		//Postcondiciones: Verifica que haya la suficiente cantidad de materiales para construir un edificio especifico
-		bool verificarMateriales(string nombreIngresado, int piedraNecesaria, int maderaNecesaria, int metalNecesario, int construidos, int cantidadMax);
+		bool verificarEdificio(string nombreIngresado, int* piedraNecesaria, int* maderaNecesaria, int* metalNecesario);
 		
 		//Precondiciones: -
 		//Postcondiciones: Verifica que haya las coordenadas ingresadas estén disponibles para construir
@@ -178,6 +174,9 @@ class Juego{
 		void mostrarCaminoMinimo(string origen, string destino);
 		
 		string obtenerCoordenadaJugador();
+
+		void modificarEdificio(std::string nombre, string material, int nuevoValor);
+
 		
 		
 };

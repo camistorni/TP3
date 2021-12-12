@@ -35,9 +35,10 @@ const std::string ENERGIA = "energia";
 const std::string BOMBAS = "bombas";
 const std::string ANDYCOINS = "andycoins";
 const std::string MAXIMO_CONSTRUIBLES = "max";
+const std::string PRODUCCION = "prod";
 const std::string MATERIAL_NULO = "matnul";
-
-const std::string MATERIALES_RECETA[4] = {PIEDRA, MADERA, METAL, MAXIMO_CONSTRUIBLES};
+const std::string MATERIALES_CONSTRUCCION[3] = {PIEDRA, MADERA, METAL}; 
+const std::string MATERIALES_RECETA[5] = {PIEDRA, MADERA, METAL, MAXIMO_CONSTRUIBLES, PRODUCCION};
 
 
 // mapa.cpp

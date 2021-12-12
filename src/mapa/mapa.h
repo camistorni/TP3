@@ -51,6 +51,7 @@ class Mapa{
 		void pedirCoordenada(int &fila, int &columna);
 		
 		int casillerosTransitablesVacios(CasilleroTransitable*** casillerosDisponibles);
+		int edificiosContruidos(string nombre, int jugador);
 
 		//Precondiciones: -
 		//Postcondiciones: Libera la memoria utilizada por los casilleros

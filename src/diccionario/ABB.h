@@ -47,7 +47,7 @@ class ABB{
 		
 		//PRE: -
 		//POS: Busca un nodo a partir de la clave ingresada
-		NodoAbb* buscar(tipo clave);
+		Receta* buscar(tipo clave);
 		
 		//PRE: -
 		//POS: Busca el sucesor de un nodo
@@ -72,6 +72,8 @@ class ABB{
 		//PRE: -
 		//POS: Elimina todos los nodos y libera la memoria
 		void cerrarDiccionario();
+
+
 };
 
 #endif

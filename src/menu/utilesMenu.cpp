@@ -29,7 +29,7 @@ void procesarOpcionesMenu(Juego* juego, int& opcion) {
 	
     switch(opcion) {
         case MENU_MODIFICAR_EDIFICIO_POR_NOMBRE:
-            //modificarEdificioPorNombre();
+            modificarEdificioPorNombre(juego);
             break;
 
         case MENU_LISTAR_EDIFICIOS:
@@ -51,6 +51,20 @@ void procesarOpcionesMenu(Juego* juego, int& opcion) {
             cout << MJE_ERROR_OPCION << endl;
             break;*/
 	}
+}
+
+void modificarEdificioPorNombre(Juego* juego){
+	// Validar que se ingresen datos correctos
+	string edificio, material;
+	int valor;
+	cout << "¿Que edificio desea modificar?" << endl;
+	cin >> edificio;
+	cout << "¿Que material de esta la receta de este desea modificar?" << endl;
+	cin >> material;
+	cout << "¿Qué valor quiere asignarle?" << endl;
+	cin >> valor;
+	juego -> modificarEdificio(edificio, material, valor);
+
 }
 
 void comenzarPartida(Juego* juego) {
@@ -124,9 +138,8 @@ void procesarOpcionesSubmenu(Juego* juego, int& opcion) {
 				cout << "Su energia actual es de: " << energiaActual << "no le alcanza para realizar esta accion." << endl;
 			}
 			else {
-				juego -> obtenerJugador() -> establecerEnergia(energiaActual - ENERGIA_POR_CONSTRUIR_EDIFICIO_POR_NOMBRE);
 				// CONSTUIR EL EDIFICIO
-				//construirEdificio(nombreIngresado);
+				construirEdificio(juego);
 			}
 			break;
 
@@ -295,8 +308,6 @@ void atacarEdificioPorCoordenada(Juego* juego){
 
 	Casillero* casillero;
 	int propietario;
-	cout << "terreno: " << juego -> obtenerMapa() -> obtenerCasillero(fila, columna) -> obtenerCaracter() << endl;
-	cout << "propietario: " << static_cast<CasilleroConstruible *>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> obtenerPropietarioEdificio() << endl;
 
 	if (
 		(casillero = juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> obtenerTipo() == TERRENO &&
@@ -357,17 +368,14 @@ void procesarOpciones(Juego* juego, int opcion) {
 	}
 }
 
-void construirEdificio(Juego* juego, string nombreIngresado) {
-	int piedraNecesaria, maderaNecesaria, metalNecesario, construidos, cantidadMax;
+void construirEdificio(Juego* juego) {
+	string nombreIngresado = "";
+	int piedraNecesaria, maderaNecesaria, metalNecesario;
+	cout << "Ingrese el nombre del edifico que desea construir." << endl;
+	cin >> nombreIngresado;
 	//Verifica que el edificio ingresado exista
-	if(!juego -> verificarEdificio(nombreIngresado, &piedraNecesaria, &maderaNecesaria, &metalNecesario, &construidos, &cantidadMax)){
-		std::cout << "El edificio '" << nombreIngresado << "' no existe" << endl << endl;
-		return;
-	}
-	
-	//Verifica que se tengan todos los materiales
-	if(!juego -> verificarMateriales(nombreIngresado, piedraNecesaria, maderaNecesaria, metalNecesario, construidos, cantidadMax))
-		return;
+	if(juego -> verificarEdificio(nombreIngresado, &piedraNecesaria, &maderaNecesaria, &metalNecesario))
+		return;	
 	
 	int fila, columna;
 	cout << "¿Donde desea construir su " << nombreIngresado << "? Ingrese la primer coordenada: " << endl;
@@ -382,7 +390,6 @@ void construirEdificio(Juego* juego, string nombreIngresado) {
 	
 	std::cout << "Todo listo para construir " << nombreIngresado << ", ¿Está seguro que quiere seguir? [y/n]: ";
 	cin >> respuesta;
-	//Edificio* edificio;
 	while (respuesta != 'y' && respuesta != 'n') {
 		cout << "Ingrese una opción válida: ";
 		cin >> respuesta;
@@ -393,6 +400,8 @@ void construirEdificio(Juego* juego, string nombreIngresado) {
 		juego -> obtenerJugador() -> buscarMaterial(PIEDRA) -> modificarCantidad(-piedraNecesaria);
 		juego -> obtenerJugador() -> buscarMaterial(MADERA) -> modificarCantidad(-maderaNecesaria);
 		juego -> obtenerJugador() -> buscarMaterial(METAL) -> modificarCantidad(-metalNecesario);
+		juego -> obtenerJugador() -> modificarEnergia(ENERGIA_POR_CONSTRUIR_EDIFICIO_POR_NOMBRE);
+
 	}
 }
 
