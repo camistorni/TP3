@@ -6,7 +6,7 @@
 
 int main(){
 	Juego* juego = new Juego();
-	/*int opcion = 0;
+	int opcion = 0;
 	mostrarMenu(juego);
 	pedirOpcion(&opcion);
 	while(opcion != 14){		
@@ -14,10 +14,12 @@ int main(){
 		mostrarMenu(juego);
 		pedirOpcion(&opcion);
 	}
-	*/
+	
+	/*
 	juego->crearCaminos();
 	juego->mostrarCaminoMinimo("0,0", "2,3");
 	//juego->guardarYSalir();
+	*/
 	delete juego;
 	return 0;
 }

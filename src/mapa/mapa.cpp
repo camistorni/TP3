@@ -26,6 +26,18 @@ int Mapa::obtenerCantidadColumnas(){
     return cantidadColumnas;
 }
 
+string Mapa::obtenerPosicionJugador(int jugador) {
+	string aux;
+	for(int i = 0; i < cantidadFilas; i++) {
+		for(int j = 0; j < cantidadColumnas; j++) {
+			if(casilleros[i][j] -> obtenerJugador() == jugador)
+				aux = to_string(i) + "," + to_string(j);
+		}
+	}
+
+	return aux;
+}
+
 char Mapa::tipoCasillero(int fila, int columna){
 	return casilleros[fila][columna] -> obtenerTipo();
 }
@@ -65,8 +77,6 @@ void Mapa::mostrarMapa() {
 		}
 	}
 }
-
-
 
 Casillero* Mapa::obtenerCasillero(int fila, int columna){
 	return casilleros[fila][columna];

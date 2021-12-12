@@ -33,3 +33,7 @@ int Casillero::obtenerEnergia(int jugadorActivo){
 void Casillero::setearJugador(int jugador){
     this -> jugador = jugador;
 }
+
+int Casillero::obtenerJugador() {
+    return jugador;
+}

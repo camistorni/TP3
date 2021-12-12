@@ -25,6 +25,8 @@ class Mapa{
 		//Postcondicions: Devuelve la cantidad de columnas
 		int obtenerCantidadColumnas ();
 		
+		string obtenerPosicionJugador(int jugador);
+
 		//Precondiciones: -
 		//Postcondicions: Devuelve el tipo de casillero
 		char tipoCasillero(int fila, int columna);

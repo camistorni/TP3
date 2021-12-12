@@ -118,6 +118,7 @@ void mostrarSubmenu(Juego* juego) {
 void procesarOpcionesSubmenu(Juego* juego, int opcion) {
 
 	int energiaActual = juego -> obtenerJugador() -> obtenerEnergia();
+	string ubicacionActual;
     switch(opcion) {
         case JUGADOR_CONSTRUIR_EDIFICIO_POR_NOMBRE:
 			if(energiaActual < ENERGIA_POR_CONSTRUIR_EDIFICIO_POR_NOMBRE){
@@ -195,6 +196,10 @@ void procesarOpcionesSubmenu(Juego* juego, int opcion) {
 			break;
 
 		case JUGADOR_MOVERSE_A_UNA_COORDENADA:
+			juego -> crearCaminos();
+			//int* ubicacionActual = juego -> obtenerJugador() -> obtenerUbicacion();
+			ubicacionActual = juego -> obtenerMapa() -> obtenerPosicionJugador(juego -> obtenerJugadorActivo());
+			juego -> mostrarCaminoMinimo(ubicacionActual, "2, 3");
             break;
 
 		case JUGADOR_FINALIZAR_TURNO:
