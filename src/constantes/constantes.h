@@ -57,6 +57,8 @@ const char CARACTER_PIEDRA = 'S';
 const char CARACTER_MADERA = 'W';
 const char CARACTER_ANDYCOINS = 'C';
 
+const char CARACTER_RECURSOS = 'R';
+
 // utilesMenu.h
 const int ENERGIA_POR_FINALIZAR_TURNO = 20;
 const int ENERGIA_POR_CONSTRUIR_EDIFICIO_POR_NOMBRE = -15;

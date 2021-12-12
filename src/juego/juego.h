@@ -20,7 +20,7 @@ class Juego{
 	private:
 		Mapa* mapa;
 		Grafo *grafo;
-		ABB *abb;
+		ABB* abb;
 		Edificio** listaEdificios;
 		Jugador** jugadores;
 		int jugadorActivo;
@@ -43,6 +43,7 @@ class Juego{
 		Edificio* obtenerEdificio(std::string nombreEdificio);
 		Mapa* obtenerMapa();
 		bool esPartidaNueva();
+		ABB* obtenerAbb();
 		
 
 		// Pre: -

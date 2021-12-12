@@ -2,7 +2,7 @@ si no existe el archivo de materiales, escribirlo con todos los valores en 0 - l
 
 del menú (no funcionan):
 2. listar mis edificios construido
-3. demoler un edificio por coordenada
+3. demoler un edificio por coordenada - listo
 5. reparar... - listo
 7. consultar....
 9. objetivos ( ver el progreso y que ganes el juego cuando los cumplas)

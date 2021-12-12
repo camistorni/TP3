@@ -32,6 +32,14 @@ void CasilleroConstruible::responder(){
     }
 }
 
+void CasilleroConstruible::depositarMaterial(Material* material) {
+    std::string nombre = material -> obtenerNombreMaterial();
+    if(nombre == MADERA) setearCaracter(CARACTER_MADERA);
+    if(nombre == PIEDRA) setearCaracter(CARACTER_PIEDRA);
+    if(nombre == METAL) setearCaracter(CARACTER_METAL);
+    this -> material = material;
+}
+
 int CasilleroConstruible::obtenerPropietarioEdificio() {
     return propietarioEdificio;
 }
@@ -80,4 +88,10 @@ bool CasilleroConstruible::repararEdificio() {
         estadoEdificio = 2;
 
     return estadoEdificio;
+}
+
+void CasilleroConstruible::demolerEdificio() {
+    propietarioEdificio = -1;
+    setearCaracter(CARACTER_RECURSOS);
+    delete edificio;
 }

@@ -96,5 +96,8 @@ void construirEdificio(Juego* juego, int fila, int columna, string nombreIngresa
 
 char confirmacionConstruccion(string nombreIngresado);
 
+void demolerEdificioPorCoordenada(Juego* juego);
+
+void depositarMateriales(Juego* juego, string edificio, Casillero* casillero);
 
 #endif

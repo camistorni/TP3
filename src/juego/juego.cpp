@@ -82,6 +82,10 @@ bool Juego::esPartidaNueva() {
 	return partidaNueva;
 }
 
+ABB* Juego::obtenerAbb() {
+	return abb;
+}
+
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
 void escribirNuevoArchivoMateriales() {
@@ -266,7 +270,7 @@ void Juego::recolectarRecursos(){
 	for(int i = 0; i < mapa -> obtenerCantidadFilas(); i++) {
 		for(int j = 0; j < mapa -> obtenerCantidadColumnas(); j++) {
 			if((casillero = mapa -> obtenerCasillero(i, j)) -> obtenerTipo() == TERRENO){
-				if(static_cast<CasilleroConstruible *>(casillero) -> recolectar(&nombre, &cantidad, jugadorActivo)){
+				if(static_cast<CasilleroConstruible*>(casillero) -> recolectar(&nombre, &cantidad, jugadorActivo)){
 					cout << "Se recolectaron " << cantidad << " de " << nombre << endl;
 					jugadores[jugadorActivo] -> buscarMaterial(nombre) -> modificarCantidad(cantidad);
 				}
@@ -355,16 +359,16 @@ void Juego::leerMapa() {
 
 bool Juego::verificarCoordenadas(int fila, int columna) {
 	bool error = false;
-	if(fila < 0 || fila > mapa->obtenerCantidadFilas()){
+	if(fila < 0 || fila > mapa -> obtenerCantidadFilas()){
 		cout << "La fila ingresada está fuera de rango. No se puede construir el edificio" << endl;
 		error = true;
-	} else if(columna < 0 || columna > mapa->obtenerCantidadColumnas()){
+	} else if(columna < 0 || columna > mapa -> obtenerCantidadColumnas()){
 		cout << "La columna " << columna << " ingresada está fuera de rango. No se puede construir el edificio" << endl;
 		error = true;
-	} else if (mapa->obtenerCasillero(fila, columna) -> obtenerTipo() != TERRENO){
+	} else if (mapa -> obtenerCasillero(fila, columna) -> obtenerTipo() != TERRENO){
 		cout << "No se puede construir en este tipo de casillero" << endl;
 		error = true;
-	} else if(mapa->obtenerCasillero(fila, columna)->obtenerCaracter() != CARACTER_VACIO){
+	} else if(mapa -> obtenerCasillero(fila, columna)->obtenerCaracter() != CARACTER_VACIO){
 		cout << "El casillero (" << fila << "," << columna << ") está ocupado" << endl;
 		error = true;
 	}	

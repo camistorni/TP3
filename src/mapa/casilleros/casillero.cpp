@@ -6,31 +6,33 @@
 Casillero::Casillero() {}
 Casillero::~Casillero() {}
 
-void Casillero::setearTipo(char tipo){
+void Casillero::responder() {}
+
+void Casillero::setearTipo(char tipo) {
     this -> tipo = tipo;
 }
-char Casillero::obtenerTipo(){
+char Casillero::obtenerTipo() {
     return tipo;
 }
-void Casillero::setearCaracter(char caracter){
+void Casillero::setearCaracter(char caracter) {
     this -> caracter = caracter;
 }		
-char Casillero::obtenerCaracter(){
+char Casillero::obtenerCaracter() {
     return (jugador != -1) ? (jugador ? '2' : '1') : caracter;
 }	
-void Casillero::setearColor(std::string color){
+void Casillero::setearColor(std::string color) {
     this -> color = color;
 }
-std::string Casillero::obtenerColor(){
+std::string Casillero::obtenerColor() {
     return color;
 }
-void Casillero::setearEnergia(int energia){
+void Casillero::setearEnergia(int energia) {
     this -> energia = energia;
 }
-int Casillero::obtenerEnergia(int jugadorActivo){
+int Casillero::obtenerEnergia(int jugadorActivo) {
     return energia;
 }
-void Casillero::setearJugador(int jugador){
+void Casillero::setearJugador(int jugador) {
     this -> jugador = jugador;
 }
 

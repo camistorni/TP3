@@ -150,10 +150,8 @@ void procesarOpcionesSubmenu(Juego* juego, int& opcion) {
 			if(energiaActual < ENERGIA_POR_DEMOLER_EDIFICIO_POR_COORDENADA) {
 				cout << "Su energia actual es de: " << energiaActual << "no le alcanza para realizar esta accion." << endl;
 			}
-			else {
-				juego -> obtenerJugador() -> establecerEnergia(energiaActual - ENERGIA_POR_DEMOLER_EDIFICIO_POR_COORDENADA);
-				// demolerEdificioPorCoordenada();
-			}
+			else 
+				demolerEdificioPorCoordenada(juego);
 			break;
 
 		case JUGADOR_ATACAR_EDIFICIO_POR_COORDENADA:
@@ -210,7 +208,7 @@ void procesarOpcionesSubmenu(Juego* juego, int& opcion) {
 			break;
 		case JUGADOR_GUARDAR_Y_SALIR:
 			break;
-			
+
 		default:
 			cout << MJE_ERROR_OPCION << endl;
 			break;
@@ -370,14 +368,13 @@ void atacarEdificioPorCoordenada(Juego* juego){
 
 	if (
 		(casillero = juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> obtenerTipo() == TERRENO &&
-		(propietario = static_cast<CasilleroConstruible *>(casillero) -> obtenerPropietarioEdificio()) > -1
+		(propietario = static_cast<CasilleroConstruible*>(casillero) -> obtenerPropietarioEdificio()) > -1
 		) {
 		if(propietario == juego -> obtenerJugadorActivo())
 			cout << "No puedes atacar tu propio edifico" << endl;
 		else {
-			string edificio = static_cast<CasilleroConstruible *>(casillero) -> obtenerEdificio();
-			cout << "Se ha " << ((static_cast<CasilleroConstruible *>(casillero) -> atacarEdificio()) ? "atacado" : "destruido") << " el edificio " << edificio << endl; 
-			juego -> obtenerJugador() -> modificarEnergia(ENERGIA_POR_ATACAR_EDIFICIO_POR_COORDENADA);
+			string edificio = static_cast<CasilleroConstruible*>(casillero) -> obtenerEdificio();
+			cout << "Se ha " << ((static_cast<CasilleroConstruible *>(casillero) -> atacarEdificio()) ? "atacado" : "destruido") << " el edificio " << edificio << endl; 			juego -> obtenerJugador() -> modificarEnergia(ENERGIA_POR_ATACAR_EDIFICIO_POR_COORDENADA);
 			juego -> obtenerJugador() -> buscarMaterial(BOMBAS) -> modificarCantidad(-1);
 		}
 	} 
@@ -400,14 +397,13 @@ void repararEdificioPorCoordenada(Juego* juego) {
 	Casillero* casillero;
 	int propietario;
 
-	if (
-		(casillero = juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> obtenerTipo() == TERRENO &&
-		(propietario = static_cast<CasilleroConstruible *>(casillero) -> obtenerPropietarioEdificio()) > -1
-		) {
+	casillero = juego -> obtenerMapa() -> obtenerCasillero(fila, columna);
+	if((casillero -> obtenerTipo() == TERRENO) && 
+		(propietario = (static_cast<CasilleroConstruible*>(casillero) -> obtenerPropietarioEdificio()) > -1)) {
 		if(propietario != juego -> obtenerJugadorActivo())
 			cout << "No puedes reparar un edificio que no te pertenece" << endl;
 		else {
-			string edificio = static_cast<CasilleroConstruible *>(casillero) -> obtenerEdificio();
+			string edificio = static_cast<CasilleroConstruible*>(casillero) -> obtenerEdificio();
 			cout << "Se ha reparado el edificio " << edificio << endl; 
 			juego -> obtenerJugador() -> modificarEnergia(ENERGIA_POR_REPARAR_EDIFICIO_POR_COORDENADA);
 			// modificar la cantidad de materiales
@@ -484,7 +480,7 @@ void construirEdificioPorCoordenada(Juego* juego) {
 
 void construirEdificio(Juego* juego, int fila, int columna, string nombreIngresado, int piedraNecesaria, int maderaNecesaria, int metalNecesario) {
 	cout << "El edificio ha sido construido correctamente" << endl << endl;
-	static_cast<CasilleroConstruible*>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> agregarEdifico(nombreIngresado, juego -> obtenerJugadorActivo());
+	static_cast<CasilleroConstruible *>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> agregarEdifico(nombreIngresado, juego -> obtenerJugadorActivo());
 	juego -> obtenerJugador() -> buscarMaterial(PIEDRA) -> modificarCantidad(-piedraNecesaria);
 	juego -> obtenerJugador() -> buscarMaterial(MADERA) -> modificarCantidad(-maderaNecesaria);
 	juego -> obtenerJugador() -> buscarMaterial(METAL) -> modificarCantidad(-metalNecesario);
@@ -504,6 +500,46 @@ char confirmacionConstruccion(string nombreIngresado) {
 	return respuesta;
 }
 
+void demolerEdificioPorCoordenada(Juego* juego) {
+	int fila, columna;
+	cout << "¿Qué edificio desea demoler? Ingrese la primer coordenada: ";
+	cin >> fila;
+	cout << "Ingrese la segunda coordenada: ";
+	cin >> columna;
+
+	Casillero* casillero;
+	int propietario;
+
+
+	casillero = juego -> obtenerMapa() -> obtenerCasillero(fila, columna);
+	if((casillero -> obtenerTipo() == TERRENO) && 
+		(propietario = static_cast<CasilleroConstruible *>(casillero) -> obtenerPropietarioEdificio() > -1)) {
+		string edificio = (static_cast<CasilleroConstruible*>(casillero) -> obtenerEdificio());
+		cout << "Se ha demolido el edificio " << edificio << endl; 
+		juego -> obtenerJugador() -> modificarEnergia(ENERGIA_POR_DEMOLER_EDIFICIO_POR_COORDENADA);
+		
+		Casillero* casillero = juego -> obtenerMapa() -> obtenerCasillero(fila, columna);
+		depositarMateriales(juego, edificio, casillero);
+		(static_cast<CasilleroConstruible *>(casillero) -> demolerEdificio());
+
+	} 
+	else
+		cout << "No hay un edificio en ese casillero" << endl;
+	
+	return;
+}
+
+void depositarMateriales(Juego* juego, string edificio, Casillero* casillero) {
+	
+	int cantidadPiedra = juego -> obtenerAbb() -> buscar(edificio) -> obtenerMaterial(PIEDRA) / 2;
+	int cantidadMadera = juego -> obtenerAbb() -> buscar(edificio) -> obtenerMaterial(MADERA) / 2;
+	int cantidadMetal = juego -> obtenerAbb() -> buscar(edificio) -> obtenerMaterial(METAL) / 2;
+	;
+
+	(static_cast<CasilleroConstruible *>(casillero) -> depositarMaterial(new Material(PIEDRA, cantidadPiedra)));
+	(static_cast<CasilleroConstruible *>(casillero) -> depositarMaterial(new Material(MADERA, cantidadMadera)));
+	(static_cast<CasilleroConstruible *>(casillero) -> depositarMaterial(new Material(METAL, cantidadMetal)));
+}
 /*
 void demolerEdificioCoordenada(Juego* juego) {
 	int fila, columna;
