@@ -37,3 +37,7 @@ void Casillero::setearJugador(int jugador){
 int Casillero::obtenerJugador() {
     return jugador;
 }
+
+void Casillero::removerJugador(int jugador) {
+    jugador = CARACTER_VACIO;
+}

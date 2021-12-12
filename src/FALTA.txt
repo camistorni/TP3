@@ -1,17 +1,16 @@
-si existe un archivo con ubicaciones.txt el programa tiene que empezar directo con el submenu
-las funciones de cerrar todos los archivos menos materiales
 si no existe el archivo de materiales, escribirlo con todos los valores en 0
-falta:
-    MENU:   
-        modificar edificio por nombre
-        listar todos los edificios
-        guardar y salir
-    SUBMENU:
-        1. construir edificios por nombre
-        2. listar mis edificios construidos
-        3. demoler un edificio por coordenada
-        4. atacar un edificio por coordenada
-        5. reparar un edificio por coordenada
-        10. recolectar recursos producidos
-        11. moverse a una coordenada (no funciona)
-        13. guardar y salir
+
+del menú (no funcionan):
+2. listar mis edificios construido
+3. demoler un edificio por coordenada
+5. reparar... - listo
+7. consultar....
+9. objetivos ( ver el progreso y que ganes el juego cuando los cumplas)
+11. moverse a una coordenada (falta recolectar los recursos del camino y restar la energia)
+
+después hay que fijarse que el programa checkee que se ingresen datos correctos sino se buggea - listo
+
+hay que sacar las funciones de establecer Energía de procesarOpcionesSubmenu y ponerlas adentro de las 
+funciones con modificarEnergia (fíjate construirEdificio y atacarEdificio) - listo
+
+y las funciones de guardado, la de ubicaciones seguro, no me acuerdo si falta otra

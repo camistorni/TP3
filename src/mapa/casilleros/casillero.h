@@ -27,6 +27,7 @@ class Casillero {
 		int obtenerEnergia(int jugadorActivo);
 		void setearJugador(int jugador);
 		int obtenerJugador();
+		void removerJugador(int jugador);
 };
 
 

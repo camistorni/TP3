@@ -63,14 +63,9 @@ void Jugador::aumentarBombasCompradas(int cantidad) {
 }
 
 void Jugador::establecerCoordenadas(int fila, int columna) {
-    cout << "establecerCoordenadas 1" << endl;
     //ubicacion = new int[2];
-    cout << "fila: " << fila << " columna: " << columna << endl;
-    cout << "ubicacion" << ubicacion[0] << endl;
     ubicacion[0] = fila;
-    cout << "establecerCoordenadas 2" << endl;
     ubicacion[1] = columna;
-    cout << "establecerCoordenadas 3" << endl;
 }
 
 void Jugador::agregarMaterial(Material* nuevoMaterial, int cantidadMateriales) {

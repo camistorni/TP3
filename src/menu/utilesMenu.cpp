@@ -208,6 +208,8 @@ void procesarOpcionesSubmenu(Juego* juego, int& opcion) {
 		case JUGADOR_FINALIZAR_TURNO:
 			finalizarTurno(juego);
 			break;
+		case JUGADOR_GUARDAR_Y_SALIR:
+			break;
 			
 		default:
 			cout << MJE_ERROR_OPCION << endl;
@@ -235,6 +237,8 @@ void moverseAUnaCoordenada(Juego* juego) {
 	xCoord = stoi(&coordenada[0]);
 	yCoord = stoi(&coordenada[2]);
 	juego -> obtenerJugador() -> establecerCoordenadas(xCoord, yCoord);
+	juego -> obtenerMapa() -> obtenerCasillero(stoi(&posicionActual[0]), stoi(&posicionActual[2])) -> removerJugador(juego -> obtenerJugadorActivo());
+	juego -> obtenerMapa() -> obtenerCasillero(xCoord, yCoord) -> setearJugador(juego -> obtenerJugadorActivo());
 }
 
 void mostrarInformacion(Juego* juego) {
