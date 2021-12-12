@@ -25,7 +25,7 @@ bool CasilleroConstruible::recolectar(std::string* materialProducido, int* canti
 }
 
 void CasilleroConstruible::responder(){
-    if (estadoEdifio){
+    if (estadoEdificio){
         cout << "Soy un casillero construible y tengo construido un " << obtenerTipo() << endl;
     }
     else {
@@ -38,7 +38,7 @@ int CasilleroConstruible::obtenerPropietarioEdificio() {
 }
 
 void CasilleroConstruible::agregarEdifico(std::string nombre, int jugador){
-    estadoEdifio = 2;
+    estadoEdificio = 2;
     propietarioEdificio = jugador;
     if (nombre == ASERRADERO) {
         edificio = new Aserradero();
@@ -64,12 +64,21 @@ void CasilleroConstruible::agregarEdifico(std::string nombre, int jugador){
     }
 }
 
-bool CasilleroConstruible::atacarEdificio(){
+bool CasilleroConstruible::atacarEdificio() {
     string tipo = edificio -> obtenerTipo();
-    estadoEdifio -= ((tipo == MINA || tipo == FABRICA) ? 1 : 2);
-    if(estadoEdifio == 0) {
+    estadoEdificio -= ((tipo == MINA || tipo == FABRICA) ? 1 : 2);
+    if(estadoEdificio == 0) {
         setearCaracter(CARACTER_VACIO);
         delete edificio;
-    };
-    return estadoEdifio > 0;
-};
+    }
+    return estadoEdificio > 0;
+}
+
+bool CasilleroConstruible::repararEdificio() {
+    string tipo = edificio -> obtenerTipo();
+    estadoEdificio -= ((tipo == MINA || tipo == FABRICA) ? 1 : 2);
+    if(estadoEdificio == 1)
+        estadoEdificio = 2;
+
+    return estadoEdificio;
+}

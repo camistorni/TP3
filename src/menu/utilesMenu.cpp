@@ -138,8 +138,7 @@ void procesarOpcionesSubmenu(Juego* juego, int& opcion) {
 				cout << "Su energia actual es de: " << energiaActual << "no le alcanza para realizar esta accion." << endl;
 			}
 			else {
-				// CONSTUIR EL EDIFICIO
-				construirEdificio(juego);
+				construirEdificioPorCoordenada(juego);
 			}
 			break;
 
@@ -158,29 +157,26 @@ void procesarOpcionesSubmenu(Juego* juego, int& opcion) {
 			break;
 
 		case JUGADOR_ATACAR_EDIFICIO_POR_COORDENADA:
-			if(energiaActual < ENERGIA_POR_ATACAR_EDIFICIO_POR_COORDENADA) {
+			if(energiaActual < ENERGIA_POR_ATACAR_EDIFICIO_POR_COORDENADA)
 				cout << "Su energia actual es de: " << energiaActual << "no le alcanza para realizar esta accion." << endl;
-			}
 			else 
 				atacarEdificioPorCoordenada(juego);
 			break;
 
 		case JUGADOR_REPARAR_EDIFICIO_POR_COORDENADA:
-			if(energiaActual < ENERGIA_POR_REPARAR_EDIFICIO_POR_COORDENADA) {
+			if(energiaActual < ENERGIA_POR_REPARAR_EDIFICIO_POR_COORDENADA)
 				cout << "Su energia actual es de: " << energiaActual << "no le alcanza para realizar esta accion." << endl;
-			}
-			else {
-				juego -> obtenerJugador() -> establecerEnergia(energiaActual - ENERGIA_POR_REPARAR_EDIFICIO_POR_COORDENADA);
-				// repararEdificioPorCoordenada();
-			}
+			else
+				// Hay que terminarla
+				// repararEdificioPorCoordenada; 
 			break;
 
 		case JUGADOR_COMPRAR_BOMBAS:
 			if(energiaActual < ENERGIA_POR_COMPRAR_BOMBA) {
 				cout << "Su energia actual es de: " << energiaActual << "no le alcanza para realizar esta accion." << endl;
 			}
-			else if(comprarBomba(juego))
-				juego -> obtenerJugador() -> establecerEnergia(energiaActual - ENERGIA_POR_COMPRAR_BOMBA);
+			else
+				comprarBomba(juego);
 			break;
 
 		case JUGADOR_CONSULTAR_COORDENADA:
@@ -206,29 +202,39 @@ void procesarOpcionesSubmenu(Juego* juego, int& opcion) {
 			break;
 
 		case JUGADOR_MOVERSE_A_UNA_COORDENADA:
-			{
-				string coordenada;
-				juego->crearCaminos();
-				cout << "Ingrese la coordenada a la que desea moverse (ej: 0,1): ";
-				cin >> coordenada;
-				string posicionActual = juego -> obtenerMapa() -> obtenerPosicionJugador(juego -> obtenerJugadorActivo());
-				cout << "Posicion Actual: " << posicionActual << endl;
-				juego -> mostrarCaminoMinimo(posicionActual, coordenada);
-			}
+			moverseAUnaCoordenada(juego);
             break;
 
 		case JUGADOR_FINALIZAR_TURNO:
-			juego -> obtenerJugador() -> modificarEnergia(ENERGIA_POR_FINALIZAR_TURNO);
-			cout << "Su energia ahora es: " << juego -> obtenerJugador() -> obtenerEnergia() << endl;
-			if(juego -> obtenerJugadorActivo() == 1)
-				juego -> lluviaElementos();
-			juego -> establecerJugadorActivo(juego -> obtenerJugadorActivo() ? 0 : 1);
+			finalizarTurno(juego);
 			break;
 			
 		default:
 			cout << MJE_ERROR_OPCION << endl;
 			break;
     }
+}
+
+void finalizarTurno(Juego* juego) {
+	juego -> obtenerJugador() -> modificarEnergia(ENERGIA_POR_FINALIZAR_TURNO);
+	cout << "Su energia ahora es: " << juego -> obtenerJugador() -> obtenerEnergia() << endl;
+	if(juego -> obtenerJugadorActivo() == 1)
+		juego -> lluviaElementos();
+	juego -> establecerJugadorActivo(juego -> obtenerJugadorActivo() ? 0 : 1);
+}
+
+void moverseAUnaCoordenada(Juego* juego) {
+	string coordenada;
+	int xCoord = 0, yCoord = 0;
+	juego -> crearCaminos();
+	cout << "Ingrese la coordenada a la que desea moverse (ej: 0,1): ";
+	cin >> coordenada;
+	string posicionActual = juego -> obtenerMapa() -> obtenerPosicionJugador(juego -> obtenerJugadorActivo());
+	cout << "Posicion Actual: " << posicionActual << endl;
+	juego -> mostrarCaminoMinimo(posicionActual, coordenada);
+	xCoord = stoi(&coordenada[0]);
+	yCoord = stoi(&coordenada[2]);
+	juego -> obtenerJugador() -> establecerCoordenadas(xCoord, yCoord);
 }
 
 void mostrarInformacion(Juego* juego) {
@@ -239,10 +245,60 @@ void mostrarInformacion(Juego* juego) {
 	cout << '\t' << "Su cantidad de andycoins actual es: " << cantidadAndycoins << endl << endl;
 }
 
+void mostrarProgresoObjetivos(Juego* juego, int i) {
+	int* objetivosJugador = juego -> obtenerJugador() -> obtenerObjetivos();
+	switch(objetivosJugador[i]) {
+		case COMPRAR_ANDYPOLIS: 
+			cout << juego -> obtenerJugador() -> buscarMaterial(ANDYCOINS) -> obtenerCantidadMaterial() 
+			<< " / " << CANTIDAD_ANDYCOINS_COMPRAR_ANDYPOLIS << endl;
+			break;
+		
+		case EDAD_DE_PIEDRA:
+			cout << juego -> obtenerJugador() -> buscarMaterial(PIEDRA) -> obtenerCantidadMaterial() 
+			<< " / " << CANTIDAD_EDAD_DE_PIEDRA << endl;
+			break;
+
+		case BOMBARDERO:
+			// Este no se puede hacer todavia, hay que ir sumando la cantidad de piedras que se usan cuando atacas
+			break;
+
+		case ENERGETICO:
+			cout << juego -> obtenerJugador() -> obtenerEnergia() << " / " << CANTIDAD_MAXIMA_ENERGIA << endl;
+			break;
+
+		case LETRADO:
+			// Hay que ver como ver esto
+			break;
+
+		case MINERO:
+			// Hay que ver como ver esto
+			break;
+
+		case CANSADO:
+			cout << juego -> obtenerJugador() -> obtenerEnergia() << " / " << CANTIDAD_MINIMA_ENERGIA << endl;
+			break;
+		
+		case CONSTRUCTOR:
+			// hay que ver esto
+			break;
+
+		case ARMADO:
+			cout << juego -> obtenerJugador() -> buscarMaterial(BOMBAS) -> obtenerCantidadMaterial() 
+			<< " / " << CANTIDAD_ARMADO << endl;
+			break;
+
+		case EXTREMISTA:
+			cout << juego -> obtenerJugador() -> obtenerCantidadBombasCompradas() << " / " << CANTIDAD_EXTREMISTA << endl;
+			break;
+	}
+}
+
 void mostrarObjetivos(Juego* juego) {
 	int* objetivosJugador = juego -> obtenerJugador() -> obtenerObjetivos();
-	for(int i = 0; i < CANTIDAD_OBJETIVOS; i++)
-		cout << OBJETIVOS[objetivosJugador[i]] << endl;
+	for(int i = 0; i < CANTIDAD_OBJETIVOS; i++) {
+		cout << OBJETIVOS[objetivosJugador[i]] << ": " ;
+		mostrarProgresoObjetivos(juego, i);
+	}
 }
 
 void mostrarInventario(Juego* juego) {
@@ -260,8 +316,7 @@ void mostrarInventario(Juego* juego) {
 	}
 }
 
-bool comprarBomba(Juego* juego) {
-	bool accionRealizada = false;
+void comprarBomba(Juego* juego) {
 	int cantidad = 0;
 	int cantidadAndycoins = 0;
 	cout << "Ingrese la cantidad de bombas que desee comprar" << endl;
@@ -275,11 +330,11 @@ bool comprarBomba(Juego* juego) {
 		juego -> obtenerJugador() -> buscarMaterial("andycoins") -> establecerCantidad(cantidadAndycoins - costoBombas);
 		int cantidadActualBombas = juego -> obtenerJugador() -> buscarMaterial("bombas") -> obtenerCantidadMaterial();
 		juego -> obtenerJugador() -> buscarMaterial("bombas") -> establecerCantidad(cantidadActualBombas + cantidad);
+		juego -> obtenerJugador() -> aumentarBombasCompradas(cantidad);
 		cout << "Ud adquirio " << cantidad << " de bombas" << endl;
 		cout << "Ahora cuenta con " << cantidadAndycoins << " de andycoins" << endl;
-		accionRealizada = true;
+		juego -> obtenerJugador() -> modificarEnergia(ENERGIA_POR_COMPRAR_BOMBA);
 	}
-	return accionRealizada;
 }
 
 
@@ -301,9 +356,9 @@ void atacarEdificioPorCoordenada(Juego* juego){
 	}
 
 	int fila, columna;
-	cout << "¿Qué edificio desea atacar? Ingrese la primer coordenada: " << endl;
+	cout << "¿Qué edificio desea atacar? Ingrese la primer coordenada: ";
 	cin >> fila;
-	cout << "Ingrese la segunda coordenada: " << endl;
+	cout << "Ingrese la segunda coordenada: ";
 	cin >> columna;
 
 	Casillero* casillero;
@@ -312,22 +367,53 @@ void atacarEdificioPorCoordenada(Juego* juego){
 	if (
 		(casillero = juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> obtenerTipo() == TERRENO &&
 		(propietario = static_cast<CasilleroConstruible *>(casillero) -> obtenerPropietarioEdificio()) > -1
-		){
-		if(propietario == juego -> obtenerJugadorActivo()){
+		) {
+		if(propietario == juego -> obtenerJugadorActivo())
 			cout << "No puedes atacar tu propio edifico" << endl;
-		} else {
+		else {
 			string edificio = static_cast<CasilleroConstruible *>(casillero) -> obtenerEdificio();
 			cout << "Se ha " << ((static_cast<CasilleroConstruible *>(casillero) -> atacarEdificio()) ? "atacado" : "destruido") << " el edificio " << edificio << endl; 
 			juego -> obtenerJugador() -> modificarEnergia(ENERGIA_POR_ATACAR_EDIFICIO_POR_COORDENADA);
 			juego -> obtenerJugador() -> buscarMaterial(BOMBAS) -> modificarCantidad(-1);
 		}
-	} else {
+	} 
+	else
 		cout << "No hay un edificio en ese casillero" << endl;
-	}
+
 	return;
 }
 
+void repararEdificioPorCoordenada(Juego* juego) {
+	
+	// Chequear si tengo los materiales necesarios. Es el 25% de lo que se necesita para constuir uno nuevo
 
+	int fila, columna;
+	cout << "¿Qué edificio desea reparar? Ingrese la primer coordenada: ";
+	cin >> fila;
+	cout << "Ingrese la segunda coordenada: ";
+	cin >> columna;
+
+	Casillero* casillero;
+	int propietario;
+
+	if (
+		(casillero = juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> obtenerTipo() == TERRENO &&
+		(propietario = static_cast<CasilleroConstruible *>(casillero) -> obtenerPropietarioEdificio()) > -1
+		) {
+		if(propietario != juego -> obtenerJugadorActivo())
+			cout << "No puedes reparar un edificio que no te pertenece" << endl;
+		else {
+			string edificio = static_cast<CasilleroConstruible *>(casillero) -> obtenerEdificio();
+			cout << "Se ha reparado el edificio " << edificio << endl; 
+			juego -> obtenerJugador() -> modificarEnergia(ENERGIA_POR_REPARAR_EDIFICIO_POR_COORDENADA);
+			// modificar la cantidad de materiales
+		}
+	} 
+	else
+		cout << "No hay un edificio en ese casillero" << endl;
+
+	return;
+}
 
 // *************** GENERALES ***************
 
@@ -368,7 +454,7 @@ void procesarOpciones(Juego* juego, int opcion) {
 	}
 }
 
-void construirEdificio(Juego* juego) {
+void construirEdificioPorCoordenada(Juego* juego) {
 	string nombreIngresado = "";
 	int piedraNecesaria, maderaNecesaria, metalNecesario;
 	cout << "Ingrese el nombre del edifico que desea construir." << endl;
@@ -378,33 +464,41 @@ void construirEdificio(Juego* juego) {
 		return;	
 	
 	int fila, columna;
-	cout << "¿Donde desea construir su " << nombreIngresado << "? Ingrese la primer coordenada: " << endl;
+	cout << "¿Donde desea construir su " << nombreIngresado << "? Ingrese la primer coordenada: ";
 	cin >> fila;
-	cout << "Ingrese la segunda coordenada: " << endl;
+	cout << "Ingrese la segunda coordenada: ";
 	cin >> columna;
 	
 	if(juego -> verificarCoordenadas(fila, columna))
 		return;
 	
+	char respuesta = confirmacionConstruccion(nombreIngresado);
+	
+	if (respuesta == 'y') 
+		construirEdificio(juego, fila, columna, nombreIngresado, piedraNecesaria, maderaNecesaria, metalNecesario);
+}
+
+void construirEdificio(Juego* juego, int fila, int columna, string nombreIngresado, int piedraNecesaria, int maderaNecesaria, int metalNecesario) {
+	cout << "El edificio ha sido construido correctamente" << endl << endl;
+	static_cast<CasilleroConstruible*>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> agregarEdifico(nombreIngresado, juego -> obtenerJugadorActivo());
+	juego -> obtenerJugador() -> buscarMaterial(PIEDRA) -> modificarCantidad(-piedraNecesaria);
+	juego -> obtenerJugador() -> buscarMaterial(MADERA) -> modificarCantidad(-maderaNecesaria);
+	juego -> obtenerJugador() -> buscarMaterial(METAL) -> modificarCantidad(-metalNecesario);
+	juego -> obtenerJugador() -> modificarEnergia(ENERGIA_POR_CONSTRUIR_EDIFICIO_POR_NOMBRE);
+};
+
+char confirmacionConstruccion(string nombreIngresado) {
 	char respuesta;
 	
 	std::cout << "Todo listo para construir " << nombreIngresado << ", ¿Está seguro que quiere seguir? [y/n]: ";
 	cin >> respuesta;
 	while (respuesta != 'y' && respuesta != 'n') {
-		cout << "Ingrese una opción válida: ";
+		cout << "Ingrese una opción válida: [y/n]";
 		cin >> respuesta;
 	}
-	if (respuesta == 'y') {
-		cout << "El edificio ha sido construido correctamente" << endl << endl;
-		static_cast<CasilleroConstruible*>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> agregarEdifico(nombreIngresado, juego -> obtenerJugadorActivo());
-		juego -> obtenerJugador() -> buscarMaterial(PIEDRA) -> modificarCantidad(-piedraNecesaria);
-		juego -> obtenerJugador() -> buscarMaterial(MADERA) -> modificarCantidad(-maderaNecesaria);
-		juego -> obtenerJugador() -> buscarMaterial(METAL) -> modificarCantidad(-metalNecesario);
-		juego -> obtenerJugador() -> modificarEnergia(ENERGIA_POR_CONSTRUIR_EDIFICIO_POR_NOMBRE);
 
-	}
+	return respuesta;
 }
-
 
 /*
 void demolerEdificioCoordenada(Juego* juego) {

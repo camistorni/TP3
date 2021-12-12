@@ -49,11 +49,17 @@ void procesarOpcionesSubmenu(Juego* juego, int& opcion);
 // Post: Muestra por pantalla los objetivos activos del jugador actual
 void mostrarObjetivos(Juego* juego);
 
+void mostrarProgresoObjetivos(Juego* juego, int i);
+
 // Pre: -
 // Post: Imprime por pantalla los objetivos activos del jugador actual
 void imprimirObjetivos(int objetivo);
 
 void atacarEdificioPorCoordenada(Juego* juego);
+
+void finalizarTurno(Juego* juego);
+
+void moverseAUnaCoordenada(Juego* juego);
 
 // Pre: -
 // Post: Muestra los materiales con sus respectivas cantidades
@@ -62,7 +68,7 @@ void mostrarInventario(Juego* juego);
 // Pre: -
 // Post: Devuelve true si se pudo realizar la accion y false en caso contrario. 
 // Si fue posible realizar la accion, se realizan las modificaciones necesarias al jugador
-bool comprarBomba(Juego* juego);
+void comprarBomba(Juego* juego);
 
 // Pre: -
 // Post: Solicita la coordenada que se quiere consultar, e imprime su informacion
@@ -84,7 +90,11 @@ void procesarOpciones(Juego* juego, int opcion);
 
 // Pre: -
 // Post: -
-void construirEdificio(Juego* juego);
+void construirEdificioPorCoordenada(Juego* juego);
+
+void construirEdificio(Juego* juego, int fila, int columna, string nombreIngresado, int piedraNecesaria, int maderaNecesaria, int metalNecesario);
+
+char confirmacionConstruccion(string nombreIngresado);
 
 
 #endif

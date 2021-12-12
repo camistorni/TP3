@@ -54,6 +54,14 @@ void Jugador::modificarEnergia(int energiaAgregada) {
     energia = (energia + energiaAgregada)%(CANTIDAD_MAXIMA_ENERGIA + 1);
 }
 
+int Jugador::obtenerCantidadBombasCompradas() {
+    return bombasCompradas;
+}
+
+void Jugador::aumentarBombasCompradas(int cantidad) {
+    bombasCompradas += cantidad;
+}
+
 void Jugador::establecerCoordenadas(int fila, int columna) {
     cout << "establecerCoordenadas 1" << endl;
     //ubicacion = new int[2];
