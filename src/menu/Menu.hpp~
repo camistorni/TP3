@@ -115,7 +115,7 @@ class Menu {
 
         // Pre: -
         // Post: Se solicita al jugador ingresar la coordenada a la que se quiere mover y se lo pasa a esa posicion del mapa
-        void moverseAUnaCoordenada(Juego *juego);
+        void moverseAUnaCoordenada();
 
         // Pre: -
         // Post: Se encarga de todo lo que este relacionado con realizar el cambio del jugador

@@ -209,7 +209,7 @@ void Menu::procesarOpcionesSubmenu(int& opcion) {
 			break;
 
 		case JUGADOR_MOVERSE_A_UNA_COORDENADA:
-			moverseAUnaCoordenada(juego);
+			moverseAUnaCoordenada();
             break;
 
 		case JUGADOR_FINALIZAR_TURNO:
