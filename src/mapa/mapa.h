@@ -13,55 +13,68 @@ class Mapa{
 		
 	public:
 	
-		//Costructor
+	// Costructor
 		Mapa(int cantFilas, int cantColumnas);
+	
+	// Destructor
 		~Mapa();
 
-		//Precondiciones: -
-		//Postcondicions: Devuelve la cantidad de filas
+
+	// Getters
+		// Pre: -
+		// Post: Devuelve la cantidad de filas
 		int obtenerCantidadFilas ();
-		
-		//Precondiciones: -
-		//Postcondicions: Devuelve la cantidad de columnas
+
+		// Pre: -
+		// Post: Devuelve la cantidad de columnas
 		int obtenerCantidadColumnas ();
-		
+
+		// Pre: -
+        // Post: Devuelve un string con la posicion actual del jugador indicado
 		std::string obtenerPosicionJugador(int jugador);
+
+		// Pre: -
+        // Post: Devuelve la posicion del jugador en los parametros recibidos
 		void obtenerPosicionJugador(int *fila, int *columna, int jugador);
 
-		//Precondiciones: -
-		//Postcondicions: Devuelve el tipo de casillero
+		// Pre: -
+        // Post: Devuelve el tipo de casillero mediante el char
 		char tipoCasillero(int fila, int columna);
 
-		//Precondiciones: -
-		//Postcondicions: Crea un objeto casillero transitable, intransitabloe o construible
+		// Pre: -
+        // Post: Devuelve el casillero indicado
+		Casillero* obtenerCasillero(int fila, int columna);
+
+		// Pre: -
+        // Post: Devuelve la cantidad de casilleros transitables que se encuentran vacios
+		int casillerosTransitablesVacios(CasilleroTransitable*** casillerosDisponibles);
+
+		// Pre: -
+        // Post: Devuelve la cantidad de edificios construidos
+		int edificiosContruidos(string nombre, int jugador);
+	
+	
+	
+	
+	// Setters
+		// Pre: -
+		// Post: Crea un objeto casillero transitable, intransitabloe o construible
 		void agregarCasillero(int fila, int columna, char caracter);
 		
-		bool sePuedeDemoler (int fila, int columna);
-
-      	Casillero* obtenerCasillero(int fila, int columna);
-
-
-		void imprimirMapa(int fila, int columna, int index);
+		
+	// Generales
 
 		//Precondiciones: -
 		//Postcondicions: Muestra un dibujo del mapa 
 		void mostrarMapa ();
-			
-		//Precondiciones: un numero mayor a 0
-		//Postcondicions: devuelve un numero entre el limite y 0
-		void pedirCoordenada(int &fila, int &columna);
+
+		// Pre: -
+        // Post: Imprime el mapa
+		void imprimirMapa(int fila, int columna, int index);
 		
-		int casillerosTransitablesVacios(CasilleroTransitable*** casillerosDisponibles);
-		int edificiosContruidos(string nombre, int jugador);
-
-		//Precondiciones: -
-		//Postcondiciones: Libera la memoria utilizada por los casilleros
-		void liberarCasilleros ();
-	private:
-		void identificarContenido (Casillero* casillero);
-
+		// Pre: un numero mayor a 0
+		// Post: devuelve un numero entre el limite y 0
+		void pedirCoordenada(int &fila, int &columna);
 };
-
-
 
 #endif //MAPA_H
