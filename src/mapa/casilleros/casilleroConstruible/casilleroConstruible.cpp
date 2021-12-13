@@ -47,9 +47,9 @@ int CasilleroConstruible::obtenerPropietarioEdificio() {
     return propietarioEdificio;
 }
 
-void CasilleroConstruible::agregarEdifico(std::string nombre, int jugador){
+void CasilleroConstruible::agregarEdifico(std::string nombre, Juego* juego){
     estadoEdificio = 2;
-    propietarioEdificio = jugador;
+    propietarioEdificio = juego -> obtenerJugadorActivo();
     if (nombre == ASERRADERO) {
         edificio = new Aserradero();
         setearCaracter(CARACTER_ASERRADERO);

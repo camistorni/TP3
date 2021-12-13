@@ -235,12 +235,11 @@ void Menu::mostrarInformacion() {
 }
 
 void Menu::construirEdificioPorNombre() {
-	string nombreIngresado = "";
+	string nombreIngresado;
 	int piedraNecesaria, maderaNecesaria, metalNecesario;
 	cout << "Ingrese el nombre del edifico que desea construir." << endl;
-	//cin >> nombreIngresado;
+	cin.ignore();
 	getline(cin, nombreIngresado);
-	//Verifica que el edificio ingresado exista
 	if(juego -> verificarEdificio(nombreIngresado, &piedraNecesaria, &maderaNecesaria, &metalNecesario))
 		return;	
 	
@@ -263,7 +262,7 @@ void Menu::construirEdificioPorNombre() {
 
 void Menu::construirEdificio(int fila, int columna, string nombreIngresado, int piedraNecesaria, int maderaNecesaria, int metalNecesario) {
 	cout << "El edificio ha sido construido correctamente" << endl << endl;
-	static_cast<CasilleroConstruible *>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> agregarEdifico(nombreIngresado, juego -> obtenerJugadorActivo());
+	static_cast<CasilleroConstruible *>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> agregarEdifico(nombreIngresado, juego);
 	juego -> obtenerJugador() -> buscarMaterial(PIEDRA) -> modificarCantidad(-piedraNecesaria);
 	juego -> obtenerJugador() -> buscarMaterial(MADERA) -> modificarCantidad(-maderaNecesaria);
 	juego -> obtenerJugador() -> buscarMaterial(METAL) -> modificarCantidad(-metalNecesario);

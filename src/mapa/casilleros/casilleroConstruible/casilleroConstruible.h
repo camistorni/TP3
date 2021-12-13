@@ -4,6 +4,7 @@
 #include "../casillero.h"
 #include "../../../edificios/edificio.h"
 #include "../../../materiales/materiales.h"
+#include "../../../juego/juego.h"
 
 class CasilleroConstruible: public Casillero {
 
@@ -18,7 +19,7 @@ class CasilleroConstruible: public Casillero {
 		CasilleroConstruible();
 		~CasilleroConstruible();
 		std::string obtenerEdificio();
-		void agregarEdifico(std::string nombre, int jugador);
+		void agregarEdifico(std::string nombre, Juego* juego);
 		void responder();
 		int obtenerPropietarioEdificio();
 		bool recolectar(std::string* materialProducido, int* cantidadProducida, int jugador);

@@ -126,7 +126,7 @@ void colocarEdificiosJugador (ifstream& archivoUbicaciones, Juego* juego, int ju
 			if (casillero -> obtenerCaracter() != CARACTER_VACIO){
 				cout << "No se puede colocar " << nombre << " en la posición (" << fila << ", " << columna << "), esta ya está ocupada "<< endl;
 			} else {
-				static_cast<CasilleroConstruible*>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> agregarEdifico(nombre, jugador);
+				static_cast<CasilleroConstruible*>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> agregarEdifico(nombre, juego);
 				cout << "Se agregó " << nombre << " en la posición (" << fila << ", " << columna << ") para el Jugador " << jugador + 1 << endl;
 				agregarEdificio(juego, nombre);
 			}
