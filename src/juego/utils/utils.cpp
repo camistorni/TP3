@@ -32,11 +32,16 @@ void imprimirMensajeError(string nombre_edificio, string material, int cantidad,
 	cout << "Hay " << cantidad << " " << material << " disponibles. Se necesitan "<< cantidadNecesaria << " para construir " << nombre_edificio << endl << endl;
 };
 
-void leerCoordenadas(ifstream& archivoUbicaciones, int* fila, int* columna) {
+void leerCoordenadas(ifstream& archivoUbicaciones, int* fila, int* columna, string residuo) {
 	char aux;
-    archivoUbicaciones >> aux;
-    archivoUbicaciones >> *fila;
-    archivoUbicaciones >> aux;
+	if(residuo != "") {
+		*fila = stoi(residuo);
+	} else {
+		archivoUbicaciones >> aux;
+		archivoUbicaciones >> *fila;
+		archivoUbicaciones >> aux;
+	}
+    
     archivoUbicaciones >> *columna;
     archivoUbicaciones >> aux;
 }
@@ -75,7 +80,7 @@ void colocarMateriales (ifstream& archivoUbicaciones, Mapa* mapa) {
 	int fila, columna;
 	std::string nombre;
 	while(archivoUbicaciones >> nombre && nombre != "1"){
-    	leerCoordenadas(archivoUbicaciones, &fila, &columna);
+    	leerCoordenadas(archivoUbicaciones, &fila, &columna, "");
 		Casillero* casillero = mapa -> obtenerCasillero(fila, columna);
 		char tipo = casillero -> obtenerTipo();
 		if (tipo != CAMINO && tipo != BETUN && tipo != MUELLE){
@@ -94,7 +99,7 @@ void colocarMateriales (ifstream& archivoUbicaciones, Mapa* mapa) {
 
 void colocarJugador (ifstream& archivoUbicaciones, Mapa* mapa, int jugador) {
 	int fila, columna;
-    leerCoordenadas(archivoUbicaciones, &fila, &columna);
+    leerCoordenadas(archivoUbicaciones, &fila, &columna, "");
 	Casillero* casillero = mapa -> obtenerCasillero(fila, columna);
 	if (casillero -> obtenerCaracter() == CARACTER_VACIO){
 		cout << "Se colocó al Jugador " << jugador + 1 << " en la posición (" << fila << ", " << columna << ")" << endl;
@@ -106,9 +111,19 @@ void colocarJugador (ifstream& archivoUbicaciones, Mapa* mapa, int jugador) {
 
 void colocarEdificiosJugador (ifstream& archivoUbicaciones, Juego* juego, int jugador) {
 	int fila, columna;
-	std::string nombre;
-	while(archivoUbicaciones >> nombre && nombre != "2"){
-    	leerCoordenadas(archivoUbicaciones, &fila, &columna);
+	std::string nombre = "", aux = "";
+
+	while(archivoUbicaciones >> aux && aux != "2") {
+		while(aux[0] != '(') {
+			cout << "Aux: " << aux << endl;
+			nombre = ((nombre == "") ? (aux) : (nombre + " " + aux));
+			cout << "Nombre:" << nombre << endl;
+			archivoUbicaciones >> aux;
+		}
+		cout << "Nombre:" << nombre << endl;
+		cout << "Aux:" << aux << endl;
+    	leerCoordenadas(archivoUbicaciones, &fila, &columna, ((aux[0]) != '(' ? NULL : aux));
+		cout << "fila:" << fila << " columna: " << columna << endl;
 		Casillero* casillero = juego -> obtenerMapa() -> obtenerCasillero(fila, columna);
 		char tipo = casillero -> obtenerTipo();
 		if (tipo != TERRENO){

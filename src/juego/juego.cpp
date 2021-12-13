@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iomanip>
 #include <cstdlib>
+#include <ctype.h>
 
 #include "../materiales/materiales.h"
 #include "juego.h"
@@ -144,12 +145,17 @@ void Juego::cerrarMateriales() {
 void Juego::leerOpcionesEdificios(){
 	
 	fstream archivoEdificios(PATH_EDIFICIOS, ios::in);
-	string edificio;
+	string edificio, aux;
 	int piedra, madera, metal, maximoContruibles;
 
-    while (archivoEdificios >> edificio){
-
-        archivoEdificios >> piedra;
+    while (archivoEdificios >> edificio) {
+		archivoEdificios >> aux;
+		if(isdigit(aux[0]))
+			piedra = stoi(aux);
+		else {
+			edificio = edificio + " " + aux;
+			archivoEdificios >> piedra;
+		}
         archivoEdificios >> madera;
         archivoEdificios >> metal;
         archivoEdificios >> maximoContruibles;

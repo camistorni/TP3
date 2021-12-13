@@ -161,7 +161,7 @@ class Menu {
 
         // Pre: -
         // Post: -
-        void partidaGanada();
+        void partidaGanada(int* opcion);
 };
 
 #endif

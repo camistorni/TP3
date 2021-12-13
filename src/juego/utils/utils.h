@@ -20,7 +20,7 @@ int valoresLluvia(string material);
 void imprimirMensajeError(string nombre_edificio, string material, int cantidad, int cantidadNecesaria);
 // Pre: Recibir el archivo abierto
 // Post: Lee las coordenadas y las guarda en los punteros recibidos
-void leerCoordenadas(ifstream& archivoUbicaciones, int* fila, int* columna);
+void leerCoordenadas(ifstream& archivoUbicaciones, int* fila, int* columna, string residuo);
 // Pre: Recibir el archivo abierto
 // Post: Guarda en el archivo recibido los valores de los punteros con formato
 void guardarCoordenadas(ofstream &archivoUbicaciones, int fila, int columna);

@@ -24,6 +24,9 @@ void Menu::iniciarJuego() {
 		validarOpcionSeleccionada(opcion);
 		//system(CLR_SCREEN);
 		procesarOpciones(opcion);
+		if(chequearObjetivos()) {
+			partidaGanada(&opcion);
+		}
 	}
 }
 
@@ -221,10 +224,6 @@ void Menu::procesarOpcionesSubmenu(int& opcion) {
 		case JUGADOR_GUARDAR_Y_SALIR:
 			break;
     }
-
-	if(chequearObjetivos())	{
-		partidaGanada();
-	}
 }
 
 void Menu::mostrarInformacion() {
@@ -705,7 +704,7 @@ void Menu::procesarOpciones(int opcion) {
 	}
 }
 
-void Menu::partidaGanada() {
+void Menu::partidaGanada(int* opcion) {
 	cout << "Cumpliste todos los objetivos! Felicitaciones, has ganado el juego!" << endl;
-
+	*opcion = JUGADOR_GUARDAR_Y_SALIR;
 }
