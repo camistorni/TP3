@@ -35,7 +35,7 @@ void imprimirMensajeError(string nombre_edificio, string material, int cantidad,
 void leerCoordenadas(ifstream& archivoUbicaciones, int* fila, int* columna, string residuo) {
 	char aux;
 	if(residuo != "") {
-		*fila = stoi(residuo);
+		*fila = residuo[1] - '0';
 	} else {
 		archivoUbicaciones >> aux;
 		archivoUbicaciones >> *fila;
@@ -112,18 +112,12 @@ void colocarJugador (ifstream& archivoUbicaciones, Mapa* mapa, int jugador) {
 void colocarEdificiosJugador (ifstream& archivoUbicaciones, Juego* juego, int jugador) {
 	int fila, columna;
 	std::string nombre = "", aux = "";
-
 	while(archivoUbicaciones >> aux && aux != "2") {
 		while(aux[0] != '(') {
-			cout << "Aux: " << aux << endl;
 			nombre = ((nombre == "") ? (aux) : (nombre + " " + aux));
-			cout << "Nombre:" << nombre << endl;
 			archivoUbicaciones >> aux;
 		}
-		cout << "Nombre:" << nombre << endl;
-		cout << "Aux:" << aux << endl;
     	leerCoordenadas(archivoUbicaciones, &fila, &columna, ((aux[0]) != '(' ? NULL : aux));
-		cout << "fila:" << fila << " columna: " << columna << endl;
 		Casillero* casillero = juego -> obtenerMapa() -> obtenerCasillero(fila, columna);
 		char tipo = casillero -> obtenerTipo();
 		if (tipo != TERRENO){
@@ -137,6 +131,7 @@ void colocarEdificiosJugador (ifstream& archivoUbicaciones, Juego* juego, int ju
 				agregarEdificio(juego, nombre);
 			}
 		}
+		nombre = "", aux = "";
     }
 }
 

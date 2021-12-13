@@ -238,7 +238,8 @@ void Menu::construirEdificioPorNombre() {
 	string nombreIngresado = "";
 	int piedraNecesaria, maderaNecesaria, metalNecesario;
 	cout << "Ingrese el nombre del edifico que desea construir." << endl;
-	cin >> nombreIngresado;
+	//cin >> nombreIngresado;
+	getline(cin, nombreIngresado);
 	//Verifica que el edificio ingresado exista
 	if(juego -> verificarEdificio(nombreIngresado, &piedraNecesaria, &maderaNecesaria, &metalNecesario))
 		return;	
