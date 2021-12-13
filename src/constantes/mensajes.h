@@ -4,6 +4,8 @@
 
 const std::string MJE_ERROR_OPCION = "Error, la opcion ingresada es incorrecta.";
 
+const std::string MJE_CUMPLIDO = "CUMPLIDO";
+
 const string MJE_COMPRAR_ANDYPOLIS = "Comprar Andypolis: haber juntado 100.000 andycoins a lo largo de la partida.";
 const string MJE_EDAD_DE_PIEDRA = "Edad de piedra: tener en el inventario 50.000 piedras.";
 const string MJE_BOMBARDERO = "Bombardero: haber usado 5 bombas.";

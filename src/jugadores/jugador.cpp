@@ -1,6 +1,7 @@
 #include <iostream>
 #include "jugador.h"
 #include "constantesJugador.h"
+#include "../constantes/constantes.h"
 
 using namespace std;
 
@@ -51,6 +52,9 @@ int Jugador::obtenerCantidadBombasUsadas() {
     return bombasUsadas;
 }
 
+int Jugador::obtenerAndycoinsRecolectadas() {
+    return andycoinsRecolectadas;
+}
 int* Jugador::obtenerObjetivos() {
     return objetivos;
 }
@@ -85,7 +89,7 @@ void Jugador::restarEnergia(int energiaGastada){
 }
 
 void Jugador::seleccionarObjetivos() {
-    int objetivosNuevos[3];
+    /*int objetivosNuevos[3];
     objetivosNuevos[0] = rand() % 10;
     objetivosNuevos[1] = rand() % 10;
     while(objetivosNuevos[1] == objetivosNuevos[0])
@@ -96,6 +100,11 @@ void Jugador::seleccionarObjetivos() {
     for(int i = 0; i < CANTIDAD_OBJETIVOS; i++) {
         objetivos[i] = objetivosNuevos[i];
     }
+*/
+    // PRUEBAS ALDU
+    objetivos[0] = 8;
+    objetivos[1] = 1;
+    objetivos[2] = 9;
 }
 
 void Jugador::aumentarBombasCompradas(int cantidad) {
@@ -200,7 +209,7 @@ bool Jugador::comprarAndypolis() {
 }
 
 bool Jugador::edadDePiedra() {
-    return edadDePiedraCumplido || (edadDePiedraCumplido = (buscarMaterial("piedra") -> obtenerCantidadMaterial() >= 50000));
+    return edadDePiedraCumplido || (edadDePiedraCumplido = (buscarMaterial(PIEDRA) -> obtenerCantidadMaterial() >= 50000));
 }
 
 bool Jugador::bombardero() {
@@ -229,7 +238,7 @@ bool Jugador::constructor() {
 }
 
 bool Jugador::armado() {
-    return armadoCumplido || (armadoCumplido = (buscarMaterial("bomba") -> obtenerCantidadMaterial() >= 10));
+    return armadoCumplido || (armadoCumplido = (buscarMaterial(BOMBAS) -> obtenerCantidadMaterial() >= 10));
 }
 
 bool Jugador::extremista() {

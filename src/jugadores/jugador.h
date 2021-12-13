@@ -51,6 +51,7 @@ class Jugador {
         int obtenerCantidadEscuelasConstruidas();
         int obtenerCantidadBombasCompradas();
         int obtenerCantidadBombasUsadas();
+        int obtenerAndycoinsRecolectadas();
         int* obtenerObjetivos();
         int* obtenerUbicacion();
         Material** obtenerMateriales();    
