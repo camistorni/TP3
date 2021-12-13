@@ -120,8 +120,8 @@ void Menu::solicitarCoordenadas() {
 // *************** SUBMENU ***************
 
 void Menu::mostrarSubmenu() {
-	mostrarInformacion();
 	juego -> obtenerMapa() -> mostrarMapa();
+	mostrarInformacion();
 	cout << endl << endl;
 	cout << "                        " << TXT_UNDERLINE << "Menú de opciones" << END_COLOR << endl << endl;
 	cout << "            ╔═══════════════════════════════════════╗" << endl;

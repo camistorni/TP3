@@ -119,9 +119,25 @@ void colocarEdificiosJugador (ifstream& archivoUbicaciones, Juego* juego, int ju
 			} else {
 				static_cast<CasilleroConstruible*>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> agregarEdifico(nombre, jugador);
 				cout << "Se agregó " << nombre << " en la posición (" << fila << ", " << columna << ") para el Jugador " << jugador + 1 << endl;
+				agregarEdificio(juego, nombre);
 			}
 		}
     }
+}
+
+void agregarEdificio(Juego* juego, string nombre) {
+	if(nombre == MINA)
+		juego -> obtenerJugador() -> construirMina(true);
+	else if(nombre == ASERRADERO)
+		juego -> obtenerJugador() -> construirAserradero(true);
+	else if(nombre == FABRICA)
+		juego -> obtenerJugador() -> construirFabrica(true);
+	else if(nombre == ESCUELA)
+		juego -> obtenerJugador() -> construirEscuela(true);
+	else if(nombre == PLANTA_ELECTRICA)
+		juego -> obtenerJugador() -> construirPlantaElectrica(true);
+	else if(nombre == MINA_ORO)
+		juego -> obtenerJugador() -> construirMinaOro(true);
 }
 
 void guardarEdificios(ofstream &archivoUbicaciones, Juego *juego, int fila, int columna, int jugador){

@@ -1,5 +1,5 @@
-madera 2000 2000
-piedra 2000 2000
-metal 2000 2000
+madera 1800 2000
+piedra 1750 2000
+metal 1955 2000
 andycoins 15 600
-bombas 1 4
+bombas 0 4

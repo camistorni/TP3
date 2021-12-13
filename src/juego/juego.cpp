@@ -187,7 +187,7 @@ void Juego::leerOpcionesEdificios(){
 bool Juego::verificarEdificio(string nombreIngresado, int* piedraNecesaria, int* maderaNecesaria, int* metalNecesario){
 	bool error = false;
 	Receta* receta = new Receta();
-	if ((receta = abb->buscar(nombreIngresado)) == NULL){
+	if ((receta = abb -> buscar(nombreIngresado)) == NULL){
 		cout << "El edificio '" << nombreIngresado << "' no existe" << endl << endl;
 		error = true;
 	} else if(
