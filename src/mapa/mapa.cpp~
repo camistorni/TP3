@@ -49,7 +49,7 @@ string Mapa::obtenerPosicionJugador(int jugador) {
 	return aux;
 }
 
-void Mapa::obtenerPosicionJugador(int *fila, int *columna, int jugador) {
+void Mapa::obtenerPosicionJugador(int *fila, int *columna) {
 	for(int i = 0; i < cantidadFilas; i++) {
 		for(int j = 0; j < cantidadColumnas; j++) {
 			if(casilleros[i][j] -> obtenerJugador() == jugador){

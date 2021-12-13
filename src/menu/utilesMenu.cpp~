@@ -209,7 +209,6 @@ void procesarOpcionesSubmenu(Juego* juego, int& opcion) {
 			finalizarTurno(juego);
 			break;
 		case JUGADOR_GUARDAR_Y_SALIR:
-			juego -> guardarYSalir();
 			break;
 			
 		default:

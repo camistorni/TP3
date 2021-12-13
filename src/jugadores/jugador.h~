@@ -52,7 +52,6 @@ class Jugador {
         void establecerCantidadMateriales(int cantidadMateriales);
 
         void modificarEnergia(int energiaAgregada);
-        void restarEnergia(int energiaGastada);
         void seleccionarObjetivos();
 
         int obtenerCantidadBombasCompradas();

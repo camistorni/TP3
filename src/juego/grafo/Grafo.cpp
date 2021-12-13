@@ -36,8 +36,7 @@ void Grafo::agregarCamino(string origen, string destino, int peso) {
     }
 }
 
-void Grafo::caminoMinimo(string origen, string destino) {
-    cout << "en camino minimo" << endl;
+void Grafo::caminoMinimo(string origen, string destino, int *energia) {
     int posicionOrigen = vertices -> obtenerPosicion(origen);
     int posicionDestino = vertices -> obtenerPosicion(destino);
 
@@ -48,7 +47,7 @@ void Grafo::caminoMinimo(string origen, string destino) {
         cout << "El vertice " << destino << " no existe en el grafo" << endl;
     }
 
-    caminoMinimo(posicionOrigen, posicionDestino);
+    caminoMinimo(posicionOrigen, posicionDestino, energia);
 }
 
 void Grafo::agrandarMatrizDeAdyacencia() {
@@ -127,8 +126,8 @@ void Grafo::mostrarMatrizAdyacencia() {
     cout << endl;
 }
 
-void Grafo::caminoMinimo(int origen, int destino) {
-    algoritmoCaminoMinimo -> caminoMinimo(origen, destino);
+void Grafo::caminoMinimo(int origen, int destino, int *energia) {
+    algoritmoCaminoMinimo -> caminoMinimo(origen, destino, energia);
 }
 
 

@@ -26,7 +26,7 @@ class Mapa{
 		int obtenerCantidadColumnas ();
 		
 		std::string obtenerPosicionJugador(int jugador);
-		void obtenerPosicionJugador(int *fila, int *columna, int jugador);
+		void obtenerPosicionJugador(int *fila, int *columna);
 
 		//Precondiciones: -
 		//Postcondicions: Devuelve el tipo de casillero

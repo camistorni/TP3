@@ -524,5 +524,5 @@ void Juego::modificarEdificio(std::string nombre, string material, int nuevoValo
 
 
 void Juego::guardarYSalir(){
-	this->~Juego();
+	~Juego();
 }
