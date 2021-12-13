@@ -141,7 +141,6 @@ void agregarEdificio(Juego* juego, string nombre) {
 }
 
 void guardarEdificios(ofstream &archivoUbicaciones, Juego *juego, int fila, int columna, int jugador){
-	
 	char caracter = juego -> obtenerMapa() -> obtenerCasillero(fila, columna) -> obtenerCaracter();
 	cout << "propietario: " << static_cast<CasilleroConstruible*>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> obtenerPropietarioEdificio() << endl;
 	if(static_cast<CasilleroConstruible*>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> obtenerPropietarioEdificio() == jugador){

@@ -78,6 +78,10 @@ class Menu {
         void setearEdificios(string nombreIngresado, bool construido);
 
         // Pre: -
+        // Post: 
+        void listarEdificiosConstruidos();
+
+        // Pre: -
         // Post: Contiene la lógica para la demolición del edificio
         void demolerEdificioPorCoordenada();
 

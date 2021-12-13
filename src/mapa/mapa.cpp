@@ -112,6 +112,7 @@ int Mapa::edificiosContruidos(string nombre, int jugador){
 				(static_cast<CasilleroConstruible*>(casillero) -> obtenerPropietarioEdificio() == jugador) &&
 				(static_cast<CasilleroConstruible*>(casillero) -> obtenerEdificio() == nombre)
 			){
+				cout << "Aldu: propietario en edificiosConstruidos: " << static_cast<CasilleroConstruible*>(casillero) -> obtenerPropietarioEdificio() << endl;
 				construidos ++;
 			}
 		}
@@ -141,12 +142,15 @@ void Mapa::agregarCasillero(int fila, int columna, char caracter){
 	}
 }
 
+// Generales
 void Mapa::imprimirMapa(int fila, int columna, int index) {
 	char caracter = casilleros[fila][columna] -> obtenerCaracter();
 	string caracterColor;
 	string stringVacio(1, CARACTER_VACIO);
 	int jugador = casilleros[fila][columna] -> obtenerJugador();
-	int propietario = static_cast<CasilleroConstruible*>(casilleros[fila][columna]) -> obtenerPropietarioEdificio();
+	int propietario = -1;
+	if(static_cast<CasilleroConstruible*>(casilleros[fila][columna]) -> obtenerTipo() == TERRENO)
+		propietario = static_cast<CasilleroConstruible*>(casilleros[fila][columna]) -> obtenerPropietarioEdificio();
 	char tipoCasillero = casilleros[fila][columna] -> obtenerTipo();
 
 	if(jugador != -1)
@@ -193,4 +197,15 @@ void Mapa::pedirCoordenada(int &fila, int &columna){
 		cin >> columna;
 	}
 
+}
+
+void Mapa::AlduChequeo() {
+	for(int i = 0; i < cantidadFilas; i++) {
+		for(int j = 0; j < cantidadColumnas; j++) {
+			if(casilleros[i][j] -> obtenerTipo() == TERRENO) {
+				int propietario = static_cast<CasilleroConstruible*>(casilleros[i][j]) -> obtenerPropietarioEdificio();
+				cout << "Aldu en alduchqueo: i " << i << " j: " << j << " propietario: " << propietario << endl;
+			}
+		}
+	}
 }

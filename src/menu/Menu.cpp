@@ -121,6 +121,7 @@ void Menu::solicitarCoordenadas() {
 
 void Menu::mostrarSubmenu() {
 	juego -> obtenerMapa() -> mostrarMapa();
+	//juego -> obtenerMapa() -> AlduChequeo();
 	mostrarInformacion();
 	cout << endl << endl;
 	cout << "                        " << TXT_UNDERLINE << "Menú de opciones" << END_COLOR << endl << endl;
@@ -155,7 +156,7 @@ void Menu::procesarOpcionesSubmenu(int& opcion) {
 			break;
 
 		case JUGADOR_LISTAR_MIS_EDIFICIOS_CONSTRUIDOS:
-			//juego -> listarEdificiosConstruidos();
+			listarEdificiosConstruidos();
 			break;
 
 		case JUGADOR_DEMOLER_EDIFICIO_POR_COORDENADA:
@@ -264,6 +265,7 @@ void Menu::construirEdificioPorNombre() {
 void Menu::construirEdificio(int fila, int columna, string nombreIngresado, int piedraNecesaria, int maderaNecesaria, int metalNecesario) {
 	cout << "El edificio ha sido construido correctamente" << endl << endl;
 	static_cast<CasilleroConstruible *>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> agregarEdifico(nombreIngresado, juego -> obtenerJugadorActivo());
+	cout << "Aldu: propietario en construirEdificio:" << static_cast<CasilleroConstruible *>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> obtenerPropietarioEdificio() << endl;
 	juego -> obtenerJugador() -> buscarMaterial(PIEDRA) -> modificarCantidad(-piedraNecesaria);
 	juego -> obtenerJugador() -> buscarMaterial(MADERA) -> modificarCantidad(-maderaNecesaria);
 	juego -> obtenerJugador() -> buscarMaterial(METAL) -> modificarCantidad(-metalNecesario);
@@ -301,6 +303,24 @@ void Menu::setearEdificios(string nombreIngresado, bool construido) {
 }
 
 // Aca va el metodo para listar los edificios 
+void Menu::listarEdificiosConstruidos() {
+	Casillero* casillero;
+	cout << "Lista de edificios:" << endl << endl;
+	cout << "            ══════════════════════════════════" << endl;
+	cout << "             Nombre\t\tUbicacion              " << endl;
+	cout << "            ══════════════════════════════════" << endl;
+	
+	for(int fila = 0; fila < juego -> obtenerMapa() -> obtenerCantidadFilas(); fila++) {
+		for(int columna = 0; columna < juego -> obtenerMapa() -> obtenerCantidadColumnas(); columna++) {
+			casillero = juego -> obtenerMapa() -> obtenerCasillero(fila, columna);
+			if((casillero -> obtenerTipo() == TERRENO) && (casillero -> obtenerCaracter() != CARACTER_VACIO)
+			&& static_cast<CasilleroConstruible *>(casillero) -> obtenerPropietarioEdificio() == juego -> obtenerJugadorActivo()) {
+				cout << "             " << static_cast<CasilleroConstruible *>(casillero) -> obtenerEdificio() << " \t\t (" << fila << ", " << columna << ")" << endl;
+			}
+		}
+	}
+	cout << endl;
+}
 
 void Menu::demolerEdificioPorCoordenada() {
 	int fila, columna;

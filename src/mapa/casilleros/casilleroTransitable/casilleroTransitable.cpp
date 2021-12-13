@@ -5,9 +5,11 @@
 #include "../constantesCasilleros.h"
 #include "casilleroTransitable.h"
 
+CasilleroTransitable::CasilleroTransitable() {}
 
 CasilleroTransitable::~CasilleroTransitable() {
-    delete material;
+    if(material != NULL)
+        delete material;
 }
 
 CasilleroCamino::CasilleroCamino(){

@@ -75,6 +75,8 @@ class Mapa{
 		// Pre: un numero mayor a 0
 		// Post: devuelve un numero entre el limite y 0
 		void pedirCoordenada(int &fila, int &columna);
+
+		void AlduChequeo();
 };
 
 #endif //MAPA_H
