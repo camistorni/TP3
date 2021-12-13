@@ -178,7 +178,7 @@ void guardarEdificios(ofstream &archivoUbicaciones, Juego *juego, int fila, int 
 			archivoUbicaciones << OBELISCO;
 			guardarCoordenadas(archivoUbicaciones, fila, columna);
 		}
-		if(caracter == CARACTER_plantaElectrica){
+		if(caracter == CARACTER_PLANTA_ELECTRICA){
 			archivoUbicaciones << PLANTA_ELECTRICA;
 			guardarCoordenadas(archivoUbicaciones, fila, columna);
 		}

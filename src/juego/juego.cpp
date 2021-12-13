@@ -202,11 +202,11 @@ bool Juego::verificarEdificio(string nombreIngresado, int* piedraNecesaria, int*
 		*maderaNecesaria = receta -> obtenerMaterial(MADERA);
 		*metalNecesario = receta -> obtenerMaterial(METAL);
 	}
+
 	return error;
 }
 
 void Juego::listarEdificios(){
-/////////////////////////// Falta max const y brinda material/////////////////////
 	
 	cout << endl << endl;
 	cout << "Lista de edificios:" << endl << endl;

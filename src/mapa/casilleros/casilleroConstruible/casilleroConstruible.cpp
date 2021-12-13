@@ -70,7 +70,7 @@ void CasilleroConstruible::agregarEdifico(std::string nombre, Juego* juego){
         setearCaracter(CARACTER_OBELISCO);
     } else if (nombre == PLANTA_ELECTRICA) {
         edificio = new PlantaElectrica();
-        setearCaracter(CARACTER_plantaElectrica);
+        setearCaracter(CARACTER_PLANTA_ELECTRICA);
     }
 }
 

@@ -82,6 +82,8 @@ class Jugador {
     // Objetivos
         // Pre: -
         // Post: Setea el atributo con el valor indicado como parametro
+
+        void agregarEdificioConstruido(string edificio);
         void construirMina(bool construido);
         void construirAserradero(bool construido);
         void construirFabrica(bool construido);

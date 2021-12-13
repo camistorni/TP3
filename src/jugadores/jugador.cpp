@@ -145,6 +145,23 @@ Material* Jugador::buscarMaterial(string nombreMaterial) {
 
 
 // Objetivos
+/*
+void Jugador::agregarEdificioConstruido(string edificio){
+    if(nombre == MINA)
+		juego -> obtenerJugador() -> construirMina(true);
+	else if(nombre == ASERRADERO)
+		juego -> obtenerJugador() -> construirAserradero(true);
+	else if(nombre == FABRICA)
+		juego -> obtenerJugador() -> construirFabrica(true);
+	else if(nombre == ESCUELA)
+		juego -> obtenerJugador() -> construirEscuela(true);
+	else if(nombre == PLANTA_ELECTRICA)
+		juego -> obtenerJugador() -> construirPlantaElectrica(true);
+	else if(nombre == MINA_ORO)
+		juego -> obtenerJugador() -> construirMinaOro(true);
+}
+
+*/
 
 void Jugador::construirMina(bool construido) {
     minaConstruida = construido;
