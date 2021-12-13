@@ -28,6 +28,7 @@ class Casillero {
 		void setearJugador(int jugador);
 		int obtenerJugador();
 		void removerJugador(int jugador);
+		void responder();
 };
 
 

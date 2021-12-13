@@ -29,8 +29,9 @@ Material* CasilleroTransitable::recolectarMaterial(){
     setearCaracter(CARACTER_VACIO);
     hayMaterial = false;
     return material;
-};
-void CasilleroTransitable::depositarMaterial(Material* material){
+}
+
+void CasilleroTransitable::depositarMaterial(Material* material) {
     std::string nombre = material -> obtenerNombreMaterial();
     if(nombre == MADERA) setearCaracter(CARACTER_MADERA);
     if(nombre == PIEDRA) setearCaracter(CARACTER_PIEDRA);
@@ -42,4 +43,11 @@ void CasilleroTransitable::depositarMaterial(Material* material){
 
 int CasilleroMuelle::obtenerEnergia(int jugadorActivo){
     return jugadorActivo ? ENERGIA_MUELLE_JUGADOR_2 : ENERGIA_MUELLE_JUGADOR_1;
+}
+
+void CasilleroTransitable::responder() { 
+    if(hayMaterial)
+        cout << "Soy un casillero transitable y tengo " << material -> obtenerNombreMaterial() << endl;
+    else 
+        cout << "Soy un casillero transitable y estoy vacio" << endl;
 }

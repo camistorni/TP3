@@ -60,6 +60,8 @@ const char CARACTER_JUGADOR1 = 'J';
 const char CARACTER_JUGADOR2 = 'U';
 
 
+const char CARACTER_RECURSOS = 'R';
+
 // utilesMenu.h
 const int ENERGIA_POR_FINALIZAR_TURNO = 20;
 const int ENERGIA_POR_CONSTRUIR_EDIFICIO_POR_NOMBRE = -15;

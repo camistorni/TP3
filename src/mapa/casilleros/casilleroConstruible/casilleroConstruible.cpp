@@ -5,7 +5,6 @@
 #include "../../../constantes/constantes.h"
 using namespace std;
 
-
 CasilleroConstruible::CasilleroConstruible() {
     setearTipo(TERRENO);
     setearColor(COLOR_TERRENO);
@@ -26,11 +25,19 @@ bool CasilleroConstruible::recolectar(std::string* materialProducido, int* canti
 
 void CasilleroConstruible::responder(){
     if (estadoEdificio){
-        cout << "Soy un casillero construible y tengo construido un " << obtenerTipo() << endl;
+        cout << "Soy un casillero construible y tengo construido un/a " << obtenerEdificio() << endl;
     }
     else {
         cout << "Soy un casillero construible vacio" << endl;
     }
+}
+
+void CasilleroConstruible::depositarMaterial(Material* material) {
+    std::string nombre = material -> obtenerNombreMaterial();
+    if(nombre == MADERA) setearCaracter(CARACTER_MADERA);
+    if(nombre == PIEDRA) setearCaracter(CARACTER_PIEDRA);
+    if(nombre == METAL) setearCaracter(CARACTER_METAL);
+    this -> material = material;
 }
 
 int CasilleroConstruible::obtenerPropietarioEdificio() {
@@ -81,4 +88,10 @@ bool CasilleroConstruible::repararEdificio() {
         estadoEdificio = 2;
 
     return estadoEdificio;
+}
+
+void CasilleroConstruible::demolerEdificio() {
+    propietarioEdificio = -1;
+    setearCaracter(CARACTER_RECURSOS);
+    delete edificio;
 }
