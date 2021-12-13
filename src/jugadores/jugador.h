@@ -41,36 +41,46 @@ class Jugador {
         bool extremistaCumplido;
 		
 	public:
+    // Constructor
 		Jugador(std::string nombreJugador);
+    // Destructor
         ~Jugador();
 
+    // Getters
         int obtenerEnergia();
+        int obtenerCantidadEscuelasConstruidas();
+        int obtenerCantidadBombasCompradas();
+        int obtenerCantidadBombasUsadas();
         int* obtenerObjetivos();
         int* obtenerUbicacion();
-        Material** obtenerMateriales();
-        Material obtenerMaterial(int material);
+        Material** obtenerMateriales();    
 
+    // Setters
         void establecerEnergia(int cantidadEnergia);
         void establecerCoordenadas(int fila, int columna);
-        void establecerMaterial(Material* vectorMateriales);
-        void establecerCantidadMateriales(int cantidadMateriales);
-
         void modificarEnergia(int energiaAgregada);
         void restarEnergia(int energiaGastada);
         void seleccionarObjetivos();
-
-        int obtenerCantidadEscuelasConstruidas();
-        void modificarCantidadEscuelasConstruidas(int cantidad);
-        int obtenerCantidadBombasCompradas();
-        int obtenerCantidadBombasUsadas();
         void aumentarBombasCompradas(int cantidad);
         void aumentarBombasUsadas(int cantidad);
-        //Precondiciones: Se tiene que haber leído bien el archivo de materiales
-		//Postcondiciones: Agrega el material leído a la lista de materiales disponibles
+        void modificarCantidadEscuelasConstruidas(int cantidad);
+        
+        
+    // Generales
+        // Pre: Se tiene que haber leído bien el archivo de materiales
+		// Post: Agrega el material leído a la lista de materiales disponibles
         void agregarMaterial(Material* nuevoMaterial, int cantidadMateriales);
         
+        // Pre: Recibir un nombre valido
+        // Post: Devuelve el material con el nombre indicado
         Material* buscarMaterial(string nombreMaterial);
+        // Pre: 
+        // Post:
 
+
+    // Objetivos
+        // Pre: -
+        // Post: Setea el atributo con el valor indicado como parametro
         void construirMina(bool construido);
         void construirAserradero(bool construido);
         void construirFabrica(bool construido);
@@ -78,15 +88,18 @@ class Jugador {
         void construirPlantaElectrica(bool construido);
         void construirMinaOro(bool construido);
         void construirObelisco(bool construido);
-
+        
+        // Pre: -
+        // Post: Devuelve true si el edificio esta construido, y false en caso contrario
         bool hayMinaConstruida();
         bool hayAserraderoconstruido();
         bool hayFabricaConstruida();
         bool hayEscuelaConstruida();
         bool hayPlantaElectricaConstruida();
         bool hayMinaOroConstruida();
-
-        // Objetivos
+        
+        // Pre: -
+        // Post: Devuelve true si se cumplio el objetivo y false en caso contrario
         bool masAltoQueLasNubes();
         bool comprarAndypolis();
         bool edadDePiedra();
@@ -98,8 +111,6 @@ class Jugador {
         bool constructor();
         bool armado();
         bool extremista();
-
-        
 };
 
 

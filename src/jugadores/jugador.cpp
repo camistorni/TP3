@@ -4,6 +4,7 @@
 
 using namespace std;
 
+// Constructor
 Jugador::Jugador(std::string nombreJugador) {
     nombre = nombreJugador;
     edificiosContruidos = new string[0];
@@ -24,14 +25,30 @@ Jugador::Jugador(std::string nombreJugador) {
     ubicacion = new int[2]();
 };
 
+// Destructor
 Jugador::~Jugador() {
     delete[] edificiosContruidos;
     delete[] objetivos;
     delete[] ubicacion;
 }
 
+
+// Getters
+
 int Jugador::obtenerEnergia() {
     return energia;
+}
+
+int Jugador::obtenerCantidadEscuelasConstruidas() {
+    return cantidadEscuelasConstruidas;
+}
+
+int Jugador::obtenerCantidadBombasCompradas() {
+    return bombasCompradas;
+}
+
+int Jugador::obtenerCantidadBombasUsadas() {
+    return bombasUsadas;
 }
 
 int* Jugador::obtenerObjetivos() {
@@ -46,8 +63,17 @@ Material** Jugador::obtenerMateriales() {
     return materiales;
 }
 
+
+// Setters
+
 void Jugador::establecerEnergia(int cantidadEnergia) {
     energia = cantidadEnergia;
+}
+
+void Jugador::establecerCoordenadas(int fila, int columna) {
+    //ubicacion = new int[2];
+    ubicacion[0] = fila;
+    ubicacion[1] = columna;
 }
 
 void Jugador::modificarEnergia(int energiaAgregada) {
@@ -58,20 +84,18 @@ void Jugador::restarEnergia(int energiaGastada){
 	energia -= energiaGastada;
 }
 
-int Jugador::obtenerCantidadEscuelasConstruidas() {
-    return cantidadEscuelasConstruidas;
-}
-
-void Jugador::modificarCantidadEscuelasConstruidas(int cantidad) {
-    cantidadEscuelasConstruidas += cantidad;
-}
-
-int Jugador::obtenerCantidadBombasCompradas() {
-    return bombasCompradas;
-}
-
-int Jugador::obtenerCantidadBombasUsadas() {
-    return bombasUsadas;
+void Jugador::seleccionarObjetivos() {
+    int objetivosNuevos[3];
+    objetivosNuevos[0] = rand() % 10;
+    objetivosNuevos[1] = rand() % 10;
+    while(objetivosNuevos[1] == objetivosNuevos[0])
+        objetivosNuevos[1] = rand() % 10;
+    objetivosNuevos[2] = rand() % 10;
+    while(objetivosNuevos[2] == objetivosNuevos[0] || objetivosNuevos[2] == objetivosNuevos[1])
+        objetivosNuevos[2] = rand() % 10;
+    for(int i = 0; i < CANTIDAD_OBJETIVOS; i++) {
+        objetivos[i] = objetivosNuevos[i];
+    }
 }
 
 void Jugador::aumentarBombasCompradas(int cantidad) {
@@ -82,11 +106,12 @@ void Jugador::aumentarBombasUsadas(int cantidad) {
     bombasUsadas += cantidad;
 }
 
-void Jugador::establecerCoordenadas(int fila, int columna) {
-    //ubicacion = new int[2];
-    ubicacion[0] = fila;
-    ubicacion[1] = columna;
+void Jugador::modificarCantidadEscuelasConstruidas(int cantidad) {
+    cantidadEscuelasConstruidas += cantidad;
 }
+
+
+// Generales
 
 void Jugador::agregarMaterial(Material* nuevoMaterial, int cantidadMateriales) {
     Material **vectorMateriales = new Material*[cantidadMateriales + 1];
@@ -108,6 +133,63 @@ Material* Jugador::buscarMaterial(string nombreMaterial) {
     }
     return material;
 }
+
+
+// Objetivos
+
+void Jugador::construirMina(bool construido) {
+    minaConstruida = construido;
+}
+
+void Jugador::construirAserradero(bool construido) {
+    aserraderoConstruido = construido;
+}
+
+void Jugador::construirFabrica(bool construido) {
+    fabricaConstruida = construido;
+}
+
+void Jugador::construirEscuela(bool construido) {
+    escuelaConstruida = construido;
+}
+
+void Jugador::construirPlantaElectrica(bool construido) {
+    plantaElectricaConstruida = construido;
+}
+
+void Jugador::construirMinaOro(bool construido) {
+    minaOroConstruida = construido;
+}
+
+void Jugador::construirObelisco(bool construido) {
+    obeliscoConstruido = construido;
+}
+
+
+bool Jugador::hayMinaConstruida() {
+    return minaConstruida;
+}
+
+bool Jugador::hayAserraderoconstruido() {
+    return aserraderoConstruido;
+}
+
+bool Jugador::hayFabricaConstruida() {
+    return fabricaConstruida;
+}
+
+bool Jugador::hayEscuelaConstruida() {
+    return escuelaConstruida;
+}
+
+bool Jugador::hayPlantaElectricaConstruida() {
+    return plantaElectricaConstruida;
+}
+
+bool Jugador::hayMinaOroConstruida() {
+    return minaOroConstruida;
+}
+
 
 bool Jugador::masAltoQueLasNubes() {
     return masAltoQueLasNubesCumplido || (obeliscoConstruido == true);
@@ -154,69 +236,8 @@ bool Jugador::extremista() {
     return extremistaCumplido || (extremistaCumplido = (bombasCompradas >= 500));
 }
 
-void Jugador::construirMina(bool construido) {
-    minaConstruida = construido;
-}
 
-void Jugador::construirAserradero(bool construido) {
-    aserraderoConstruido = construido;
-}
 
-void Jugador::construirFabrica(bool construido) {
-    fabricaConstruida = construido;
-}
 
-void Jugador::construirEscuela(bool construido) {
-    escuelaConstruida = construido;
-}
 
-void Jugador::construirPlantaElectrica(bool construido) {
-    plantaElectricaConstruida = construido;
-}
-
-void Jugador::construirMinaOro(bool construido) {
-    minaOroConstruida = construido;
-}
-
-void Jugador::construirObelisco(bool construido) {
-    obeliscoConstruido = construido;
-}
-
-bool Jugador::hayMinaConstruida() {
-    return minaConstruida;
-}
-
-bool Jugador::hayAserraderoconstruido() {
-    return aserraderoConstruido;
-}
-
-bool Jugador::hayFabricaConstruida() {
-    return fabricaConstruida;
-}
-
-bool Jugador::hayEscuelaConstruida() {
-    return escuelaConstruida;
-}
-
-bool Jugador::hayPlantaElectricaConstruida() {
-    return plantaElectricaConstruida;
-}
-
-bool Jugador::hayMinaOroConstruida() {
-    return minaOroConstruida;
-}
-
-void Jugador::seleccionarObjetivos() {
-    int objetivosNuevos[3];
-    objetivosNuevos[0] = rand() % 10;
-    objetivosNuevos[1] = rand() % 10;
-    while(objetivosNuevos[1] == objetivosNuevos[0])
-        objetivosNuevos[1] = rand() % 10;
-    objetivosNuevos[2] = rand() % 10;
-    while(objetivosNuevos[2] == objetivosNuevos[0] || objetivosNuevos[2] == objetivosNuevos[1])
-        objetivosNuevos[2] = rand() % 10;
-    for(int i = 0; i < CANTIDAD_OBJETIVOS; i++) {
-        objetivos[i] = objetivosNuevos[i];
-    }
-}
 
