@@ -33,19 +33,126 @@ class Juego{
 
 		//Costructor 
 		Juego();
+		// Destructor
 		~Juego();
 
+		// Pre: -
+		// Post: Devuelve la cantidad de material
 		int obtenerCantidadMateriales();
+		// Pre: -
+		// Post: Devuelve la cantidad de edificios existentes
 		int obtenerCantidadEdificios();
-		Jugador* obtenerJugador();
+		// Pre: -
+		// Post: Devuelve el numero del jugador que se encuentra activo en el momento
 		int obtenerJugadorActivo();
-		Jugador** obtenerJugadores();
-		void establecerJugadorActivo(int jugador);
-		Edificio* obtenerEdificio(std::string nombreEdificio);
+		// Pre: -
+		// Post: Devuelve al jugador que se encuentra activo en el momento
+		Jugador* obtenerJugador();
+		// Pre: -
+		// Post: Devuelve el mapa del juego
 		Mapa* obtenerMapa();
-		bool esPartidaNueva();
+		// Pre: -
+		// Post: Devuelve el ABB del juego
 		ABB* obtenerAbb();
+		// Pre: -
+		// Post: Devuelve true si se trata de una partida nueva y false en caso contrario
+		bool esPartidaNueva();
+
+		// Pre: -
+		// Post: Setea al jugador activo como el parametro recibido
+		void establecerJugadorActivo(int jugador);
+
 		
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+// Métodos para el archivo de materiales
+		
+		// Pre: -
+		// Post: Lee los datos del archivo de materiales
+		void leerMateriales();
+
+		// Pre: -
+		// Post: Guarda los materiales en el archivo "materiales" y elimina la lista
+		void cerrarMateriales();
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+// Métodos para el archivo de edificios
+
+		// Pre: -
+		// Post: Lee los datos del archivo de edificios
+		void leerOpcionesEdificios();
+
+		// Pre: -
+		// Post: Verifica que exista el edificio ingresado y, si existe, guarda los datos del edificio en las variables ingresadas
+		bool verificarEdificio(string nombreIngresado, int* piedraNecesaria, int* maderaNecesaria, int* metalNecesario);
+		
+		// Pre: -
+		// Post: Imprime todos los edificios y sus especificaciones
+		void listarEdificios();
+
+		// Pre: -
+		// Post: Guarda los edificios en el archivo "edificios" y elimina la lista
+		void cerrarEdificios();
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+// Métodos para el archivo de ubicaciones
+
+		// Pre: -
+		// Post: Lee los datos del archivo de ubicaciones
+		void leerUbicaciones();
+
+		// Pre: -
+		// Post: Guarda las ubicaciones en el archivo "ubicaciones" y elimina la lista
+		void cerrarUbicaciones();
+		
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+// Métodos para el archivo de mapa
+
+		// Pre: -
+		// Post: Lee los datos del archivo de mapa
+		void leerMapa();
+
+		// Pre: -
+		// Post: Verifica que haya las coordenadas ingresadas estén disponibles para construir
+		bool verificarCoordenadas(int fila, int columna);
+		
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+// Métodos para el grafo
+
+		// Pre: -
+		// Post: Crea los vértices del grafo
+		void crearVertices(int fila, int columna);
+		
+		// Pre: Los vértices deben estar bien agregados
+		// Post: Crea caminos entre cada vértice del grafo
+		void crearCaminos();
+		
+		// Pre: -
+		// Post: Devuelve los valores de cada casillero del mapa
+		int valoresCaminos(int x, int y);
+		
+		// Pre: -
+		// Post: Imprime el camino minimo ingresado
+		void mostrarCaminoMinimo(string origen, string destino, int *energia);
+		
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+// Métodos
+
+		// Pre: -
+		// Post: Recolecta los materiales generados por los edificios
+		void recolectarRecursos();
+		
+		// Pre: -
+		// Post: Deposita los materiales de la lluvia en el mapa
+		void lluviaElementos();
+
+
+
+
+
 
 		// Pre: -
 		// Post: Guarda los edificios en el archivo "edificios" y elimina la lista. Guarda los materiales en el archivo "materiales" y elimina la lista. Guarda las ubicaciones en el archivo "ubicaciones" y elimina la lista. Libera la memoria utilizada para el mapa
@@ -56,21 +163,13 @@ class Juego{
 		void leerArchivos();
 		
 		void mostrarMapa();
-		//Precondiciones: -
-		//Postcondiciones: Guarda los datos del archivo de materiales
-		void leerMateriales();
+		
 
-		//Precondiciones: -
-		//Postcondiciones: Guarda los datos del archivo de edificios
-		void leerOpcionesEdificios();
 		
-		//Precondiciones: -
-		//Postcondiciones: Guarda los datos del archivo de ubicaciones
-		void leerUbicaciones();
 		
-		//Precondiciones: -
-		//Postcondiciones: Guarda los datos del archivo de mapa
-		void leerMapa();
+		
+		
+		
 
 		
 		//Precondiciones: -
@@ -86,9 +185,7 @@ class Juego{
 		//Postcondiciones: Agrega cantidades de material dependiendo del edificio ingresado
 		void agregarRecursos(string nombreEdificio);
 		
-		//Precondiciones: -
-		//Postcondiciones: Recolecta los materiales generados por los edificios
-		void recolectarRecursos();
+		
 		
 		//Precondiciones: Se tiene que haber leído bien el archivo de ubicaciones //(modificar)
 		//Postcondiciones: Agrega la ubicación leída a la lista de ubicaciones
@@ -98,89 +195,9 @@ class Juego{
 		//Postcondiciones: Imprime los edificios construidos
 		void listarEdificiosConstruidos();
 		
-		//Precondiciones: -
-		//Postcondiciones: Imprime todos los edificios y sus especificaciones
-		void listarEdificios();
-
-		//Precondiciones: -
-		//Postcondiciones: Verifica que exista el edificio ingresado y, si existe, guarda los datos del edificio en las variables ingresadas
-		bool verificarEdificio(string nombreIngresado, int* piedraNecesaria, int* maderaNecesaria, int* metalNecesario);
-		
-		//Precondiciones: -
-		//Postcondiciones: Verifica que haya las coordenadas ingresadas estén disponibles para construir
-		bool verificarCoordenadas(int fila, int columna);
-		
-		//Precondiciones: -
-		//Postcondiciones: Imprime un mensaje de error si algún material es insuficiente
-		
-		//Precondiciones: Se debe verificar que haya suficientes materiales, que el edificio ingresado exista, y que las coordenadas estén disponibles
-		//Postcondiciones: Pregunta al usuario si de verdad quiere construir y, si afirma, construye el edificio ingresado y modifica la lista de materiales y edificios
-		bool construirEdificio(string nombreIngresado);
-
-		//Precondiciones: -
-		//Postcondiciones: - (modificar)
-		void demolerEdificioCoordenada();
-
-		void aumentarMaterialesDerrumbe(Edificio* edificio);
-
-		void consultarCoordenada();
-
-		void lluviaElementos();
-
-		void modificarMateriales();
-
-		
-
-		//Precondiciones: -
-		//Postcondiciones: Guarda los edificios en el archivo "edificios" y elimina la lista
-		void cerrarEdificios();
-
-		//Precondiciones: -
-		//Postcondiciones: Guarda los materiales en el archivo "materiales" y elimina la lista
-		void cerrarMateriales();
-		
-		//Precondiciones: -
-		//Postcondiciones: Guarda las ubicaciones en el archivo "ubicaciones" y elimina la lista
-		void cerrarUbicaciones();
-		
-		//Precondiciones: -
-		//Postcondiciones: Libera la memoria utilizada para el mapa
-		void cerrarMapa();
-		
-		//Precondiciones: -
-		//Postcondiciones: Imprime el menu de opciones
-		void mostrarMenu();
-		
-		//Precondiciones: -
-		//Postcondiciones: Pide al usuario que ingrese una opcion y verifica que sea válida
-		int pedirOpcion();
-
-		//Precondiciones: La opcion ingresada debe ser válida
-		//Postcondiciones: Procesa la opcion ingresada por el usuario
-		void procesarOpciones(int opcion);
-		
-		//PRE: -
-		//POS: Crea los vértices del grafo
-		void crearVertices(int fila, int columna);
-		
-		//PRE: Los vértices deben estar bien agregados
-		//POS: Crea caminos entre cada vértice del grafo
-		void crearCaminos();
-		
-		//PRE: -
-		//POS: Devuelve los valores de cada casillero del mapa
-		int valoresCaminos(int x, int y);
-		
-		//PRE: -
-		//POS: Imprime el camino minimo ingresado
-		void mostrarCaminoMinimo(string origen, string destino, int *energia);
-		
-		string obtenerCoordenadaJugador();
-
-		void modificarEdificio(std::string nombre, string material, int nuevoValor);
-
-		
-		
+		// Pre: -
+		// Post: Modifica los valores necesarios para construir un edificio
+		void modificarEdificio(std::string nombre, string material, int nuevoValor);		
 };
 
 #endif

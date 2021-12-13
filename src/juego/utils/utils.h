@@ -45,5 +45,8 @@ void guardarEdificios(ofstream &archivoUbicaciones, Juego *juego, int fila, int 
 // Pre: Recibir el archivo abierto
 // Post: Se fija si el archivo recibido tiene información
 bool isEmpty(ifstream& pFile);
+// Pre: -
+// Post: Escribe el archivo de materiales con todos sus valores en 0
+void escribirNuevoArchivoMateriales();
 
 #endif
