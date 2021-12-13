@@ -50,7 +50,6 @@ int CasilleroConstruible::obtenerPropietarioEdificio() {
 void CasilleroConstruible::agregarEdifico(std::string nombre, int jugador){
     estadoEdificio = 2;
     propietarioEdificio = jugador;
-    cout << "Aldu: propietario en agregarEdificio: " << propietarioEdificio << endl;
     if (nombre == ASERRADERO) {
         edificio = new Aserradero();
         setearCaracter(CARACTER_ASERRADERO);

@@ -121,7 +121,6 @@ void Menu::solicitarCoordenadas() {
 
 void Menu::mostrarSubmenu() {
 	juego -> obtenerMapa() -> mostrarMapa();
-	//juego -> obtenerMapa() -> AlduChequeo();
 	mostrarInformacion();
 	cout << endl << endl;
 	cout << "                        " << TXT_UNDERLINE << "Menú de opciones" << END_COLOR << endl << endl;
@@ -265,7 +264,6 @@ void Menu::construirEdificioPorNombre() {
 void Menu::construirEdificio(int fila, int columna, string nombreIngresado, int piedraNecesaria, int maderaNecesaria, int metalNecesario) {
 	cout << "El edificio ha sido construido correctamente" << endl << endl;
 	static_cast<CasilleroConstruible *>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> agregarEdifico(nombreIngresado, juego -> obtenerJugadorActivo());
-	cout << "Aldu: propietario en construirEdificio:" << static_cast<CasilleroConstruible *>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> obtenerPropietarioEdificio() << endl;
 	juego -> obtenerJugador() -> buscarMaterial(PIEDRA) -> modificarCantidad(-piedraNecesaria);
 	juego -> obtenerJugador() -> buscarMaterial(MADERA) -> modificarCantidad(-maderaNecesaria);
 	juego -> obtenerJugador() -> buscarMaterial(METAL) -> modificarCantidad(-metalNecesario);
