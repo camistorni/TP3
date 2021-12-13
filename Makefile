@@ -1,5 +1,5 @@
 CC = g++ -Wall -Werror -Wconversion -g
-OBJS = main.o mapa.o Menu.o materiales.o jugador.o juego.o utils.o receta.o edificio.o casilleroConstruible.o casilleroInaccesible.o casilleroTransitable.o casillero.o CaminoMinimo.o Dijkstra.o Grafo.o Vertice.o parser.o ABB.o nodo.o
+OBJS = main.o mapa.o Menu.o materiales.o jugador.o juego.o utils.o receta.o edificio.o casilleroConstruible.o casilleroInaccesible.o casilleroTransitable.o casillero.o CaminoMinimo.o Dijkstra.o Grafo.o Vertice.o ABB.o nodo.o
 
 andypolis: $(OBJS)
 	$(CC) -o andypolis $(OBJS)
@@ -52,9 +52,6 @@ Grafo.o: src/juego/grafo/Grafo.cpp
 
 Vertice.o: src/juego/grafo/Vertice.cpp
 	$(CC) -o Vertice.o -c src/juego/grafo/Vertice.cpp
-	
-parser.o: src/edificios/parser.cpp
-	$(CC) -o parser.o -c src/edificios/parser.cpp
 
 ABB.o: src/diccionario/ABB.cpp
 	$(CC) -o ABB.o -c src/diccionario/ABB.cpp

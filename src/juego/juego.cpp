@@ -6,7 +6,6 @@
 
 #include "../materiales/materiales.h"
 #include "juego.h"
-#include "../edificios/parser.h"
 #include "../edificios/edificio.h"
 #include "../mapa/casilleros/casillero.h"
 #include "../mapa/casilleros/casilleroConstruible/casilleroConstruible.h"
@@ -38,15 +37,16 @@ Juego::Juego () {
 }
 
 Juego::~Juego() {
-	cerrarUbicaciones();
+	//cerrarUbicaciones();
 	cerrarMateriales();	
 	//cerrarMapa();
-	for(int i = 0; i < 2; i++) {
+	for(int i = 0; i < 2; i++)
 		delete jugadores[i];
-	}
 	delete[] jugadores;
 	jugadores = NULL;
 	delete mapa;
+	delete grafo;
+	delete abb;
 	//mapa = NULL;
 	/*for(int j = 0; j < cantidadEdificios; j++) {
 		delete listaEdificios[j];
@@ -60,6 +60,10 @@ Jugador** Juego::obtenerJugadores(){
 
 int Juego::obtenerCantidadMateriales() {
 	return cantidadMateriales;
+}
+
+int Juego::obtenerCantidadEdificios() {
+	return cantidadEdificios;
 }
 
 Jugador* Juego::obtenerJugador() {
@@ -151,8 +155,6 @@ void Juego::cerrarMateriales() {
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
 void Juego::leerOpcionesEdificios(){
-/////////////////////////// Revisar cuando esté el diccionario //////////////77///
-
 	
 	fstream archivoEdificios(PATH_EDIFICIOS, ios::in);
 	string edificio;

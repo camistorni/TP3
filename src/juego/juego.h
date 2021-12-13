@@ -36,6 +36,7 @@ class Juego{
 		~Juego();
 
 		int obtenerCantidadMateriales();
+		int obtenerCantidadEdificios();
 		Jugador* obtenerJugador();
 		int obtenerJugadorActivo();
 		Jugador** obtenerJugadores();

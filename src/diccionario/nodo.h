@@ -20,6 +20,9 @@ class NodoAbb{
 	
 		//Constructor
 		NodoAbb(tipo clave, Receta* receta);
+
+		// Destructor
+		~NodoAbb();
 		
 		//PRE: -
 		//POS: Devuelve la clave del nodo

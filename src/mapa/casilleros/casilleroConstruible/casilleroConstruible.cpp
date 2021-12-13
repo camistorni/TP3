@@ -12,7 +12,10 @@ CasilleroConstruible::CasilleroConstruible() {
 }
 
 CasilleroConstruible::~CasilleroConstruible() {
-    delete[] edificio;
+    if(propietarioEdificio > -1)
+        delete edificio;
+    if(material != NULL)
+        delete material;
 }
 
 std::string CasilleroConstruible::obtenerEdificio(){
@@ -49,22 +52,22 @@ void CasilleroConstruible::agregarEdifico(std::string nombre, int jugador){
     propietarioEdificio = jugador;
     if (nombre == ASERRADERO) {
         edificio = new Aserradero();
-         setearCaracter(CARACTER_ASERRADERO);
+        setearCaracter(CARACTER_ASERRADERO);
     } else if (nombre == ESCUELA) {
         edificio = new Escuela();
         setearCaracter(CARACTER_ESCUELA);
     } else if (nombre == FABRICA) {
         edificio = new Fabrica();
-         setearCaracter(CARACTER_FABRICA);
+        setearCaracter(CARACTER_FABRICA);
     } else if (nombre == MINA) {
         edificio = new Mina();
-         setearCaracter(CARACTER_MINA);
+        setearCaracter(CARACTER_MINA);
     } else if (nombre == MINA_ORO) {
         edificio = new MinaOro();
-         setearCaracter(CARACTER_MINA_ORO);
+        setearCaracter(CARACTER_MINA_ORO);
     } else if (nombre == OBELISCO) {
         edificio = new Obelico();
-         setearCaracter(CARACTER_OBELISCO);
+        setearCaracter(CARACTER_OBELISCO);
     } else if (nombre == PLANTA_ELECTRICA) {
         edificio = new PlantaElectrica();
         setearCaracter(CARACTER_plantaElectrica);

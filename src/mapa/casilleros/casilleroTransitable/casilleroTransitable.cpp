@@ -6,6 +6,10 @@
 #include "casilleroTransitable.h"
 
 
+CasilleroTransitable::~CasilleroTransitable() {
+    delete material;
+}
+
 CasilleroCamino::CasilleroCamino(){
     setearTipo(CAMINO);
     setearColor(COLOR_CAMINO);

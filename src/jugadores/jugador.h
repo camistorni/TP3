@@ -15,6 +15,8 @@ class Jugador {
 
         int andycoinsRecolectadas;
 
+        int cantidadEscuelasConstruidas;
+
         int bombasCompradas;
         int bombasUsadas;
 
@@ -24,7 +26,9 @@ class Jugador {
         bool escuelaConstruida;
         bool plantaElectricaConstruida;
         bool minaOroConstruida;
+        bool obeliscoConstruido;
 
+        bool masAltoQueLasNubesCumplido;
         bool comprarAndypolisCumplido;
         bool edadDePiedraCumplido;
         bool bombarderoCumplido;
@@ -55,15 +59,35 @@ class Jugador {
         void restarEnergia(int energiaGastada);
         void seleccionarObjetivos();
 
+        int obtenerCantidadEscuelasConstruidas();
+        void modificarCantidadEscuelasConstruidas(int cantidad);
         int obtenerCantidadBombasCompradas();
+        int obtenerCantidadBombasUsadas();
         void aumentarBombasCompradas(int cantidad);
+        void aumentarBombasUsadas(int cantidad);
         //Precondiciones: Se tiene que haber leído bien el archivo de materiales
 		//Postcondiciones: Agrega el material leído a la lista de materiales disponibles
         void agregarMaterial(Material* nuevoMaterial, int cantidadMateriales);
         
         Material* buscarMaterial(string nombreMaterial);
 
+        void construirMina(bool construido);
+        void construirAserradero(bool construido);
+        void construirFabrica(bool construido);
+        void construirEscuela(bool construido);
+        void construirPlantaElectrica(bool construido);
+        void construirMinaOro(bool construido);
+        void construirObelisco(bool construido);
+
+        bool hayMinaConstruida();
+        bool hayAserraderoconstruido();
+        bool hayFabricaConstruida();
+        bool hayEscuelaConstruida();
+        bool hayPlantaElectricaConstruida();
+        bool hayMinaOroConstruida();
+
         // Objetivos
+        bool masAltoQueLasNubes();
         bool comprarAndypolis();
         bool edadDePiedra();
         bool bombardero();

@@ -10,13 +10,15 @@ Menu::Menu() {
 }
 
 // Destructor
-Menu::~Menu() {}
+Menu::~Menu() {
+	delete juego;
+}
 
 // Iniciar juego
 void Menu::iniciarJuego() {
     int opcion = MENU_ERROR;
 
-    while((opcion != JUGADOR_GUARDAR_Y_SALIR) || ((juego -> obtenerJugadorActivo() < 0) && (opcion != MENU_GUARDAR_Y_SALIR))) {
+	while(((juego -> obtenerJugadorActivo() > -1) ? (opcion != JUGADOR_GUARDAR_Y_SALIR) : (opcion != MENU_GUARDAR_Y_SALIR))) {
 		mostrarMenu();
 		pedirOpcion(&opcion);
 		validarOpcionSeleccionada(opcion);
@@ -217,9 +219,12 @@ void Menu::procesarOpcionesSubmenu(int& opcion) {
 			break;
 
 		case JUGADOR_GUARDAR_Y_SALIR:
-			juego -> guardarYSalir();
 			break;
     }
+
+	if(chequearObjetivos())	{
+		partidaGanada();
+	}
 }
 
 void Menu::mostrarInformacion() {
@@ -250,8 +255,10 @@ void Menu::construirEdificioPorNombre() {
 	
 	char respuesta = confirmacionConstruccion(nombreIngresado);
 	
-	if (respuesta == 'y') 
+	if (respuesta == 'y') {
 		construirEdificio(fila, columna, nombreIngresado, piedraNecesaria, maderaNecesaria, metalNecesario);
+		setearEdificios(nombreIngresado, true);
+	}
 }
 
 void Menu::construirEdificio(int fila, int columna, string nombreIngresado, int piedraNecesaria, int maderaNecesaria, int metalNecesario) {
@@ -274,6 +281,23 @@ char Menu::confirmacionConstruccion(string nombreIngresado) {
 	}
 
 	return respuesta;
+}
+
+void Menu::setearEdificios(string nombreIngresado, bool construido) {
+	if(nombreIngresado == MINA)
+		juego -> obtenerJugador() -> construirMina(construido);
+	else if(nombreIngresado == ASERRADERO)
+		juego -> obtenerJugador() -> construirAserradero(construido);
+	else if(nombreIngresado == FABRICA)
+		juego -> obtenerJugador() -> construirFabrica(construido);
+	else if(nombreIngresado == ESCUELA)
+		juego -> obtenerJugador() -> construirEscuela(construido);
+	else if(nombreIngresado == PLANTA_ELECTRICA)
+		juego -> obtenerJugador() -> construirPlantaElectrica(construido);
+	else if(nombreIngresado == MINA_ORO)
+		juego -> obtenerJugador() -> construirMinaOro(construido);
+	else if(nombreIngresado == OBELISCO)
+		juego -> obtenerJugador() -> construirObelisco(construido);
 }
 
 // Aca va el metodo para listar los edificios 
@@ -344,6 +368,7 @@ void Menu::atacarEdificioPorCoordenada() {
 			string edificio = static_cast<CasilleroConstruible*>(casillero) -> obtenerEdificio();
 			cout << "Se ha " << ((static_cast<CasilleroConstruible *>(casillero) -> atacarEdificio()) ? "atacado" : "destruido") << " el edificio " << edificio << endl; 			juego -> obtenerJugador() -> modificarEnergia(ENERGIA_POR_ATACAR_EDIFICIO_POR_COORDENADA);
 			juego -> obtenerJugador() -> buscarMaterial(BOMBAS) -> modificarCantidad(-1);
+			juego -> obtenerJugador() -> aumentarBombasUsadas(1);
 		}
 	} 
 	else
@@ -478,7 +503,8 @@ void Menu::mostrarProgresoObjetivos(int i) {
 			break;
 
 		case BOMBARDERO:
-			// Este no se puede hacer todavia, hay que ir sumando la cantidad de piedras que se usan cuando atacas
+			cout << juego -> obtenerJugador() -> obtenerCantidadBombasUsadas() <<
+			" / " << CANTIDAD_BOMBARDERO << endl;
 			break;
 
 		case ENERGETICO:
@@ -486,11 +512,12 @@ void Menu::mostrarProgresoObjetivos(int i) {
 			break;
 
 		case LETRADO:
-			// Hay que ver como ver esto
+			cout << juego -> obtenerJugador() -> obtenerCantidadEscuelasConstruidas() << " / " << 
+			juego -> obtenerAbb() -> buscar(ESCUELA) -> obtenerMaximoConstruible() << endl;
 			break;
 
 		case MINERO:
-			// Hay que ver como ver esto
+			cout << contarMinasConstruidas() << " / 2" << endl;
 			break;
 
 		case CANSADO:
@@ -498,7 +525,7 @@ void Menu::mostrarProgresoObjetivos(int i) {
 			break;
 		
 		case CONSTRUCTOR:
-			// hay que ver esto
+			cout << contarEdificiosConstruidos() << " / " << juego -> obtenerCantidadEdificios() << endl;;
 			break;
 
 		case ARMADO:
@@ -507,9 +534,37 @@ void Menu::mostrarProgresoObjetivos(int i) {
 			break;
 
 		case EXTREMISTA:
-			cout << juego -> obtenerJugador() -> obtenerCantidadBombasCompradas() << " / " << CANTIDAD_EXTREMISTA << endl;
+			cout << juego -> obtenerJugador() -> obtenerCantidadBombasCompradas() << " / " <<
+			CANTIDAD_EXTREMISTA << endl;
 			break;
 	}
+}
+
+int Menu::contarEdificiosConstruidos() {
+	int contador = 0;
+	Jugador* jugador = juego -> obtenerJugador();
+	if(jugador -> hayMinaConstruida())
+		contador++;
+	if(jugador -> hayAserraderoconstruido())
+		contador++;
+	if(jugador -> hayFabricaConstruida())
+		contador++;
+	if(jugador -> hayEscuelaConstruida())
+		contador++;
+	if(jugador -> hayPlantaElectricaConstruida())
+		contador++;
+	if(jugador -> hayMinaOroConstruida())
+		contador++;
+	return contador;
+}
+
+int Menu::contarMinasConstruidas() {
+	int contador = 0;
+	if(juego -> obtenerJugador() -> hayMinaConstruida())
+		contador++;
+	if(juego -> obtenerJugador() -> hayMinaOroConstruida())
+		contador++;
+	return contador;
 }
 
 void Menu::moverseAUnaCoordenada(Juego *juego) {
@@ -550,6 +605,48 @@ void Menu::finalizarTurno() {
 	juego -> establecerJugadorActivo(juego -> obtenerJugadorActivo() ? 0 : 1);
 }
 
+bool Menu::chequearObjetivos() {
+	int* objetivosJugador = juego -> obtenerJugador() -> obtenerObjetivos();
+	int cantidadCumplidos = 0;
+	bool juegoGanado = false;
+	for(int i = 0; i < CANTIDAD_OBJETIVOS; i++) {
+		switch(objetivosJugador[i]) {
+			case COMPRAR_ANDYPOLIS:
+				if(juego -> obtenerJugador() -> comprarAndypolis()) cantidadCumplidos++;
+				break;
+			case EDAD_DE_PIEDRA:
+				if(juego -> obtenerJugador() -> edadDePiedra()) cantidadCumplidos++;
+				break;
+			case BOMBARDERO:
+				if(juego -> obtenerJugador() -> bombardero()) cantidadCumplidos++;
+				break;
+			case ENERGETICO: 
+				if(juego -> obtenerJugador() -> energetico()) cantidadCumplidos++;
+				break;
+			//case LETRADO:
+			//	if(juego -> obtenerJugador() -> letrado()) cantidadCumplidos++;
+				//break;
+			case MINERO:
+				if(juego -> obtenerJugador() -> minero()) cantidadCumplidos++;
+				break;
+			case CANSADO:
+				if(juego -> obtenerJugador() -> cansado()) cantidadCumplidos++;
+				break;
+			case CONSTRUCTOR:
+				if(juego -> obtenerJugador() -> constructor()) cantidadCumplidos++;
+				break;
+			case ARMADO:
+				if(juego -> obtenerJugador() -> armado()) cantidadCumplidos++;
+				break;
+			case EXTREMISTA:
+				if(juego -> obtenerJugador() -> extremista()) cantidadCumplidos++;
+				break;
+		}
+	}
+	if(cantidadCumplidos == 3 || juego -> obtenerJugador() -> masAltoQueLasNubes())
+		juegoGanado = true;
+	return juegoGanado;
+}
 
 // *************** GENERALES ***************
 
@@ -590,4 +687,7 @@ void Menu::procesarOpciones(int opcion) {
 	}
 }
 
+void Menu::partidaGanada() {
+	cout << "Cumpliste todos los objetivos! Felicitaciones, has ganado el juego!" << endl;
 
+}

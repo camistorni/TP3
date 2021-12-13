@@ -15,6 +15,8 @@ class Receta{
         void modificarMaterial(std::string material, int nuevaCantidad);
         void setearProduccion(std::string produccion);
         std::string obtenerProduccion();
+
+        int obtenerMaximoConstruible();
 };
 
 #endif

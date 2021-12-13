@@ -30,8 +30,10 @@ class ABB{
 		
 	public:
 		
-		//Constructor
+		// Constructor
 		ABB();
+		// Destructor
+		~ABB();
 		
 		//PRE: Tiene que haberse leído bien el mapa
 		//POS: Agrega un nuevo nodo al arbol. Si el arbolo está vacío crea una raiz

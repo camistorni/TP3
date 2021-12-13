@@ -9,6 +9,7 @@ class CasilleroTransitable: public Casillero{
         Material* material;
         bool hayMaterial;
     public:
+        ~CasilleroTransitable();
         Material* recolectarMaterial();
         void depositarMaterial(Material* material);
         bool hayMaterialDepositado();

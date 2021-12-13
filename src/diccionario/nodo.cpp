@@ -6,11 +6,14 @@ using namespace std;
 NodoAbb::NodoAbb(tipo clave, Receta* receta){
 	this -> clave = clave;
 	this -> receta = receta;
-	this -> der = NULL;
-	this -> izq = NULL;
-	this -> padre = NULL;
+	der = NULL;
+	izq = NULL;
+	padre = NULL;
 }
 
+NodoAbb::~NodoAbb() {
+	delete receta;
+}
 
 tipo NodoAbb::obtenerClave(){
 	return clave;

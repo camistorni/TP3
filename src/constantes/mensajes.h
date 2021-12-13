@@ -25,7 +25,7 @@ enum listadoObjetivos_t {
     CANSADO = 6,
     CONSTRUCTOR = 7,
     ARMADO = 8,
-    EXTREMISTA = 9
+    EXTREMISTA = 9,
 };
 
 const string OBJETIVOS[10] = {

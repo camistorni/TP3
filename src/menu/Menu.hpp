@@ -74,6 +74,10 @@ class Menu {
         char confirmacionConstruccion(string nombreIngresado);
 
         // Pre: -
+        // Post: Modifica los valores del jugador para ver si se cumplio un objetivo
+        void setearEdificios(string nombreIngresado, bool construido);
+
+        // Pre: -
         // Post: Contiene la lógica para la demolición del edificio
         void demolerEdificioPorCoordenada();
 
@@ -113,6 +117,14 @@ class Menu {
         // Post: Muestra el progreso de los objetivos actuales del jugador
         void mostrarProgresoObjetivos(int i);
 
+        // Pre:
+        // Post: Cuenta la cantidad de edificios construidos que tiene el jugador
+        int contarEdificiosConstruidos();
+
+        // Pre: -
+        // Post: Devuelve la cantidad de minas construidas
+        int contarMinasConstruidas();
+
         // Pre: -
         // Post: Se solicita al jugador ingresar la coordenada a la que se quiere mover y se lo pasa a esa posicion del mapa
         void moverseAUnaCoordenada(Juego *juego);
@@ -121,6 +133,9 @@ class Menu {
         // Post: Se encarga de todo lo que este relacionado con realizar el cambio del jugador
         void finalizarTurno();
 
+        // Pre: -
+        // Post: Se fija si se cumplieron los objetivos para que el jugador gane el juego
+        bool chequearObjetivos();
 
         // *************** GENERALES ***************
 
@@ -140,6 +155,9 @@ class Menu {
         // Post: Se encarga de procesar la opcion ingresada ya sea del menu principal como del secundario
         void procesarOpciones(int opcion); 
 
+        // Pre: -
+        // Post: -
+        void partidaGanada();
 };
 
 #endif

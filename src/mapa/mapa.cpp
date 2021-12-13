@@ -21,10 +21,18 @@ Mapa::Mapa(int cantFilas, int cantColumnas){
 }
 
 Mapa::~Mapa(){
+	Casillero* casillero;
 	for(int i = 0; i < cantidadFilas; i++) {
 		for(int j = 0; j < cantidadColumnas; j++) {
-			delete casilleros[i][j];
+			if((casillero = casilleros[i][j]) -> obtenerTipo() == TERRENO)
+				delete static_cast<CasilleroConstruible*>(casillero);
+			else if(casillero -> obtenerTipo() != LAGO)
+				delete static_cast<CasilleroTransitable*>(casillero);
+			else 
+				delete casillero;
+			
 		}
+		
 		delete[] casilleros[i];
 	}
 	delete [] casilleros;

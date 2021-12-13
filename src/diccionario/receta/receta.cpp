@@ -34,3 +34,7 @@ std::string Receta::obtenerProduccion(){
 void Receta::setearProduccion(std::string produccion){
     produccionReceta = produccion;
 }
+
+int Receta::obtenerMaximoConstruible() {
+    return maximoContruiblesReceta;
+}

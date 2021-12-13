@@ -9,30 +9,39 @@ using namespace std;
 
 
 ABB::ABB(){
-	this->raiz = NULL;
-	this->cantidadNodos = 0;
+	raiz = NULL;
+	cantidadNodos = 0;
 }
 
-NodoAbb* ABB::insertarNodo(NodoAbb *nodo, tipo clave, Receta *receta){
+ABB::~ABB() {
+	cerrarDiccionario();
+	//delete raiz;
+	
+}
+
+void ABB::cerrarDiccionario() {
+	cerrarDiccionario(raiz);
+}
+
+
+NodoAbb* ABB::insertarNodo(NodoAbb *nodo, tipo clave, Receta *receta) {
 
 	if(nodo == NULL)
 		nodo = new NodoAbb(clave, receta);
 		
 	else if(clave < nodo->obtenerClave())
-		nodo->setIzq(insertarNodo(nodo->obtenerIzq(), clave, receta), nodo);
+		nodo -> setIzq(insertarNodo(nodo->obtenerIzq(), clave, receta), nodo);
 	
 	else
-		nodo->setDer(insertarNodo(nodo->obtenerDer(), clave, receta), nodo);
+		nodo -> setDer(insertarNodo(nodo->obtenerDer(), clave, receta), nodo);
 	
 	return nodo;
 }
 
-
-void ABB::insertarNodo(tipo clave, Receta* receta){
-	this->raiz = insertarNodo(this->raiz, clave, receta);
+void ABB::insertarNodo(tipo clave, Receta* receta) {
+	raiz = insertarNodo(raiz, clave, receta);
 	cantidadNodos++;
 }
-
 
 void ABB::imprimirOrdenado(NodoAbb *nodo){
 	
@@ -235,6 +244,3 @@ void ABB::cerrarDiccionario(NodoAbb *nodo){
 	}
 }
 
-void ABB::cerrarDiccionario(){
-	this->cerrarDiccionario(this->raiz);
-}
