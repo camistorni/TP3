@@ -1,6 +1,6 @@
 Aclaraciones:
 
-Inicialmente estabamos trabajando con branchs y haciendo push a main. Accidentalmente pusheamos un commit a main con un error grave que no pudimos revertir, por lo que pasamos a trabajar en un nuevo branch que se llama master. El programa final se encuentra en este branch (master).
+Inicialmente estabamos trabajando con branchs y haciendo push a main. Accidentalmente pusheamos un commit a main con un error grave que no pudimos revertir, por lo que pasamos a trabajar en un nuevo branch que se llama master. El programa final se encuentra en este branch (final).
 
 Hay un makefile con todos los archivos, a continuacion se detalla como usarlo:
 -) Para compilar el programa correr:
