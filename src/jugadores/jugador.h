@@ -5,7 +5,7 @@
 
 class Jugador {
 
-	protected:
+	private:
         std::string nombre;
         Material** materiales;
         int energia;

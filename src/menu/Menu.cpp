@@ -7,6 +7,7 @@ using namespace std;
 // Constructor
 Menu::Menu() {
     juego = new Juego;
+	partidaGanada = false;
 }
 
 // Destructor
@@ -24,8 +25,8 @@ void Menu::iniciarJuego() {
 		validarOpcionSeleccionada(opcion);
 		//system(CLR_SCREEN);
 		procesarOpciones(opcion);
-		if(chequearObjetivos())
-			partidaGanada(&opcion);
+		if(partidaGanada)
+			ganarPartida(&opcion);
 	}
 }
 
@@ -118,8 +119,6 @@ void Menu::solicitarCoordenadas() {
 	while(juego -> verificarCoordenadas(fila, columna) == false)
 		juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
 }
-
-// *************** SUBMENU ***************
 
 void Menu::mostrarSubmenu() {
 	juego -> obtenerMapa() -> mostrarMapa();
@@ -249,14 +248,19 @@ void Menu::construirEdificioPorNombre() {
 	cout << "Ingrese la segunda coordenada: ";
 	cin >> columna;
 	
+	cout << "1" << endl;
 	if(juego -> verificarCoordenadas(fila, columna))
 		return;
+	cout << "2" << endl;
 	
 	char respuesta = confirmacionConstruccion(nombreIngresado);
+	cout << "3" << endl;
 	
 	if (respuesta == 'y') {
 		if(nombreIngresado == OBELISCO){
-			// Hacer Aldu
+		cout << "1" << endl;
+
+			partidaGanada = true;
 		} else
 			construirEdificio(fila, columna, nombreIngresado, piedraNecesaria, maderaNecesaria, metalNecesario);
 	}
@@ -275,6 +279,8 @@ void Menu::construirEdificio(int fila, int columna, string nombreIngresado, int 
 			juego -> obtenerMapa() -> edificiosContruidos(ESCUELA, juego -> obtenerJugadorActivo()) >=
 			juego -> obtenerAbb() -> buscar(ESCUELA) -> obtenerMaximoConstruible()
 		);
+	if(nombreIngresado == OBELISCO)
+		partidaGanada = true;
 };
 
 char Menu::confirmacionConstruccion(string nombreIngresado) {
@@ -327,27 +333,15 @@ void Menu::demolerEdificioPorCoordenada() {
 		cout << "Se ha demolido el edificio " << edificio << endl; 
 		juego -> obtenerJugador() -> modificarEnergia(ENERGIA_POR_DEMOLER_EDIFICIO_POR_COORDENADA);
 		
-		Casillero* casillero = juego -> obtenerMapa() -> obtenerCasillero(fila, columna);
-		depositarMateriales(edificio, casillero);
-		(static_cast<CasilleroConstruible *>(casillero) -> demolerEdificio());
+		juego -> obtenerJugador() -> buscarMaterial(PIEDRA) -> modificarCantidad(juego -> obtenerAbb() -> buscar(edificio) -> obtenerMaterial(PIEDRA) / 2);
+		juego -> obtenerJugador() -> buscarMaterial(MADERA) -> modificarCantidad(juego -> obtenerAbb() -> buscar(MADERA) -> obtenerMaterial(PIEDRA) / 2);
+		juego -> obtenerJugador() -> buscarMaterial(METAL) -> modificarCantidad(juego -> obtenerAbb() -> buscar(edificio) -> obtenerMaterial(METAL) / 2);
 
 	} 
 	else
 		cout << "No hay un edificio en ese casillero" << endl;
 	
 	return;
-}
-
-void Menu::depositarMateriales(string edificio, Casillero* casillero) {
-	
-	int cantidadPiedra = juego -> obtenerAbb() -> buscar(edificio) -> obtenerMaterial(PIEDRA) / 2;
-	int cantidadMadera = juego -> obtenerAbb() -> buscar(edificio) -> obtenerMaterial(MADERA) / 2;
-	int cantidadMetal = juego -> obtenerAbb() -> buscar(edificio) -> obtenerMaterial(METAL) / 2;
-	;
-	
-	(static_cast<CasilleroConstruible *>(casillero) -> depositarMaterial(new Material(PIEDRA, cantidadPiedra)));
-	(static_cast<CasilleroConstruible *>(casillero) -> depositarMaterial(new Material(MADERA, cantidadMadera)));
-	(static_cast<CasilleroConstruible *>(casillero) -> depositarMaterial(new Material(METAL, cantidadMetal)));
 }
 
 void Menu::atacarEdificioPorCoordenada() {
@@ -586,10 +580,10 @@ void Menu::finalizarTurno() {
 	juego -> establecerJugadorActivo(juego -> obtenerJugadorActivo() ? 0 : 1);
 }
 
-bool Menu::chequearObjetivos() {
+void Menu::chequearObjetivos() {
 	int* objetivosJugador = juego -> obtenerJugador() -> obtenerObjetivos();
 	int cantidadCumplidos = 0;
-	bool juegoGanado = false;
+	bool objetivosCumplidos = false;
 	for(int i = 0; i < CANTIDAD_OBJETIVOS; i++) {
 		switch(objetivosJugador[i]) {
 			case COMPRAR_ANDYPOLIS:
@@ -604,9 +598,9 @@ bool Menu::chequearObjetivos() {
 			case ENERGETICO: 
 				if(juego -> obtenerJugador() -> energetico()) cantidadCumplidos++;
 				break;
-			//case LETRADO:
-			//	if(juego -> obtenerJugador() -> letrado()) cantidadCumplidos++;
-				//break;
+			case LETRADO:
+				if(juego -> obtenerJugador() -> letrado()) cantidadCumplidos++;
+				break;
 			case MINERO:
 				if(juego -> obtenerJugador() -> minero()) cantidadCumplidos++;
 				break;
@@ -625,8 +619,8 @@ bool Menu::chequearObjetivos() {
 		}
 	}
 	if(cantidadCumplidos == 3 || juego -> obtenerJugador() -> masAltoQueLasNubes())
-		juegoGanado = true;
-	return juegoGanado;
+		objetivosCumplidos = true;
+	partidaGanada  = objetivosCumplidos;
 }
 
 // *************** GENERALES ***************
@@ -668,7 +662,7 @@ void Menu::procesarOpciones(int opcion) {
 	}
 }
 
-void Menu::partidaGanada(int* opcion) {
+void Menu::ganarPartida(int* opcion) {
 	cout << "Cumpliste todos los objetivos! Felicitaciones, has ganado el juego!" << endl;
 	*opcion = JUGADOR_GUARDAR_Y_SALIR;
 }

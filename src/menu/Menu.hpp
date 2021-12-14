@@ -11,6 +11,7 @@
 class Menu {
     private:
         Juego* juego;
+        bool partidaGanada;
 
     public:
 
@@ -82,10 +83,6 @@ class Menu {
         void demolerEdificioPorCoordenada();
 
         // Pre: -
-        // Post: Deposita los materiales que quedaron luego de demoler un edificio
-        void depositarMateriales(string edificio, Casillero* casillero);
-
-        // Pre: -
         // Post: Contiene la logica para atacar un edificio
         void atacarEdificioPorCoordenada();
 
@@ -131,7 +128,7 @@ class Menu {
 
         // Pre: -
         // Post: Se fija si se cumplieron los objetivos para que el jugador gane el juego
-        bool chequearObjetivos();
+        void chequearObjetivos();
 
         // *************** GENERALES ***************
 
@@ -153,7 +150,7 @@ class Menu {
 
         // Pre: -
         // Post: -
-        void partidaGanada(int* opcion);
+        void ganarPartida(int* opcion);
 };
 
 #endif

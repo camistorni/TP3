@@ -352,11 +352,11 @@ void Juego::leerMapa() {
 
 bool Juego::verificarCoordenadas(int fila, int columna) {
 	bool error = false;
-	if(fila < 0 || fila > mapa -> obtenerCantidadFilas()){
+	if(fila < 0 || fila >= mapa -> obtenerCantidadFilas()){
 		cout << "La fila ingresada está fuera de rango. No se puede construir el edificio" << endl;
 		error = true;
-	} else if(columna < 0 || columna > mapa -> obtenerCantidadColumnas()){
-		cout << "La columna " << columna << " ingresada está fuera de rango. No se puede construir el edificio" << endl;
+	} else if(columna < 0 || columna >= mapa -> obtenerCantidadColumnas()){
+		cout << "La columna ingresada está fuera de rango. No se puede construir el edificio" << endl;
 		error = true;
 	} else if (mapa -> obtenerCasillero(fila, columna) -> obtenerTipo() != TERRENO){
 		cout << "No se puede construir en este tipo de casillero" << endl;
