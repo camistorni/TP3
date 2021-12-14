@@ -18,7 +18,7 @@ private:
 
     //pre: tienen que existir tanto el origen como el destino. Ademas se deben haber calculado las matrices de Floyd
     //post: muestra el camino minimo entre el origen y el destino
-    void caminoMinimo(int origen, int destino, int *energia);
+    void caminoMinimo(int origen, int destino, int *energia, string *camino, int *tamano);
 
     //post: agranda dinamicamente la matriz de adyacencia
     void agrandarMatrizDeAdyacencia();
@@ -47,7 +47,7 @@ public:
 
     //pre: se debe tener un algortimo para calcular el camino mínimo previamente elegido
     //post: muestra por terminal el camino mínimo desde un origen a un destino
-    void caminoMinimo(string origen, string destino, int *energia);
+    void caminoMinimo(string origen, string destino, int *energia, string *camino, int *tamano);
 
     //pre: el peso es un valor positivo
     //post: Ajusta la matriz de adyacencia con el peso ingresado

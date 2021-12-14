@@ -6,7 +6,7 @@ Dijkstra::Dijkstra(Lista<Vertice> *vertices, int **matrizAdyacencia) : CaminoMin
     recorrido = new int[cantidadVertices];
 }
 
-void Dijkstra::caminoMinimo(int origen, int destino, int *energia) {
+void Dijkstra::caminoMinimo(int origen, int destino, int *energia, string *camino, int *tamano) {
     inicializarVisitados(origen);
     inicializarDistancia(matrizAdyacencia[origen]);
     inicializarRecorrido(origen);
@@ -26,7 +26,7 @@ void Dijkstra::caminoMinimo(int origen, int destino, int *energia) {
         verticesRecorridos++;
     }
 
-    mostrarRecorrido(origen, destino, energia);
+    mostrarRecorrido(origen, destino, energia, camino, tamano);
 }
 
 int Dijkstra::verticeMinimaDistancia() {
@@ -74,7 +74,7 @@ void Dijkstra::actualizarDistancia(int vertice) {
     }
 }
 
-void Dijkstra::mostrarRecorrido(int origen, int destino, int *energia) {
+void Dijkstra::mostrarRecorrido(int origen, int destino, int *energia, string *camino, int *tamano) {
     if(distancia[destino] == INFINITO){
         cout << "No hay un camino que conecte " <<  vertices->obtenerNombre(origen + 1) << " con " << vertices->obtenerNombre(destino + 1);
     }else{
@@ -85,6 +85,8 @@ void Dijkstra::mostrarRecorrido(int origen, int destino, int *energia) {
         do{
             destino = recorrido[destino];
             cout << " <- " << vertices->obtenerNombre(destino + 1);
+            camino[destino] = vertices->obtenerNombre(destino + 1);
+            *tamano++;
         }while(origen != destino);
     }
     cout << endl;

@@ -126,8 +126,8 @@ void Grafo::mostrarMatrizAdyacencia() {
     cout << endl;
 }
 
-void Grafo::caminoMinimo(int origen, int destino) {
-    algoritmoCaminoMinimo -> caminoMinimo(origen, destino);
+void Grafo::caminoMinimo(int origen, int destino, int *energia) {
+    algoritmoCaminoMinimo -> caminoMinimo(origen, destino, energia);
 }
 
 
