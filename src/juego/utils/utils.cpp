@@ -137,7 +137,6 @@ void colocarEdificiosJugador (ifstream& archivoUbicaciones, Juego* juego, int ju
 
 void guardarEdificios(ofstream &archivoUbicaciones, Juego *juego, int fila, int columna, int jugador){
 	char caracter = juego -> obtenerMapa() -> obtenerCasillero(fila, columna) -> obtenerCaracter();
-	cout << "propietario: " << static_cast<CasilleroConstruible*>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> obtenerPropietarioEdificio() << endl;
 	if(static_cast<CasilleroConstruible*>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> obtenerPropietarioEdificio() == jugador){
 		if(caracter == CARACTER_MINA){
 			archivoUbicaciones << MINA;
