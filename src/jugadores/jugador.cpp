@@ -104,10 +104,6 @@ void Jugador::aumentarBombasUsadas(int cantidad) {
     bombasUsadas += cantidad;
 }
 
-void Jugador::modificarCantidadEscuelasConstruidas(int cantidad) {
-    cantidadEscuelasConstruidas += cantidad;
-}
-
 
 // Generales
 

@@ -147,48 +147,6 @@ class Juego{
 		// Post: Deposita los materiales de la lluvia en el mapa
 		void lluviaElementos();
 
-
-
-
-
-
-		// Pre: -
-		// Post: Guarda los edificios en el archivo "edificios" y elimina la lista. Guarda los materiales en el archivo "materiales" y elimina la lista. Guarda las ubicaciones en el archivo "ubicaciones" y elimina la lista. Libera la memoria utilizada para el mapa
-		void guardarYSalir();
-
-		//Precondiciones: -
-		//Postcondiciones: Guarda los datos de todos los archivos
-		void leerArchivos();
-		
-		void mostrarMapa();
-		
-
-		
-		
-		
-		
-		
-
-		
-		//Precondiciones: -
-		//Postcondiciones: Imprime los materiales disponibles
-		void mostrarInventario();
-
-	
-		//Precondiciones: -
-		//Postcondiciones: Agrega cantidades de material dependiendo del edificio ingresado
-		void agregarRecursos(string nombreEdificio);
-		
-		
-		
-		//Precondiciones: Se tiene que haber leído bien el archivo de ubicaciones //(modificar)
-		//Postcondiciones: Agrega la ubicación leída a la lista de ubicaciones
-		int identificarEdificio(string tipoEdficio);
-		
-		//Precondiciones: -
-		//Postcondiciones: Imprime los edificios construidos
-		void listarEdificiosConstruidos();
-		
 		// Pre: -
 		// Post: Modifica los valores necesarios para construir un edificio
 		void modificarEdificio(std::string nombre, string material, int nuevoValor);		

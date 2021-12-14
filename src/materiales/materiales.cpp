@@ -16,9 +16,6 @@ int Material::obtenerCantidadMaterial(){
 	return this -> cantidadMaterial;
 }
 
-void Material::establecerNombreMaterial(std::string nombre){
-	this -> nombreMaterial = nombre;
-}
 void Material::establecerCantidad(int cantidad){
 	this -> cantidadMaterial = cantidad;
 }
