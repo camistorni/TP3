@@ -56,7 +56,6 @@ void guardarCoordenadas(ofstream &archivoUbicaciones, int fila, int columna){
 }
 
 void guardarMateriales(ofstream &archivoUbicaciones, Juego *juego, int fila, int columna){
-
 	if(juego -> obtenerMapa() -> obtenerCasillero(fila, columna) -> obtenerCaracter() == CARACTER_MADERA){
 		archivoUbicaciones << MADERA;
 		guardarCoordenadas(archivoUbicaciones, fila, columna);
@@ -152,7 +151,6 @@ void agregarEdificio(Juego* juego, string nombre) {
 
 void guardarEdificios(ofstream &archivoUbicaciones, Juego *juego, int fila, int columna, int jugador){
 	char caracter = juego -> obtenerMapa() -> obtenerCasillero(fila, columna) -> obtenerCaracter();
-	cout << "propietario: " << static_cast<CasilleroConstruible*>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> obtenerPropietarioEdificio() << endl;
 	if(static_cast<CasilleroConstruible*>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> obtenerPropietarioEdificio() == jugador){
 		if(caracter == CARACTER_MINA){
 			archivoUbicaciones << MINA;
@@ -191,9 +189,16 @@ bool isEmpty(ifstream& pFile) {
 
 void escribirNuevoArchivoMateriales() {
 	fstream archivoMateriales(PATH_MATERIALES, ios::out);
-	archivoMateriales << " " << MADERA << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
-	archivoMateriales << " " << PIEDRA << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
-	archivoMateriales << " " << METAL << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
-	archivoMateriales << " " << ANDYCOINS << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
-	archivoMateriales << " " << BOMBAS << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
+	archivoMateriales << " " << MADERA << " " << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
+	archivoMateriales << " " << PIEDRA << " " << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
+	archivoMateriales << " " << METAL << " " << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
+	archivoMateriales << " " << ANDYCOINS << " " << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
+	archivoMateriales << " " << BOMBAS << " " << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
+	archivoMateriales.close();
+}
+
+void escribirNuevoArchivoUbicaciones() {
+	fstream archivoUbicaciones(PATH_UBICACIONES, ios::out);
+	archivoUbicaciones << endl;
+	archivoUbicaciones.close();
 }

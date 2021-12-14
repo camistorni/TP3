@@ -24,8 +24,10 @@ void Menu::iniciarJuego() {
 		validarOpcionSeleccionada(opcion);
 		//system(CLR_SCREEN);
 		procesarOpciones(opcion);
-		if(chequearObjetivos())
+		if(chequearObjetivos()) {
 			partidaGanada(&opcion);
+			juego -> esPartidaGanada(true);
+		}
 	}
 }
 

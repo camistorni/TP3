@@ -26,6 +26,7 @@ class Juego{
 		int jugadorActivo;
 		int cantidadEdificios, cantidadMateriales;
 		bool partidaNueva;
+		bool partidaGanada;
 
 		//int cantidadMateriales, cantidadEdificios, cantidadUbicaciones;
 	
@@ -61,6 +62,9 @@ class Juego{
 		// Pre: -
 		// Post: Setea al jugador activo como el parametro recibido
 		void establecerJugadorActivo(int jugador);
+		// Pre: -
+		// Post: Setea la variable como el parametro recibido
+		void esPartidaGanada(bool ganada);
 
 		
 //----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -89,10 +93,6 @@ class Juego{
 		// Pre: -
 		// Post: Imprime todos los edificios y sus especificaciones
 		void listarEdificios();
-
-		// Pre: -
-		// Post: Guarda los edificios en el archivo "edificios" y elimina la lista
-		void cerrarEdificios();
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -149,34 +149,16 @@ class Juego{
 		// Post: Deposita los materiales de la lluvia en el mapa
 		void lluviaElementos();
 
-
-
-
-
-
 		// Pre: -
-		// Post: Guarda los edificios en el archivo "edificios" y elimina la lista. Guarda los materiales en el archivo "materiales" y elimina la lista. Guarda las ubicaciones en el archivo "ubicaciones" y elimina la lista. Libera la memoria utilizada para el mapa
-		void guardarYSalir();
+		// Post: Modifica los valores necesarios para construir un edificio
+		void modificarEdificio(std::string nombre, string material, int nuevoValor);		
 
-		//Precondiciones: -
-		//Postcondiciones: Guarda los datos de todos los archivos
-		void leerArchivos();
-		
-		void mostrarMapa();
-		
-
-		
-		
-		
-		
-		
-
+		// CHEQUEAR
 		
 		//Precondiciones: -
 		//Postcondiciones: Imprime los materiales disponibles
 		void mostrarInventario();
 
-		
 		//Precondiciones: Se tiene que haber leído bien el archivo de edificio
 		//Postcondiciones: Agrega el edificio leído a la lista de edificios disponibles
 		void agregarEdificio(Edificio* edificio);
@@ -184,8 +166,6 @@ class Juego{
 		//Precondiciones: -
 		//Postcondiciones: Agrega cantidades de material dependiendo del edificio ingresado
 		void agregarRecursos(string nombreEdificio);
-		
-		
 		
 		//Precondiciones: Se tiene que haber leído bien el archivo de ubicaciones //(modificar)
 		//Postcondiciones: Agrega la ubicación leída a la lista de ubicaciones
@@ -195,9 +175,6 @@ class Juego{
 		//Postcondiciones: Imprime los edificios construidos
 		void listarEdificiosConstruidos();
 		
-		// Pre: -
-		// Post: Modifica los valores necesarios para construir un edificio
-		void modificarEdificio(std::string nombre, string material, int nuevoValor);		
 };
 
 #endif
