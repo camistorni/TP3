@@ -90,9 +90,6 @@ class Juego{
 		// Post: Imprime todos los edificios y sus especificaciones
 		void listarEdificios();
 
-		// Pre: -
-		// Post: Guarda los edificios en el archivo "edificios" y elimina la lista
-		void cerrarEdificios();
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------

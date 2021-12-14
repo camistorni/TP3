@@ -137,7 +137,6 @@ void colocarEdificiosJugador (ifstream& archivoUbicaciones, Juego* juego, int ju
 
 void guardarEdificios(ofstream &archivoUbicaciones, Juego *juego, int fila, int columna, int jugador){
 	char caracter = juego -> obtenerMapa() -> obtenerCasillero(fila, columna) -> obtenerCaracter();
-	cout << "propietario: " << static_cast<CasilleroConstruible*>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> obtenerPropietarioEdificio() << endl;
 	if(static_cast<CasilleroConstruible*>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> obtenerPropietarioEdificio() == jugador){
 		if(caracter == CARACTER_MINA){
 			archivoUbicaciones << MINA;
@@ -181,4 +180,11 @@ void escribirNuevoArchivoMateriales() {
 	archivoMateriales << " " << METAL << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
 	archivoMateriales << " " << ANDYCOINS << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
 	archivoMateriales << " " << BOMBAS << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
+	archivoMateriales.close();
+}
+
+void escribirNuevoArchivoMateriales() {
+	fstream archivoUbicaciones(PATH_UBICACIONES, ios::out);
+	archivoUbicaciones << endl;
+	archivoUbicaciones.close();
 }

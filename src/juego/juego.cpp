@@ -40,7 +40,7 @@ Juego::Juego () {
 
 // Destructor
 Juego::~Juego() {
-	//cerrarUbicaciones();
+	cerrarUbicaciones();
 	cerrarMateriales();	
 	//cerrarMapa();
 	for(int i = 0; i < 2; i++)
@@ -218,14 +218,6 @@ void Juego::listarEdificios(){
 
 }
 
-void Juego::cerrarEdificios(){
-
-	for(int i = 0; i < this->cantidadEdificios; i++)
-		delete this->listaEdificios[i];
-   
-	delete[] this->listaEdificios;
-}
-
 void Juego::listarEdificiosConstruidos(){
 	////////////////////Arreglar cantidad construidos y edificios construidos ///////////////////
 	////////////////////Falta alguna manera de imprimir solo nombres/////////////////////////////
@@ -318,7 +310,6 @@ void Juego::cerrarUbicaciones() {
 			guardarEdificios(archivoUbicaciones, this, i, j, 1);
 	}
 	
-	cerrarEdificios();
 	archivoUbicaciones.close();
 }
 
@@ -505,10 +496,10 @@ void Juego::lluviaElementos() {
 	}
 	shuffleString(bolsas, asignados);
 	for (int i = 0; i < asignados; i++)
-		if (bolsas[i] != MATERIAL_NULO) {
-			CasilleroTransitable* casillero = casillerosDisponibles[i];
-			casillero -> depositarMaterial(new Material(bolsas[i], valoresLluvia(bolsas[i])));
-		}
+		if (bolsas[i] != MATERIAL_NULO)
+			casillerosDisponibles[i] -> depositarMaterial(new Material(bolsas[i], valoresLluvia(bolsas[i])));
+	delete[] bolsas;
+	delete[] casillerosDisponibles;
 }
 
 void Juego::modificarEdificio(std::string nombre, string material, int nuevoValor){
