@@ -180,4 +180,11 @@ void escribirNuevoArchivoMateriales() {
 	archivoMateriales << " " << METAL << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
 	archivoMateriales << " " << ANDYCOINS << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
 	archivoMateriales << " " << BOMBAS << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
+	archivoMateriales.close();
+}
+
+void escribirNuevoArchivoMateriales() {
+	fstream archivoUbicaciones(PATH_UBICACIONES, ios::out);
+	archivoUbicaciones << endl;
+	archivoUbicaciones.close();
 }
