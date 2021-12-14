@@ -48,5 +48,8 @@ bool isEmpty(ifstream& pFile);
 // Pre: -
 // Post: Escribe el archivo de materiales con todos sus valores en 0
 void escribirNuevoArchivoMateriales();
+// Pre: -
+// Post: Escribe el archivo de ubicaciones vacio
+void escribirNuevoArchivoUbicaciones();
 
 #endif

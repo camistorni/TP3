@@ -89,7 +89,7 @@ void Jugador::restarEnergia(int energiaGastada){
 }
 
 void Jugador::seleccionarObjetivos() {
-    /*int objetivosNuevos[3];
+    int objetivosNuevos[3];
     objetivosNuevos[0] = rand() % 10;
     objetivosNuevos[1] = rand() % 10;
     while(objetivosNuevos[1] == objetivosNuevos[0])
@@ -100,11 +100,7 @@ void Jugador::seleccionarObjetivos() {
     for(int i = 0; i < CANTIDAD_OBJETIVOS; i++) {
         objetivos[i] = objetivosNuevos[i];
     }
-*/
-    // PRUEBAS ALDU
-    objetivos[0] = 8;
-    objetivos[1] = 1;
-    objetivos[2] = 9;
+
 }
 
 void Jugador::aumentarBombasCompradas(int cantidad) {
@@ -261,9 +257,3 @@ bool Jugador::armado() {
 bool Jugador::extremista() {
     return extremistaCumplido || (extremistaCumplido = (bombasCompradas >= 500));
 }
-
-
-
-
-
-
