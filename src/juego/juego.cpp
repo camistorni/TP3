@@ -496,10 +496,10 @@ void Juego::lluviaElementos() {
 	}
 	shuffleString(bolsas, asignados);
 	for (int i = 0; i < asignados; i++)
-		if (bolsas[i] != MATERIAL_NULO) {
-			CasilleroTransitable* casillero = casillerosDisponibles[i];
-			casillero -> depositarMaterial(new Material(bolsas[i], valoresLluvia(bolsas[i])));
-		}
+		if (bolsas[i] != MATERIAL_NULO)
+			casillerosDisponibles[i] -> depositarMaterial(new Material(bolsas[i], valoresLluvia(bolsas[i])));
+	delete[] bolsas;
+	delete[] casillerosDisponibles;
 }
 
 void Juego::modificarEdificio(std::string nombre, string material, int nuevoValor){

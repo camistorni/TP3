@@ -65,5 +65,7 @@ receta.o: src/diccionario/receta/receta.cpp
 valgrind:
 	valgrind --tool=memcheck --error-exitcode=1 --leak-check=full --show-leak-kinds=all ./andypolis
 
+valgrind2:
+	valgrind --trace-children=yes --track-fds=yes --track-origins=yes --leak-check=full --show-leak-kinds=all ./andypolis
 run: 
 	./andypolis

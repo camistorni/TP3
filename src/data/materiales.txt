@@ -2,4 +2,4 @@ madera 1000 49800
 piedra 499000 49750
 metal 1775 49955
 andycoins 999900000 100000
-bombas 1000 4
+bombas 1000 3
