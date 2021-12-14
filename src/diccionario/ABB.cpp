@@ -15,8 +15,6 @@ ABB::ABB(){
 
 ABB::~ABB() {
 	cerrarDiccionario();
-	//delete raiz;
-	
 }
 
 void ABB::cerrarDiccionario() {

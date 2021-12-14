@@ -7,7 +7,6 @@ using namespace std;
 // Constructor
 Menu::Menu() {
     juego = new Juego;
-	partidaGanada = false;
 }
 
 // Destructor
@@ -25,7 +24,7 @@ void Menu::iniciarJuego() {
 		validarOpcionSeleccionada(opcion);
 		//system(CLR_SCREEN);
 		procesarOpciones(opcion);
-		if(partidaGanada)
+		if(juego -> seGanoLaPartida())
 			ganarPartida(&opcion);
 	}
 }
@@ -258,9 +257,7 @@ void Menu::construirEdificioPorNombre() {
 	
 	if (respuesta == 'y') {
 		if(nombreIngresado == OBELISCO){
-		cout << "1" << endl;
-
-			partidaGanada = true;
+			juego -> seGanoLaPartida(true);
 		} else
 			construirEdificio(fila, columna, nombreIngresado, piedraNecesaria, maderaNecesaria, metalNecesario);
 	}
@@ -280,7 +277,7 @@ void Menu::construirEdificio(int fila, int columna, string nombreIngresado, int 
 			juego -> obtenerAbb() -> buscar(ESCUELA) -> obtenerMaximoConstruible()
 		);
 	if(nombreIngresado == OBELISCO)
-		partidaGanada = true;
+		juego -> seGanoLaPartida(true);
 };
 
 char Menu::confirmacionConstruccion(string nombreIngresado) {
@@ -620,7 +617,7 @@ void Menu::chequearObjetivos() {
 	}
 	if(cantidadCumplidos == 3 || juego -> obtenerJugador() -> masAltoQueLasNubes())
 		objetivosCumplidos = true;
-	partidaGanada  = objetivosCumplidos;
+	juego -> seGanoLaPartida(objetivosCumplidos);
 }
 
 // *************** GENERALES ***************

@@ -11,7 +11,6 @@
 class Menu {
     private:
         Juego* juego;
-        bool partidaGanada;
 
     public:
 

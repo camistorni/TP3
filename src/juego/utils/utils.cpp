@@ -175,16 +175,15 @@ bool isEmpty(ifstream& pFile) {
 
 void escribirNuevoArchivoMateriales() {
 	fstream archivoMateriales(PATH_MATERIALES, ios::out);
-	archivoMateriales << " " << MADERA << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
-	archivoMateriales << " " << PIEDRA << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
-	archivoMateriales << " " << METAL << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
-	archivoMateriales << " " << ANDYCOINS << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
-	archivoMateriales << " " << BOMBAS << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
+	archivoMateriales << " " << MADERA << " " << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
+	archivoMateriales << " " << PIEDRA << " " << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
+	archivoMateriales << " " << METAL << " " <<  CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
+	archivoMateriales << " " << ANDYCOINS << " " << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
+	archivoMateriales << " " << BOMBAS << " " << CANTIDAD_CERO << " " << CANTIDAD_CERO << endl;
 	archivoMateriales.close();
 }
 
-void escribirNuevoArchivoMateriales() {
+void escribirNuevoArchivoUbicaciones() {
 	fstream archivoUbicaciones(PATH_UBICACIONES, ios::out);
-	archivoUbicaciones << endl;
 	archivoUbicaciones.close();
 }

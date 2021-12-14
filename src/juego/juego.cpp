@@ -40,9 +40,8 @@ Juego::Juego () {
 
 // Destructor
 Juego::~Juego() {
-	cerrarUbicaciones();
-	cerrarMateriales();	
-	//cerrarMapa();
+	partidaGanada ? escribirNuevoArchivoMateriales() : cerrarMateriales();
+	partidaGanada ? escribirNuevoArchivoUbicaciones() : cerrarUbicaciones();
 	for(int i = 0; i < 2; i++)
 		delete jugadores[i];
 	delete[] jugadores;
@@ -112,11 +111,10 @@ void Juego::leerMateriales() {
 			material = new Material;
 			*material = Material(nombre, stoi(cantidadMaterialJugador2));
 			jugadores[1] -> agregarMaterial(material, cantidadMateriales);
-
 			cantidadMateriales++;
 		}
-		archivoMateriales.close();
-	}	
+	}
+	archivoMateriales.close();
 }
 
 void Juego::cerrarMateriales() {
@@ -507,3 +505,10 @@ void Juego::modificarEdificio(std::string nombre, string material, int nuevoValo
 }
 
 
+void Juego::seGanoLaPartida(bool ganada){
+	partidaGanada |= ganada;
+}
+
+bool Juego::seGanoLaPartida(){
+	return partidaGanada;
+}

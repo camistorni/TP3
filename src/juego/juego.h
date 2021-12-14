@@ -26,6 +26,7 @@ class Juego{
 		int jugadorActivo;
 		int cantidadEdificios, cantidadMateriales;
 		bool partidaNueva;
+		bool partidaGanada;
 
 		//int cantidadMateriales, cantidadEdificios, cantidadUbicaciones;
 	
@@ -191,6 +192,9 @@ class Juego{
 		// Pre: -
 		// Post: Modifica los valores necesarios para construir un edificio
 		void modificarEdificio(std::string nombre, string material, int nuevoValor);		
+
+		void seGanoLaPartida(bool ganada);
+		bool seGanoLaPartida();
 };
 
 #endif
