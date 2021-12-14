@@ -21,7 +21,7 @@ void Casillero::setearCaracter(char caracter) {
 }		
 
 char Casillero::obtenerCaracter() {
-    return (jugador != -1) ? (jugador ? '2' : '1') : caracter;
+    return caracter;
 }	
 
 void Casillero::setearColor(std::string color) {
@@ -41,6 +41,7 @@ int Casillero::obtenerEnergia(int jugadorActivo) {
 }
 
 void Casillero::setearJugador(int jugador) {
+    setearCaracter(jugador == 0 ? CARACTER_JUGADOR1 : CARACTER_JUGADOR2);
     this -> jugador = jugador;
 }
 
@@ -48,6 +49,7 @@ int Casillero::obtenerJugador() {
     return jugador;
 }
 
-void Casillero::removerJugador(int jugador) {
-    jugador = CARACTER_VACIO;
+void Casillero::removerJugador() {
+    caracter = CARACTER_VACIO;
+    jugador = -1;
 }

@@ -72,6 +72,8 @@ class Mapa{
 		// Pre: un numero mayor a 0
 		// Post: devuelve un numero entre el limite y 0
 		void pedirCoordenada(int &fila, int &columna);
+
+		bool colocarJugador(int fila, int columna, int jugador);
 };
 
 #endif //MAPA_H

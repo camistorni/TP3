@@ -133,7 +133,9 @@ class Juego{
 		
 		// Pre: -
 		// Post: Imprime el camino minimo ingresado
-		void mostrarCaminoMinimo(string origen, string destino, int *energia);
+		bool mostrarCaminoMinimo(string origen, string destino, int *energia);
+
+		bool verificarCoordenadasMinimas(int fila, int columna);
 		
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------

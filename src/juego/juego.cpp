@@ -32,6 +32,7 @@ Juego::Juego () {
 	cantidadMateriales = 0;
 	jugadorActivo = -1;
 	partidaNueva = false;
+	partidaGanada = false;
 	leerMateriales();
 	leerOpcionesEdificios();
 	leerMapa();
@@ -40,8 +41,8 @@ Juego::Juego () {
 
 // Destructor
 Juego::~Juego() {
-	partidaGanada ? escribirNuevoArchivoMateriales() : cerrarMateriales();
 	partidaGanada ? escribirNuevoArchivoUbicaciones() : cerrarUbicaciones();
+	partidaGanada ? escribirNuevoArchivoMateriales() : cerrarMateriales();	
 	for(int i = 0; i < 2; i++)
 		delete jugadores[i];
 	delete[] jugadores;
@@ -111,10 +112,11 @@ void Juego::leerMateriales() {
 			material = new Material;
 			*material = Material(nombre, stoi(cantidadMaterialJugador2));
 			jugadores[1] -> agregarMaterial(material, cantidadMateriales);
+
 			cantidadMateriales++;
 		}
-	}
-	archivoMateriales.close();
+		archivoMateriales.close();
+	}	
 }
 
 void Juego::cerrarMateriales() {
@@ -239,12 +241,10 @@ void Juego::leerUbicaciones() {
 void Juego::cerrarUbicaciones() {
 
 	ofstream archivoUbicaciones(PATH_UBICACIONES);
-	
 	for(int i = 0; i < mapa -> obtenerCantidadFilas(); i++) {
 		for(int j = 0; j < mapa -> obtenerCantidadColumnas(); j++)
 			guardarMateriales(archivoUbicaciones, this, i, j);
 	}
-	
 	//jugador 1
 	archivoUbicaciones << '1';
 	int filaJugador1 = 0, columnaJugador1 = 0;
@@ -266,7 +266,6 @@ void Juego::cerrarUbicaciones() {
 		for(int j = 0; j < mapa -> obtenerCantidadColumnas(); j++)
 			guardarEdificios(archivoUbicaciones, this, i, j, 1);
 	}
-	
 	archivoUbicaciones.close();
 }
 
@@ -297,7 +296,6 @@ void Juego::leerMapa() {
 	this->mapa = mapa;
 	archivoMapa.close();
 }
-
 bool Juego::verificarCoordenadas(int fila, int columna) {
 	bool error = false;
 	if(fila < 0 || fila >= mapa -> obtenerCantidadFilas()){
@@ -316,6 +314,24 @@ bool Juego::verificarCoordenadas(int fila, int columna) {
 	return error;
 }
 
+bool Juego::verificarCoordenadasMinimas(int fila, int columna){
+	bool error = true;
+	if(fila < 0 || fila > mapa -> obtenerCantidadFilas()){
+		cout << "La fila " << fila << " ingresada está fuera de rango" << endl;
+		error = false;
+	} else if(columna < 0 || columna > mapa -> obtenerCantidadColumnas()){
+		cout << "La columna " << columna << " ingresada está fuera de rango" << endl;
+		error = false;
+	} else if(mapa -> obtenerCasillero(fila, columna)->obtenerCaracter() != CARACTER_VACIO && mapa -> obtenerCasillero(fila, columna)->obtenerTipo() == TERRENO){
+		cout << "El casillero (" << fila << "," << columna << ") está ocupado por un edificio" << endl;
+		error = false;
+	}
+	else if(mapa -> obtenerCasillero(fila, columna)->obtenerJugador() != -1){
+		cout << "El casillero (" << fila << "," << columna << ") está ocupado por un jugador" << endl;
+		error = false;
+	}
+	return error;
+}
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 // Métodos para el grafo
@@ -338,8 +354,8 @@ void Juego::crearCaminos() {
 	
 	crearVertices(filas, columnas);
 	
-	for(int i = 0; i < filas; i++){
-		for(int j = 0; j < columnas; j++){
+	for(int j = 0; j < filas; j++){
+		for(int i = 0; i < columnas; i++){
 			string coordX = to_string(j);
 			string coordY = to_string(i);
 			string coordActual = coordX + ',' + coordY;
@@ -358,21 +374,22 @@ void Juego::crearCaminos() {
 
 			int derechaX = j + 1;
 			int derechaY = i;
-			string derecha = to_string(derechaX) + ',' +to_string(derechaY);
+			string derecha = to_string(derechaX) + ',' + to_string(derechaY);
 			
 			grafo->agregarCamino(coordActual, coordActual, 0);
 			
 			if(izquierdaX > 0)
-				this->grafo->agregarCamino(coordActual, izquierda, valoresCaminos(izquierdaX, izquierdaY));
+				this->grafo->agregarCamino(coordActual, izquierda, valoresCaminos(j, i));
 				
 			if (arribaY > 0)
-				this->grafo->agregarCamino(coordActual, arriba, valoresCaminos(arribaX, arribaY));
+				this->grafo->agregarCamino(coordActual, arriba, valoresCaminos(j, i));
 				
 			if(derechaX < columnas)
-				this->grafo->agregarCamino(coordActual, derecha, valoresCaminos(derechaX, derechaY));
+				this->grafo->agregarCamino(coordActual, derecha, valoresCaminos(j, i));
 				
 			if(abajoY < filas)
-				this->grafo->agregarCamino(coordActual, abajo, valoresCaminos(abajoX, abajoY));
+				this->grafo->agregarCamino(coordActual, abajo, valoresCaminos(j, i));
+				
 		}
 	}
 }
@@ -380,7 +397,7 @@ void Juego::crearCaminos() {
 int Juego::valoresCaminos(int x, int y) {
 	
 	char casillero = this->obtenerMapa()->obtenerCasillero(x, y)->obtenerTipo();
- 
+
 	if(casillero == 'C')
 		return 4;
 		
@@ -396,17 +413,37 @@ int Juego::valoresCaminos(int x, int y) {
 	return 0;
 }
 
-void Juego::mostrarCaminoMinimo(string origen, string destino, int *energia) {
+
+bool Juego::mostrarCaminoMinimo(string origen, string destino, int *energia) {
 	const char* destino2 = destino.c_str();
 	int destinoX = destino2[0] - '0';
 	int destinoY = destino2[2] - '0';
 	
-	if(verificarCoordenadas(destinoX, destinoY)) {
+	if(verificarCoordenadasMinimas(destinoX, destinoY)) {
+		string *camino = new string;
+		int tamano = 0;
 		grafo -> usarDijkstra();
-		grafo -> caminoMinimo(origen, destino, energia);	
-	}
-}
+		grafo -> caminoMinimo(origen, destino, energia);
 
+		for (int i = 0; i < tamano; i++)
+			cout << camino << endl;
+		
+		for(int i = 0; i < tamano; i++){
+			const char *camino2 = camino[i].c_str();
+			int caminoX = camino2[0] - '0';
+			int caminoY = camino2[2] - '0';
+			if(this -> obtenerMapa() -> obtenerCasillero(caminoX, caminoY) -> obtenerTipo() == CAMINO){
+				if(static_cast<CasilleroTransitable*>(this -> obtenerMapa() -> obtenerCasillero(caminoX, caminoY)) -> hayMaterialDepositado()){
+					Material *material = static_cast<CasilleroTransitable*>(this -> obtenerMapa() -> obtenerCasillero(caminoX, caminoY)) -> recolectarMaterial();
+					obtenerJugador() -> buscarMaterial(material -> obtenerNombreMaterial()) -> modificarCantidad(material -> obtenerCantidadMaterial());
+					delete material;
+				}
+			}	
+		}
+		return true;	
+	}
+	return false;
+}
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 // Métodos
@@ -453,16 +490,15 @@ void Juego::lluviaElementos() {
 	}
 	shuffleString(bolsas, asignados);
 	for (int i = 0; i < asignados; i++)
-		if (bolsas[i] != MATERIAL_NULO)
-			casillerosDisponibles[i] -> depositarMaterial(new Material(bolsas[i], valoresLluvia(bolsas[i])));
-	delete[] bolsas;
-	delete[] casillerosDisponibles;
+		if (bolsas[i] != MATERIAL_NULO) {
+			CasilleroTransitable* casillero = casillerosDisponibles[i];
+			casillero -> depositarMaterial(new Material(bolsas[i], valoresLluvia(bolsas[i])));
+		}
 }
 
 void Juego::modificarEdificio(std::string nombre, string material, int nuevoValor){
 	abb -> buscar(nombre) -> modificarMaterial(material, nuevoValor);
 }
-
 
 void Juego::seGanoLaPartida(bool ganada){
 	partidaGanada |= ganada;

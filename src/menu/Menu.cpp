@@ -84,37 +84,25 @@ void Menu::modificarEdificioPorNombre() {
 }
 
 void Menu::comenzarPartida() {
-	seleccionarJugador();
-	solicitarCoordenadas();
-
-	if(juego -> obtenerJugadorActivo() == 0)
-		juego -> establecerJugadorActivo(1);
-	else 
-		juego -> establecerJugadorActivo(0);
-
-	solicitarCoordenadas();
-
+	int fila = -1, columna = -1;
 	elegirJugador();
+	for (int i = 0; i < 2; i++){
+		cout << "Elija las cooedenadas del Jugador" << i + 1 << endl; 
+		juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
+		while(!juego -> obtenerMapa() -> colocarJugador(fila, columna, i)){
+			cout << "El otro jugador ya se encuentra en ese casillero, por favor elija otro" << endl; 
+			juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
+		}
+	}
 }
 
 void Menu::elegirJugador() {
 	juego -> establecerJugadorActivo(rand() % 2);
 }
 
-void Menu::seleccionarJugador() {
-	int opcion;
-	cout << "¿Que jugador desea ser? Seleccione 1 o 2" << endl;
-	cin >> opcion;
-	while(opcion != 1 && opcion != 2) {
-		cout << "La opcion ingresada es incorrecta, por favor ingrese nuevamente." << endl;
-		cin >> opcion;
-	}
-	juego -> establecerJugadorActivo(opcion - 1);
-}
-
 void Menu::solicitarCoordenadas() {
 	int fila = -1, columna = -1;
-	juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
+	juego -> obtenerMapa() -> pedirCoordenada(fila, columna); 
 	while(juego -> verificarCoordenadas(fila, columna) == false)
 		juego -> obtenerMapa() -> pedirCoordenada(fila, columna);
 }
@@ -541,25 +529,27 @@ void Menu::mostrarProgresoObjetivos(int objetivos) {
 }
 
 void Menu::moverseAUnaCoordenada(Juego *juego) {
-	string coordenada;
-	int xCoord = 0, yCoord = 0, energiaGastada = 0;
+	int xCoord = -1, yCoord = -1, energiaGastada = 0;
 	
 	juego -> crearCaminos();
-	cout << "Ingrese la coordenada a la que desea moverse (ej: 0,1): ";
-	cin >> coordenada;
+	juego -> obtenerMapa() -> pedirCoordenada(xCoord, yCoord);
+	string nuevaCoordenada = to_string(xCoord) + "," + to_string(yCoord);
 	string posicionActual = juego -> obtenerMapa() -> obtenerPosicionJugador(juego -> obtenerJugadorActivo());
-	cout << "Posicion Actual: " << posicionActual << endl << endl;
-	juego -> mostrarCaminoMinimo(posicionActual, coordenada, &energiaGastada);
+	cout << "Posicion Actual: (" << posicionActual << ")" << endl << endl;
+	juego -> mostrarCaminoMinimo(posicionActual, nuevaCoordenada, &energiaGastada);
 	cout << endl;
 	
 	if(juego -> obtenerJugador() -> obtenerEnergia() >= energiaGastada){
-		xCoord = stoi(&coordenada[0]);
-		yCoord = stoi(&coordenada[2]);
-		juego -> obtenerMapa() -> obtenerCasillero(stoi(&posicionActual[0]), stoi(&posicionActual[2])) -> removerJugador(juego -> obtenerJugadorActivo());
+
+		xCoord = stoi(&nuevaCoordenada[0]);
+		yCoord = stoi(&nuevaCoordenada[2]);
+		juego -> obtenerMapa() -> obtenerCasillero(stoi(&posicionActual[0]), stoi(&posicionActual[2])) -> removerJugador();
 		juego -> obtenerMapa() -> obtenerCasillero(xCoord, yCoord) -> setearJugador(juego -> obtenerJugadorActivo());
 		juego -> obtenerJugador() -> restarEnergia(energiaGastada);
 	}
 	else{
+	cout << "3" << endl;
+
 		int opcion = 0;
 		cout << "No tiene suficiente energía para completar esta acción. Puede elegir otra coordenada(1) o volver al menú(2)" << endl;
 		cout << "Ingrese la opción elegida: ";

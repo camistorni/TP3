@@ -188,8 +188,8 @@ void Mapa::pedirCoordenada(int &fila, int &columna){
 	cout  << endl;
 	while (fila > cantidadFilas || fila < 0 || columna > cantidadColumnas || columna < 0){
 		cout << "Coordenada incorrecta" << endl;
-		cout << "Ingrese la coordenada nuevamente -> fil ( 0 - " << cantidadFilas << ")" << endl;
-		cout << "                                 -> col ( 0 - " << cantidadColumnas << ")" << endl;
+		cout << "Ingrese la coordenada nuevamente -> fil ( 0 - " << cantidadFilas - 1 << ")" << endl;
+		cout << "                                 -> col ( 0 - " << cantidadColumnas -1 << ")" << endl;
 		cout << "fila ->  ";
 		cin >> fila;
 		cout << "columna ->  ";
@@ -197,3 +197,17 @@ void Mapa::pedirCoordenada(int &fila, int &columna){
 	}
 
 }
+
+bool Mapa::colocarJugador(int fila, int columna, int jugador){
+	bool sePudoColocar = true;
+	if((casilleros[fila][columna] -> obtenerTipo() == TERRENO) &&
+		(casilleros[fila][columna] -> obtenerCaracter() != CARACTER_VACIO) 
+	){
+		sePudoColocar = false;
+	} else {
+		casilleros[fila][columna] -> setearJugador(jugador);
+	}
+		
+	return sePudoColocar;
+}
+
