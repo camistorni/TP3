@@ -1,7 +1,0 @@
-del menú (no funcionan):
-2. listar mis edificios construido
-7. consultar....
-9. objetivos ( ver el progreso y que ganes el juego cuando los cumplas) - casi listo
-11. moverse a una coordenada (falta recolectar los recursos del camino y restar la energia)
-
-y las funciones de guardado, la de ubicaciones seguro, no me acuerdo si falta otra

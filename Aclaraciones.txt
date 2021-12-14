@@ -1,0 +1,19 @@
+Aclaraciones:
+
+Inicialmente estabamos trabajando con branchs y haciendo push a main. Accidentalmente pusheamos un commit a main con un error grave que no pudimos revertir, por lo que pasamos a trabajar en un nuevo branch que se llama master. El programa final se encuentra en este branch (master).
+
+Hay un makefile con todos los archivos, a continuacion se detalla como usarlo:
+-) Para compilar el programa correr:
+	make
+-) Para ejecutar el programa correr:
+	make run
+-) Para correr valgrind correr:
+	make valgrind
+
+El archivo del diagrama UML se encuentra subido a GIT con el nombre: "UML TP3.pdf", en un branch llamado UML (solo mirar este branch para ver el UML, los push y commits se encuentran en master)
+
+Se pueden ingresar nombres con solamente dos palabaras (por ejemplo: "mina oro", "planta electrica"), el programa no se encuentra preparado para nombres de edificios que posean más de dos palabras. 
+
+Para las coordenadas (ya sea ingresarlas o mostrar en el mapa) se tomaron filas y columnas, siendo filas los casilleros horizontales y columnas los verticales.
+
+Los recursos producidos en la lluvia de elementos serán recolectados por el método de recolectar recursos.

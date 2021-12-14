@@ -459,6 +459,12 @@ void Juego::recolectarRecursos(){
 					cout << "Se recolectaron " << cantidad << " de " << nombre << endl;
 					jugadores[jugadorActivo] -> buscarMaterial(nombre) -> modificarCantidad(cantidad);
 				}
+			} else if ((casillero -> obtenerTipo() != LAGO) &&
+				static_cast<CasilleroTransitable*>(casillero)-> hayMaterialDepositado()
+			){
+				Material* material = static_cast<CasilleroTransitable*>(casillero) -> recolectarMaterial();
+				obtenerJugador() -> buscarMaterial(material -> obtenerNombreMaterial()) -> modificarCantidad(material -> obtenerCantidadMaterial());
+				delete material;
 			}
 		}
 	}
