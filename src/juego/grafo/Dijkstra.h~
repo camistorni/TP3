@@ -29,7 +29,7 @@ private:
 
     // Pre: para que tenga sentido, debe ejecutarse un recorrido previamente
     // Post: muestra por pantalla el resultado del recorrido.
-    void mostrarRecorrido(int origen, int destino, int *energia);
+    void mostrarRecorrido(int origen, int destino, int *energia, string *camino);
 
     // Post: muestra el estado instantaneo del vector de recorrido, distancia y visitados.
     void mostrarIteracion(int iteracion);
@@ -37,7 +37,7 @@ public:
     Dijkstra(Lista<Vertice> * vertices, int ** matrizAdyacencia);
 
     // Post: muestra por pantalla el camino mínimo entre el origen y el destino, detallando su recorrido y peso
-    void caminoMinimo(int origen, int destino) override;
+    void caminoMinimo(int origen, int destino, int *energia, string *camino) override;
 
     ~Dijkstra() override;
 

@@ -175,6 +175,7 @@ class Juego{
 		//Postcondiciones: Imprime los edificios construidos
 		void listarEdificiosConstruidos();
 		
+		bool verificarCoordenadasMinimas(int fila, int columna);
 };
 
 #endif

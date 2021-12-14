@@ -1,0 +1,183 @@
+#include <fstream>
+#include "utils.h"
+#include "../../mapa/casilleros/casilleroConstruible/casilleroConstruible.h"
+
+
+void shuffleString(string* vector, int largo){
+	for (int i = 0; i < largo; i++)
+		swap(vector[i], vector[rand()%largo]);
+}
+
+void shuffleInt(int* vector, int largo){
+	for (int i = 0; i < largo; i++)
+		swap(vector[i], vector[rand()%largo]);
+}
+
+int valoresLluvia(string material){
+	int valor;
+	if(material == PIEDRA){
+		valor = 100;
+	} else if(material == MADERA){
+		valor = 50;
+	} else if(material == METAL){
+		valor = 50;
+	} else if(material == ANDYCOINS){
+		valor = 250;
+	}
+	return valor;
+}
+
+void imprimirMensajeError(string nombre_edificio, string material, int cantidad, int cantidadNecesaria){
+	cout << "No hay suficiente " << material << "." << endl;
+	cout << "Hay " << cantidad << " " << material << " disponibles. Se necesitan "<< cantidadNecesaria << " para construir " << nombre_edificio << endl << endl;
+};
+
+void leerCoordenadas(ifstream& archivoUbicaciones, int* fila, int* columna) {
+	char aux;
+    archivoUbicaciones >> aux;
+    archivoUbicaciones >> *fila;
+    archivoUbicaciones >> aux;
+    archivoUbicaciones >> *columna;
+    archivoUbicaciones >> aux;
+}
+
+void guardarCoordenadas(ofstream &archivoUbicaciones, int fila, int columna){
+    archivoUbicaciones << " (";
+    archivoUbicaciones << fila;
+    archivoUbicaciones << ", ";
+    archivoUbicaciones << columna;
+    archivoUbicaciones << ')';
+    archivoUbicaciones << endl;
+}
+
+void guardarMateriales(ofstream &archivoUbicaciones, Juego *juego, int fila, int columna){
+
+	if(juego -> obtenerMapa() -> obtenerCasillero(fila, columna) -> obtenerCaracter() == CARACTER_MADERA){
+		archivoUbicaciones << MADERA;
+		guardarCoordenadas(archivoUbicaciones, fila, columna);
+	}
+	if(juego -> obtenerMapa() -> obtenerCasillero(fila, columna) -> obtenerCaracter() == CARACTER_PIEDRA){
+		archivoUbicaciones << PIEDRA;
+		guardarCoordenadas(archivoUbicaciones, fila, columna);
+	}
+	if(juego -> obtenerMapa() -> obtenerCasillero(fila, columna) -> obtenerCaracter() == CARACTER_METAL){
+		archivoUbicaciones << METAL;
+		guardarCoordenadas(archivoUbicaciones, fila, columna);
+	}
+	if(juego -> obtenerMapa() -> obtenerCasillero(fila, columna) -> obtenerCaracter() == CARACTER_ANDYCOINS){
+		archivoUbicaciones << ANDYCOINS;
+		guardarCoordenadas(archivoUbicaciones, fila, columna);
+	}
+}
+
+void colocarMateriales (ifstream& archivoUbicaciones, Mapa* mapa) {
+	cout << "Materiales:" << endl;
+	int fila, columna;
+	std::string nombre;
+	while(archivoUbicaciones >> nombre && nombre != "1"){
+    	leerCoordenadas(archivoUbicaciones, &fila, &columna);
+		Casillero* casillero = mapa -> obtenerCasillero(fila, columna);
+		char tipo = casillero -> obtenerTipo();
+		if (tipo != CAMINO && tipo != BETUN && tipo != MUELLE){
+			cout << "No se puede colocar " << nombre << " en el terreno de la posición (" << fila << ", " << columna << ")" << endl;
+		} else {
+			if (casillero -> obtenerCaracter() != CARACTER_VACIO){
+				cout << "No se puede colocar " << nombre << " en la posición (" << fila << ", " << columna << "), esta ya está ocupada " << endl;
+			} else {
+				cout << "Se agregó " << nombre << " en la posición (" << fila << ", " << columna << ")" << endl;
+				Material* material = new Material(nombre, 1);
+				static_cast<CasilleroTransitable *>(casillero) -> depositarMaterial(material);
+			}
+		}
+    }
+}
+
+void colocarJugador (ifstream& archivoUbicaciones, Mapa* mapa, int jugador) {
+	int fila, columna;
+    leerCoordenadas(archivoUbicaciones, &fila, &columna);
+	Casillero* casillero = mapa -> obtenerCasillero(fila, columna);
+	if (casillero -> obtenerCaracter() == CARACTER_VACIO){
+		cout << "Se colocó al Jugador " << jugador + 1 << " en la posición (" << fila << ", " << columna << ")" << endl;
+		casillero -> setearJugador(jugador);
+	} else {
+		cout << "No se pudo colocar al Jugador " << jugador + 1 << " en la posición (" << fila << ", " << columna << ") ya que esta está ocupada." << endl;
+	}
+}
+
+void colocarEdificiosJugador (ifstream& archivoUbicaciones, Juego* juego, int jugador) {
+	int fila, columna;
+	std::string nombre;
+	while(archivoUbicaciones >> nombre && nombre != "2"){
+    	leerCoordenadas(archivoUbicaciones, &fila, &columna);
+		Casillero* casillero = juego -> obtenerMapa() -> obtenerCasillero(fila, columna);
+		char tipo = casillero -> obtenerTipo();
+		if (tipo != TERRENO){
+			cout << "No se puede colocar " << nombre << " en el terreno de la posición (" << fila << ", " << columna << ")" << endl;
+		} else {
+			if (casillero -> obtenerCaracter() != CARACTER_VACIO){
+				cout << "No se puede colocar " << nombre << " en la posición (" << fila << ", " << columna << "), esta ya está ocupada "<< endl;
+			} else {
+				static_cast<CasilleroConstruible*>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> agregarEdifico(nombre, jugador);
+				cout << "Se agregó " << nombre << " en la posición (" << fila << ", " << columna << ") para el Jugador " << jugador + 1 << endl;
+				agregarEdificio(juego, nombre);
+			}
+		}
+    }
+}
+
+void agregarEdificio(Juego* juego, string nombre) {
+	if(nombre == MINA)
+		juego -> obtenerJugador() -> construirMina(true);
+	else if(nombre == ASERRADERO)
+		juego -> obtenerJugador() -> construirAserradero(true);
+	else if(nombre == FABRICA)
+		juego -> obtenerJugador() -> construirFabrica(true);
+	else if(nombre == ESCUELA)
+		juego -> obtenerJugador() -> construirEscuela(true);
+	else if(nombre == PLANTA_ELECTRICA)
+		juego -> obtenerJugador() -> construirPlantaElectrica(true);
+	else if(nombre == MINA_ORO)
+		juego -> obtenerJugador() -> construirMinaOro(true);
+}
+
+void guardarEdificios(ofstream &archivoUbicaciones, Juego *juego, int fila, int columna, int jugador){
+	
+	char caracter = juego -> obtenerMapa() -> obtenerCasillero(fila, columna) -> obtenerCaracter();
+	cout << "caracter: " << caracter << "\t" << "propietario: " << static_cast<CasilleroConstruible*>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> obtenerPropietarioEdificio() << endl;
+	if(juego -> obtenerMapa() -> obtenerCasillero(fila, columna) -> obtenerTipo() == TERRENO){
+		if(static_cast<CasilleroConstruible*>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> obtenerPropietarioEdificio() == jugador){
+			if(caracter == CARACTER_MINA){
+				archivoUbicaciones << MINA;
+				guardarCoordenadas(archivoUbicaciones, fila, columna);
+			}
+			if(caracter == CARACTER_MINA_ORO){
+				archivoUbicaciones << MINA_ORO;
+				guardarCoordenadas(archivoUbicaciones, fila, columna);
+			}
+			if(caracter == CARACTER_ASERRADERO){
+				archivoUbicaciones << ASERRADERO;
+				guardarCoordenadas(archivoUbicaciones, fila, columna);
+			}
+			if(caracter == CARACTER_FABRICA){
+				archivoUbicaciones << FABRICA;
+				guardarCoordenadas(archivoUbicaciones, fila, columna);
+			}
+			if(caracter == CARACTER_ESCUELA){
+				archivoUbicaciones << ESCUELA;
+				guardarCoordenadas(archivoUbicaciones, fila, columna);
+			}
+			if(caracter == CARACTER_OBELISCO){
+				archivoUbicaciones << OBELISCO;
+				guardarCoordenadas(archivoUbicaciones, fila, columna);
+			}
+			if(caracter == CARACTER_plantaElectrica){
+				archivoUbicaciones << PLANTA_ELECTRICA;
+				guardarCoordenadas(archivoUbicaciones, fila, columna);
+			}
+		}
+	}	
+}
+
+bool isEmpty(ifstream& pFile) {
+    return pFile.peek() == std::ifstream::traits_type::eof();
+}

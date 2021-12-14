@@ -23,10 +23,6 @@ void Menu::iniciarJuego() {
 		validarOpcionSeleccionada(opcion);
 		//system(CLR_SCREEN);
 		procesarOpciones(opcion);
-		if(chequearObjetivos()) {
-			partidaGanada(&opcion);
-			juego -> esPartidaGanada(true);
-		}
 	}
 }
 
@@ -158,7 +154,7 @@ void Menu::procesarOpcionesSubmenu(int& opcion) {
 			break;
 
 		case JUGADOR_LISTAR_MIS_EDIFICIOS_CONSTRUIDOS:
-			listarEdificiosConstruidos();
+			//juego -> listarEdificiosConstruidos();
 			break;
 
 		case JUGADOR_DEMOLER_EDIFICIO_POR_COORDENADA:
@@ -224,6 +220,10 @@ void Menu::procesarOpcionesSubmenu(int& opcion) {
 		case JUGADOR_GUARDAR_Y_SALIR:
 			break;
     }
+
+	if(chequearObjetivos())	{
+		partidaGanada();
+	}
 }
 
 void Menu::mostrarInformacion() {
@@ -235,12 +235,11 @@ void Menu::mostrarInformacion() {
 }
 
 void Menu::construirEdificioPorNombre() {
-	string nombreIngresado;
+	string nombreIngresado = "";
 	int piedraNecesaria, maderaNecesaria, metalNecesario;
 	cout << "Ingrese el nombre del edifico que desea construir." << endl;
-	cin.ignore();
-	getline(cin, nombreIngresado);
-
+	cin >> nombreIngresado;
+	//Verifica que el edificio ingresado exista
 	if(juego -> verificarEdificio(nombreIngresado, &piedraNecesaria, &maderaNecesaria, &metalNecesario))
 		return;	
 	
@@ -263,7 +262,7 @@ void Menu::construirEdificioPorNombre() {
 
 void Menu::construirEdificio(int fila, int columna, string nombreIngresado, int piedraNecesaria, int maderaNecesaria, int metalNecesario) {
 	cout << "El edificio ha sido construido correctamente" << endl << endl;
-	static_cast<CasilleroConstruible *>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> agregarEdifico(nombreIngresado, juego);
+	static_cast<CasilleroConstruible *>(juego -> obtenerMapa() -> obtenerCasillero(fila, columna)) -> agregarEdifico(nombreIngresado, juego -> obtenerJugadorActivo());
 	juego -> obtenerJugador() -> buscarMaterial(PIEDRA) -> modificarCantidad(-piedraNecesaria);
 	juego -> obtenerJugador() -> buscarMaterial(MADERA) -> modificarCantidad(-maderaNecesaria);
 	juego -> obtenerJugador() -> buscarMaterial(METAL) -> modificarCantidad(-metalNecesario);
@@ -299,25 +298,8 @@ void Menu::setearEdificios(string nombreIngresado, bool construido) {
 	else if(nombreIngresado == OBELISCO)
 		juego -> obtenerJugador() -> construirObelisco(construido);
 }
- 
-void Menu::listarEdificiosConstruidos() {
-	Casillero* casillero;
-	cout << "Lista de edificios:" << endl << endl;
-	cout << "            ══════════════════════════════════" << endl;
-	cout << "             Nombre\t\tUbicacion              " << endl;
-	cout << "            ══════════════════════════════════" << endl;
-	
-	for(int fila = 0; fila < juego -> obtenerMapa() -> obtenerCantidadFilas(); fila++) {
-		for(int columna = 0; columna < juego -> obtenerMapa() -> obtenerCantidadColumnas(); columna++) {
-			casillero = juego -> obtenerMapa() -> obtenerCasillero(fila, columna);
-			if((casillero -> obtenerTipo() == TERRENO) && (casillero -> obtenerCaracter() != CARACTER_VACIO)
-			&& static_cast<CasilleroConstruible *>(casillero) -> obtenerPropietarioEdificio() == juego -> obtenerJugadorActivo()) {
-				cout << "             " << static_cast<CasilleroConstruible *>(casillero) -> obtenerEdificio() << " \t\t (" << fila << ", " << columna << ")" << endl;
-			}
-		}
-	}
-	cout << endl;
-}
+
+// Aca va el metodo para listar los edificios 
 
 void Menu::demolerEdificioPorCoordenada() {
 	int fila, columna;
@@ -395,6 +377,7 @@ void Menu::atacarEdificioPorCoordenada() {
 }
 
 void Menu::repararEdificioPorCoordenada() {
+	
 	int fila, columna;
 	cout << "¿Qué edificio desea reparar? Ingrese la primer coordenada: ";
 	cin >> fila;
@@ -462,8 +445,8 @@ void Menu::comprarBomba() {
 		juego -> obtenerJugador() -> buscarMaterial("bombas") -> establecerCantidad(cantidadActualBombas + cantidad);
 		juego -> obtenerJugador() -> aumentarBombasCompradas(cantidad);
 		cout << "Ud adquirio " << cantidad << " de bombas" << endl;
-		juego -> obtenerJugador() -> modificarEnergia(ENERGIA_POR_COMPRAR_BOMBA);
 		cout << "Ahora cuenta con " << cantidadAndycoins << " de andycoins" << endl;
+		juego -> obtenerJugador() -> modificarEnergia(ENERGIA_POR_COMPRAR_BOMBA);
 	}
 }
 
@@ -501,60 +484,57 @@ void Menu::mostrarObjetivos() {
 	int* objetivosJugador = juego -> obtenerJugador() -> obtenerObjetivos();
 	for(int i = 0; i < CANTIDAD_OBJETIVOS; i++) {
 		cout << OBJETIVOS[objetivosJugador[i]] << ": " ;
-		mostrarProgresoObjetivos(objetivosJugador[i]);
+		mostrarProgresoObjetivos(i);
 	}
 }
 
-void Menu::mostrarProgresoObjetivos(int objetivos) {
-	switch(objetivos) {
+void Menu::mostrarProgresoObjetivos(int i) {
+	int* objetivosJugador = juego -> obtenerJugador() -> obtenerObjetivos();
+	switch(objetivosJugador[i]) {
 		case COMPRAR_ANDYPOLIS: 
-			cout << (juego -> obtenerJugador() -> comprarAndypolis() ? MJE_CUMPLIDO : (to_string(juego -> obtenerJugador() -> 
-			obtenerAndycoinsRecolectadas()) + " / " + to_string(CANTIDAD_ANDYCOINS_COMPRAR_ANDYPOLIS))) << endl;
+			cout << juego -> obtenerJugador() -> buscarMaterial(ANDYCOINS) -> obtenerCantidadMaterial() 
+			<< " / " << CANTIDAD_ANDYCOINS_COMPRAR_ANDYPOLIS << endl;
 			break;
 		
 		case EDAD_DE_PIEDRA:
-			cout << (juego -> obtenerJugador() -> edadDePiedra() ? MJE_CUMPLIDO : (to_string(juego -> obtenerJugador() -> 
-			buscarMaterial(PIEDRA) -> obtenerCantidadMaterial()) + " / " + to_string(CANTIDAD_EDAD_DE_PIEDRA))) << endl;
+			cout << juego -> obtenerJugador() -> buscarMaterial(PIEDRA) -> obtenerCantidadMaterial() 
+			<< " / " << CANTIDAD_EDAD_DE_PIEDRA << endl;
 			break;
 
 		case BOMBARDERO:
-			cout << (juego -> obtenerJugador() -> bombardero() ? MJE_CUMPLIDO : (to_string(juego -> 
-			obtenerJugador() -> obtenerCantidadBombasUsadas()) + " / " + to_string(CANTIDAD_BOMBARDERO))) << endl;
+			cout << juego -> obtenerJugador() -> obtenerCantidadBombasUsadas() <<
+			" / " << CANTIDAD_BOMBARDERO << endl;
 			break;
 
 		case ENERGETICO:
-			cout << (juego -> obtenerJugador() -> energetico() ? MJE_CUMPLIDO : (to_string(juego -> obtenerJugador() -> 
-			obtenerEnergia()) + " / " + to_string(CANTIDAD_MAXIMA_ENERGIA))) << endl;
+			cout << juego -> obtenerJugador() -> obtenerEnergia() << " / " << CANTIDAD_MAXIMA_ENERGIA << endl;
 			break;
 
 		case LETRADO:
-			//cout << (juego -> obtenerJugador() -> letrado() ? MJE_CUMPLIDO : (to_string(juego -> obtenerJugador() ->
-			//obtenerCantidadEscuelasConstruidas()) + " / " + to_string(juego -> obtenerAbb() -> buscar(ESCUELA) -> obtenerMaximoConstruible))) << endl;
+			cout << juego -> obtenerJugador() -> obtenerCantidadEscuelasConstruidas() << " / " << 
+			juego -> obtenerAbb() -> buscar(ESCUELA) -> obtenerMaximoConstruible() << endl;
 			break;
 
 		case MINERO:
-			cout << (juego -> obtenerJugador() -> minero() ? MJE_CUMPLIDO : (to_string(contarMinasConstruidas()) + 
-			" / 2" )) << endl;
+			cout << contarMinasConstruidas() << " / 2" << endl;
 			break;
 
 		case CANSADO:
-			cout << (juego -> obtenerJugador() -> cansado() ? MJE_CUMPLIDO : to_string(juego -> obtenerJugador() ->
-			obtenerEnergia()) + " / " + to_string(CANTIDAD_MINIMA_ENERGIA)) << endl;
+			cout << juego -> obtenerJugador() -> obtenerEnergia() << " / " << CANTIDAD_MINIMA_ENERGIA << endl;
 			break;
 		
 		case CONSTRUCTOR:
-			cout << (juego -> obtenerJugador() -> constructor() ? MJE_CUMPLIDO : to_string(contarEdificiosConstruidos())
-			+ " / " + to_string(juego -> obtenerCantidadEdificios())) << endl;
+			cout << contarEdificiosConstruidos() << " / " << juego -> obtenerCantidadEdificios() << endl;;
 			break;
 
 		case ARMADO:
-			cout << (juego -> obtenerJugador() -> armado() ? MJE_CUMPLIDO : (to_string(juego -> obtenerJugador() -> 
-			buscarMaterial(BOMBAS) -> obtenerCantidadMaterial()) + " / " + to_string(CANTIDAD_ARMADO))) << endl;
+			cout << juego -> obtenerJugador() -> buscarMaterial(BOMBAS) -> obtenerCantidadMaterial() 
+			<< " / " << CANTIDAD_ARMADO << endl;
 			break;
 
 		case EXTREMISTA:
-			cout << (juego -> obtenerJugador() -> extremista() ? MJE_CUMPLIDO : (to_string(juego -> obtenerJugador() -> 
-			obtenerCantidadBombasCompradas()) + " / " + to_string(CANTIDAD_EXTREMISTA))) << endl;
+			cout << juego -> obtenerJugador() -> obtenerCantidadBombasCompradas() << " / " <<
+			CANTIDAD_EXTREMISTA << endl;
 			break;
 	}
 }
@@ -598,6 +578,7 @@ void Menu::moverseAUnaCoordenada(Juego *juego) {
 	cout << "Posicion Actual: " << posicionActual << endl << endl;
 	caminoDisponible = juego -> mostrarCaminoMinimo(posicionActual, coordenada, &energiaGastada);
 	cout << endl;
+	cout << "(1, 1): " << juego->valoresCaminos(1, 1) << endl;
 	if(caminoDisponible){
 		if(juego -> obtenerJugador() -> obtenerEnergia() >= energiaGastada){
 			xCoord = stoi(&coordenada[0]);
@@ -708,7 +689,7 @@ void Menu::procesarOpciones(int opcion) {
 	}
 }
 
-void Menu::partidaGanada(int* opcion) {
+void Menu::partidaGanada() {
 	cout << "Cumpliste todos los objetivos! Felicitaciones, has ganado el juego!" << endl;
-	*opcion = JUGADOR_GUARDAR_Y_SALIR;
+
 }
