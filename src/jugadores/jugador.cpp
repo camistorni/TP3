@@ -7,7 +7,7 @@ using namespace std;
 Jugador::Jugador(std::string nombreJugador) {
     nombre = nombreJugador;
     edificiosContruidos = new string[0];
-    energia = 10;
+    energia = 50;
     andycoinsRecolectadas = bombasCompradas = bombasUsadas = 0;
     comprarAndypolisCumplido = 
     edadDePiedraCumplido = 

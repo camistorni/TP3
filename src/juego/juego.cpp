@@ -435,18 +435,17 @@ void Juego::crearCaminos() {
 			grafo->agregarCamino(coordActual, coordActual, 0);
 			
 			if(izquierdaX > 0)
-				this->grafo->agregarCamino(izquierda, coordActual, valoresCaminos(j, i));
+				this->grafo->agregarCamino(coordActual, izquierda, valoresCaminos(j, i));
 				
 			if (arribaY > 0)
-				this->grafo->agregarCamino(arriba, coordActual, valoresCaminos(j, i));
+				this->grafo->agregarCamino(coordActual, arriba, valoresCaminos(j, i));
 				
 			if(derechaX < columnas)
-				this->grafo->agregarCamino(derecha, coordActual, valoresCaminos(j, i));
+				this->grafo->agregarCamino(coordActual, derecha, valoresCaminos(j, i));
 				
 			if(abajoY < filas)
-				this->grafo->agregarCamino(abajo, coordActual, valoresCaminos(j, i));
+				this->grafo->agregarCamino(coordActual, abajo, valoresCaminos(j, i));
 				
-			cout << valoresCaminos(j, i) << endl;
 		}
 	}
 }
@@ -477,8 +476,21 @@ bool Juego::mostrarCaminoMinimo(string origen, string destino, int *energia) {
 	int destinoY = destino2[2] - '0';
 	
 	if(verificarCoordenadasMinimas(destinoX, destinoY)) {
+		string *camino = new string;
+		int tamano = 0;
 		grafo -> usarDijkstra();
-		grafo -> caminoMinimo(origen, destino, energia);
+		grafo -> caminoMinimo(origen, destino, energia, camino, &tamano);
+		for(int i = 0; i < tamano < i++){
+			const char *camino2 = camino[i].c_str();
+			int caminoX = camino2[0] - '0';
+			int caminoY = camino2[2] - '0';
+			if(this -> obtenerMapa() -> obtenerCasillero(fila, columna) -> obtenerTipo() == CAMINO){
+				if(static_cast<CasilleroTransitable*>(this -> obtenerMapa() -> obtenerCasillero(caminoX, caminoY)) -> hayMaterialDepositado()){
+					Material *material = static_cast<CasilleroTransitable*>(this -> obtenerMapa() -> obtenerCasillero(caminoX, caminoY)) -> recolectarMaterial();
+					
+				}				
+			}	
+		}
 		return true;	
 	}
 	return false;
