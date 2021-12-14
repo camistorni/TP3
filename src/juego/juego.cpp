@@ -218,47 +218,6 @@ void Juego::listarEdificios(){
 
 }
 
-void Juego::listarEdificiosConstruidos(){
-	////////////////////Arreglar cantidad construidos y edificios construidos ///////////////////
-	////////////////////Falta alguna manera de imprimir solo nombres/////////////////////////////
-/*
-	int construidosTotal = 0;
-	long nombreMasLargo = 0;
-	long nombre = 0;
-	
-	std::cout << endl << endl;
-	std::cout << "Lista de edificios construidos:" << endl << endl;
-	
-	std::cout << "            ═════════════════════════════════════════════════════════" << endl;
-	std::cout << "             Nombre\t\tCantidad\t\tCoordenadas"<< endl;
-	std::cout << "            ═════════════════════════════════════════════════════════" << endl;
-	
-	for(int i = 0; i < this ->cantidadEdificios; i++){
-		nombre = this->abb->obtenerNodo(i)->obtenerClave().length();
-		if(nombre > nombreMasLargo)
-			nombreMasLargo = nombre;
-	}
-	for(int i = 0; i < this ->cantidadEdificios; i++){
-		if(this -> listaEdificios[i] -> obtenerCantConstruidos() != 0){
-		
-			long espacio = nombreMasLargo - this->abb->obtenerNodo(i)->obtenerClave().length();
-			std::cout << "             " << this->abb->obtenerNodo(i)->obtenerClave();
-			std::cout << setw(8 + (int)espacio);
-			std::cout << this -> listaEdificios[i] -> obtenerCantConstruidos() << setw(20);
-			
-			for(int j = 0; j < listaEdificios[i] -> obtenerCantConstruidos(); j++)
-		 		std::cout << "(" << this -> listaEdificios[i] -> obtenerEdificiosConstruidos(j) -> obtenerFila() << ", " << this -> listaEdificios[i] -> obtenerEdificiosConstruidos(j) -> obtenerColumna() << ")";
-			
-			construidosTotal += listaEdificios[i]->obtenerCantConstruidos();
-			std::cout << endl;
-		}
-	}
-	std::cout << endl << endl;
-	std::cout << "Cantidad total de edificios construidos: " << construidosTotal << endl << endl;
-	*/
-}
-
-
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 // Métodos para el archivo de ubicaciones
 

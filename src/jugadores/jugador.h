@@ -51,7 +51,6 @@ class Jugador {
         int obtenerCantidadBombasUsadas();
         int obtenerAndycoinsRecolectadas();
         int* obtenerObjetivos();
-        int* obtenerUbicacion();
         Material** obtenerMateriales();    
 
     // Setters
@@ -61,7 +60,6 @@ class Jugador {
         void seleccionarObjetivos();
         void aumentarBombasCompradas(int cantidad);
         void aumentarBombasUsadas(int cantidad);
-        void modificarCantidadEscuelasConstruidas(int cantidad);
         
         
     // Generales
@@ -72,19 +70,19 @@ class Jugador {
         // Pre: Recibir un nombre valido
         // Post: Devuelve el material con el nombre indicado
         Material* buscarMaterial(string nombreMaterial);
-        // Pre: 
-        // Post:
+
 
 
     // Objetivos
         // Pre: -
         // Post: Setea el atributo con el valor indicado como parametro
-
         void agregarEdificioConstruido(string edificio);
 
         // Pre: -
-        // Post: Devuelve true si el edificio esta construido, y false en caso contrario
+        // Post: Devuelve la cantidad de minas construidas
         int minasConstruidas();
+        // Pre: -
+        // Post: Devuelve la cantidad de edificios construidos
         int edificiosContruidos();
         
         // Pre: -

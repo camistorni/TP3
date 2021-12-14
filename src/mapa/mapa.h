@@ -54,8 +54,6 @@ class Mapa{
 		int edificiosContruidos(string nombre, int jugador);
 	
 	
-	
-	
 	// Setters
 		// Pre: -
 		// Post: Crea un objeto casillero transitable, intransitabloe o construible
@@ -63,7 +61,6 @@ class Mapa{
 		
 		
 	// Generales
-
 		//Precondiciones: -
 		//Postcondicions: Muestra un dibujo del mapa 
 		void mostrarMapa ();

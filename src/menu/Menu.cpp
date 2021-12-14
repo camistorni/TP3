@@ -441,15 +441,15 @@ void Menu::comprarBomba() {
 	int cantidadAndycoins = 0;
 	cout << "Ingrese la cantidad de bombas que desee comprar" << endl;
 	cin >> cantidad;
-	cantidadAndycoins = juego -> obtenerJugador() -> buscarMaterial("andycoins") -> obtenerCantidadMaterial();
+	cantidadAndycoins = juego -> obtenerJugador() -> buscarMaterial(ANDYCOINS) -> obtenerCantidadMaterial();
 	int costoBombas = cantidad * COSTO_BOMBA;
 	if(cantidadAndycoins < costoBombas) {
 		cout << "No se pudieron adquirir la cantidad de bombas solicitas debido a que no le alcanzan las andycoins" << endl;
 	}
 	else {
-		juego -> obtenerJugador() -> buscarMaterial("andycoins") -> establecerCantidad(cantidadAndycoins - costoBombas);
-		int cantidadActualBombas = juego -> obtenerJugador() -> buscarMaterial("bombas") -> obtenerCantidadMaterial();
-		juego -> obtenerJugador() -> buscarMaterial("bombas") -> establecerCantidad(cantidadActualBombas + cantidad);
+		juego -> obtenerJugador() -> buscarMaterial(ANDYCOINS) -> establecerCantidad(cantidadAndycoins - costoBombas);
+		int cantidadActualBombas = juego -> obtenerJugador() -> buscarMaterial(BOMBAS) -> obtenerCantidadMaterial();
+		juego -> obtenerJugador() -> buscarMaterial(BOMBAS) -> establecerCantidad(cantidadActualBombas + cantidad);
 		juego -> obtenerJugador() -> aumentarBombasCompradas(cantidad);
 		cout << "Ud adquirio " << cantidad << " de bombas" << endl;
 		juego -> obtenerJugador() -> modificarEnergia(ENERGIA_POR_COMPRAR_BOMBA);
