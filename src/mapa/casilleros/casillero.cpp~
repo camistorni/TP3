@@ -49,6 +49,6 @@ int Casillero::obtenerJugador() {
 }
 
 void Casillero::removerJugador(int jugador) {
-    caracter = 'G';
+    caracter = CARACTER_VACIO;
     jugador = -1;
 }

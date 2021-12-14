@@ -25,7 +25,6 @@ void Dijkstra::caminoMinimo(int origen, int destino, int *energia) {
         }
         verticesRecorridos++;
     }
-
     mostrarRecorrido(origen, destino, energia);
 }
 
@@ -70,6 +69,7 @@ void Dijkstra::actualizarDistancia(int vertice) {
         if(!verticesVisitados[i] && distancia[vertice] != INFINITO && distancia[i] > matrizAdyacencia[vertice][i] + distancia[vertice]){
             distancia[i] = matrizAdyacencia[vertice][i] + distancia[vertice];
             recorrido[i] = vertice;
+            cout << distancia[i] << endl;
         }
     }
 }

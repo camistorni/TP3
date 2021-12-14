@@ -578,7 +578,7 @@ void Menu::moverseAUnaCoordenada(Juego *juego) {
 	cout << "Posicion Actual: " << posicionActual << endl << endl;
 	caminoDisponible = juego -> mostrarCaminoMinimo(posicionActual, coordenada, &energiaGastada);
 	cout << endl;
-	cout << "(1, 1): " << juego->valoresCaminos(1, 1) << endl;
+	
 	if(caminoDisponible){
 		if(juego -> obtenerJugador() -> obtenerEnergia() >= energiaGastada){
 			xCoord = stoi(&coordenada[0]);

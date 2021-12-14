@@ -167,8 +167,6 @@ class Juego{
 		//POS: Devuelve los valores de cada casillero del mapa
 		int valoresCaminos(int x, int y);
 		
-		bool verificarCoordenadasMinimas(int fila, int columna);
-		
 		//PRE: -
 		//POS: Imprime el camino minimo ingresado
 		bool mostrarCaminoMinimo(string origen, string destino, int *energia);

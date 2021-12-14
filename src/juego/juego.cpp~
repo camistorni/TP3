@@ -445,8 +445,6 @@ void Juego::crearCaminos() {
 				
 			if(abajoY < filas)
 				this->grafo->agregarCamino(abajo, coordActual, valoresCaminos(j, i));
-				
-			cout << valoresCaminos(j, i) << endl;
 		}
 	}
 }
@@ -454,7 +452,7 @@ void Juego::crearCaminos() {
 int Juego::valoresCaminos(int x, int y) {
 	
 	char casillero = this->obtenerMapa()->obtenerCasillero(x, y)->obtenerTipo();
-
+ 
 	if(casillero == 'C')
 		return 4;
 		
