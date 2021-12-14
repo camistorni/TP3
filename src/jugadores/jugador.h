@@ -8,9 +8,7 @@ class Jugador {
 	protected:
         std::string nombre;
         Material** materiales;
-        std::string* edificiosContruidos; // para el objetivo, no para el juego en si
         int energia;
-		int* ubicacion; // capaz no hace falta
         int* objetivos;
 
         int andycoinsRecolectadas;
@@ -23,10 +21,10 @@ class Jugador {
         bool minaConstruida;
         bool aserraderoConstruido;
         bool fabricaConstruida;
-        bool escuelaConstruida;
         bool plantaElectricaConstruida;
         bool minaOroConstruida;
         bool obeliscoConstruido;
+        int escuelaConstruida;
 
         bool masAltoQueLasNubesCumplido;
         bool comprarAndypolisCumplido;
@@ -58,7 +56,6 @@ class Jugador {
 
     // Setters
         void establecerEnergia(int cantidadEnergia);
-        void establecerCoordenadas(int fila, int columna);
         void modificarEnergia(int energiaAgregada);
         void restarEnergia(int energiaGastada);
         void seleccionarObjetivos();
@@ -84,22 +81,11 @@ class Jugador {
         // Post: Setea el atributo con el valor indicado como parametro
 
         void agregarEdificioConstruido(string edificio);
-        void construirMina(bool construido);
-        void construirAserradero(bool construido);
-        void construirFabrica(bool construido);
-        void construirEscuela(bool construido);
-        void construirPlantaElectrica(bool construido);
-        void construirMinaOro(bool construido);
-        void construirObelisco(bool construido);
-        
+
         // Pre: -
         // Post: Devuelve true si el edificio esta construido, y false en caso contrario
-        bool hayMinaConstruida();
-        bool hayAserraderoconstruido();
-        bool hayFabricaConstruida();
-        bool hayEscuelaConstruida();
-        bool hayPlantaElectricaConstruida();
-        bool hayMinaOroConstruida();
+        int minasConstruidas();
+        int edificiosContruidos();
         
         // Pre: -
         // Post: Devuelve true si se cumplio el objetivo y false en caso contrario
@@ -108,7 +94,8 @@ class Jugador {
         bool edadDePiedra();
         bool bombardero();
         bool energetico();
-        bool letrero();
+        bool letrado();
+        void letrado(bool cumplido);
         bool minero();
         bool cansado();
         bool constructor();

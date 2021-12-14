@@ -2,15 +2,22 @@
 #include "jugador.h"
 #include "constantesJugador.h"
 #include "../constantes/constantes.h"
+#include "../edificios/constantesEdificios.h"
 
 using namespace std;
 
 // Constructor
 Jugador::Jugador(std::string nombreJugador) {
     nombre = nombreJugador;
-    edificiosContruidos = new string[0];
     energia = 50;
-    andycoinsRecolectadas = bombasCompradas = bombasUsadas = 0;
+    andycoinsRecolectadas = bombasCompradas = bombasUsadas = escuelaConstruida = 0;
+    minaConstruida =
+    aserraderoConstruido =
+    fabricaConstruida =
+    plantaElectricaConstruida =
+    minaOroConstruida =
+    obeliscoConstruido =
+    masAltoQueLasNubesCumplido =
     comprarAndypolisCumplido = 
     edadDePiedraCumplido = 
     bombarderoCumplido = 
@@ -23,14 +30,11 @@ Jugador::Jugador(std::string nombreJugador) {
     extremistaCumplido = false;
     objetivos = new int[3]();
     seleccionarObjetivos();
-    ubicacion = new int[2]();
 };
 
 // Destructor
 Jugador::~Jugador() {
-    delete[] edificiosContruidos;
     delete[] objetivos;
-    delete[] ubicacion;
 }
 
 
@@ -59,10 +63,6 @@ int* Jugador::obtenerObjetivos() {
     return objetivos;
 }
 
-int* Jugador::obtenerUbicacion() {
-    return ubicacion;
-}
-
 Material** Jugador::obtenerMateriales() {
     return materiales;
 }
@@ -74,12 +74,6 @@ void Jugador::establecerEnergia(int cantidadEnergia) {
     energia = cantidadEnergia;
 }
 
-void Jugador::establecerCoordenadas(int fila, int columna) {
-    //ubicacion = new int[2];
-    ubicacion[0] = fila;
-    ubicacion[1] = columna;
-}
-
 void Jugador::modificarEnergia(int energiaAgregada) {
     energia = (energia + energiaAgregada)%(CANTIDAD_MAXIMA_ENERGIA + 1);
 }
@@ -89,7 +83,7 @@ void Jugador::restarEnergia(int energiaGastada){
 }
 
 void Jugador::seleccionarObjetivos() {
-    /*int objetivosNuevos[3];
+    int objetivosNuevos[3];
     objetivosNuevos[0] = rand() % 10;
     objetivosNuevos[1] = rand() % 10;
     while(objetivosNuevos[1] == objetivosNuevos[0])
@@ -100,11 +94,6 @@ void Jugador::seleccionarObjetivos() {
     for(int i = 0; i < CANTIDAD_OBJETIVOS; i++) {
         objetivos[i] = objetivosNuevos[i];
     }
-*/
-    // PRUEBAS ALDU
-    objetivos[0] = 8;
-    objetivos[1] = 1;
-    objetivos[2] = 9;
 }
 
 void Jugador::aumentarBombasCompradas(int cantidad) {
@@ -145,75 +134,28 @@ Material* Jugador::buscarMaterial(string nombreMaterial) {
 
 
 // Objetivos
-/*
+
 void Jugador::agregarEdificioConstruido(string edificio){
-    if(nombre == MINA)
-		juego -> obtenerJugador() -> construirMina(true);
-	else if(nombre == ASERRADERO)
-		juego -> obtenerJugador() -> construirAserradero(true);
-	else if(nombre == FABRICA)
-		juego -> obtenerJugador() -> construirFabrica(true);
-	else if(nombre == ESCUELA)
-		juego -> obtenerJugador() -> construirEscuela(true);
-	else if(nombre == PLANTA_ELECTRICA)
-		juego -> obtenerJugador() -> construirPlantaElectrica(true);
-	else if(nombre == MINA_ORO)
-		juego -> obtenerJugador() -> construirMinaOro(true);
+    if(nombre == MINA) minaConstruida = true;
+	if(nombre == ASERRADERO) aserraderoConstruido = true;
+	if(nombre == FABRICA) fabricaConstruida = true;
+	if(nombre == ESCUELA) escuelaConstruida = true;
+	if(nombre == PLANTA_ELECTRICA) plantaElectricaConstruida = true;
+    if(nombre == MINA_ORO) minaOroConstruida = true;
 }
 
-*/
-
-void Jugador::construirMina(bool construido) {
-    minaConstruida = construido;
+int Jugador::minasConstruidas(){
+    return minaConstruida + minaOroConstruida;
 }
 
-void Jugador::construirAserradero(bool construido) {
-    aserraderoConstruido = construido;
-}
-
-void Jugador::construirFabrica(bool construido) {
-    fabricaConstruida = construido;
-}
-
-void Jugador::construirEscuela(bool construido) {
-    escuelaConstruida = construido;
-}
-
-void Jugador::construirPlantaElectrica(bool construido) {
-    plantaElectricaConstruida = construido;
-}
-
-void Jugador::construirMinaOro(bool construido) {
-    minaOroConstruida = construido;
-}
-
-void Jugador::construirObelisco(bool construido) {
-    obeliscoConstruido = construido;
-}
-
-
-bool Jugador::hayMinaConstruida() {
-    return minaConstruida;
-}
-
-bool Jugador::hayAserraderoconstruido() {
-    return aserraderoConstruido;
-}
-
-bool Jugador::hayFabricaConstruida() {
-    return fabricaConstruida;
-}
-
-bool Jugador::hayEscuelaConstruida() {
-    return escuelaConstruida;
-}
-
-bool Jugador::hayPlantaElectricaConstruida() {
-    return plantaElectricaConstruida;
-}
-
-bool Jugador::hayMinaOroConstruida() {
-    return minaOroConstruida;
+int Jugador::edificiosContruidos(){
+  return minaConstruida +
+        aserraderoConstruido +     
+        fabricaConstruida +
+        plantaElectricaConstruida +
+        minaOroConstruida +
+        obeliscoConstruido +
+        (escuelaConstruida > 0);
 }
 
 
@@ -236,11 +178,15 @@ bool Jugador::bombardero() {
 bool Jugador::energetico() {
     return energeticoCumplido || (energeticoCumplido = (energia == 100));
 }
-/*
+
 bool Jugador::letrado() {
-    return letradoCumplido || (letradoCumplido = ())
+    return letradoCumplido;
 }
-*/
+
+void Jugador::letrado(bool cumplido){
+    letradoCumplido = cumplido;
+}
+
 bool Jugador::minero() {
     return mineroCumplido || (mineroCumplido = (minaConstruida && minaOroConstruida));
 }

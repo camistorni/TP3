@@ -176,11 +176,7 @@ class Juego{
 		//Postcondiciones: Imprime los materiales disponibles
 		void mostrarInventario();
 
-		
-		//Precondiciones: Se tiene que haber leído bien el archivo de edificio
-		//Postcondiciones: Agrega el edificio leído a la lista de edificios disponibles
-		void agregarEdificio(Edificio* edificio);
-		
+	
 		//Precondiciones: -
 		//Postcondiciones: Agrega cantidades de material dependiendo del edificio ingresado
 		void agregarRecursos(string nombreEdificio);

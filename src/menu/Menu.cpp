@@ -255,8 +255,10 @@ void Menu::construirEdificioPorNombre() {
 	char respuesta = confirmacionConstruccion(nombreIngresado);
 	
 	if (respuesta == 'y') {
-		construirEdificio(fila, columna, nombreIngresado, piedraNecesaria, maderaNecesaria, metalNecesario);
-		setearEdificios(nombreIngresado, true);
+		if(nombreIngresado == OBELISCO){
+			// Hacer Aldu
+		} else
+			construirEdificio(fila, columna, nombreIngresado, piedraNecesaria, maderaNecesaria, metalNecesario);
 	}
 }
 
@@ -267,6 +269,12 @@ void Menu::construirEdificio(int fila, int columna, string nombreIngresado, int 
 	juego -> obtenerJugador() -> buscarMaterial(MADERA) -> modificarCantidad(-maderaNecesaria);
 	juego -> obtenerJugador() -> buscarMaterial(METAL) -> modificarCantidad(-metalNecesario);
 	juego -> obtenerJugador() -> modificarEnergia(ENERGIA_POR_CONSTRUIR_EDIFICIO_POR_NOMBRE);
+	juego -> obtenerJugador() -> agregarEdificioConstruido(nombreIngresado);
+	if(nombreIngresado == ESCUELA)
+		juego -> obtenerJugador() -> letrado(
+			juego -> obtenerMapa() -> edificiosContruidos(ESCUELA, juego -> obtenerJugadorActivo()) >=
+			juego -> obtenerAbb() -> buscar(ESCUELA) -> obtenerMaximoConstruible()
+		);
 };
 
 char Menu::confirmacionConstruccion(string nombreIngresado) {
@@ -280,23 +288,6 @@ char Menu::confirmacionConstruccion(string nombreIngresado) {
 	}
 
 	return respuesta;
-}
-
-void Menu::setearEdificios(string nombreIngresado, bool construido) {
-	if(nombreIngresado == MINA)
-		juego -> obtenerJugador() -> construirMina(construido);
-	else if(nombreIngresado == ASERRADERO)
-		juego -> obtenerJugador() -> construirAserradero(construido);
-	else if(nombreIngresado == FABRICA)
-		juego -> obtenerJugador() -> construirFabrica(construido);
-	else if(nombreIngresado == ESCUELA)
-		juego -> obtenerJugador() -> construirEscuela(construido);
-	else if(nombreIngresado == PLANTA_ELECTRICA)
-		juego -> obtenerJugador() -> construirPlantaElectrica(construido);
-	else if(nombreIngresado == MINA_ORO)
-		juego -> obtenerJugador() -> construirMinaOro(construido);
-	else if(nombreIngresado == OBELISCO)
-		juego -> obtenerJugador() -> construirObelisco(construido);
 }
  
 void Menu::listarEdificiosConstruidos() {
@@ -353,7 +344,7 @@ void Menu::depositarMateriales(string edificio, Casillero* casillero) {
 	int cantidadMadera = juego -> obtenerAbb() -> buscar(edificio) -> obtenerMaterial(MADERA) / 2;
 	int cantidadMetal = juego -> obtenerAbb() -> buscar(edificio) -> obtenerMaterial(METAL) / 2;
 	;
-
+	
 	(static_cast<CasilleroConstruible *>(casillero) -> depositarMaterial(new Material(PIEDRA, cantidadPiedra)));
 	(static_cast<CasilleroConstruible *>(casillero) -> depositarMaterial(new Material(MADERA, cantidadMadera)));
 	(static_cast<CasilleroConstruible *>(casillero) -> depositarMaterial(new Material(METAL, cantidadMetal)));
@@ -532,8 +523,8 @@ void Menu::mostrarProgresoObjetivos(int objetivos) {
 			break;
 
 		case MINERO:
-			cout << (juego -> obtenerJugador() -> minero() ? MJE_CUMPLIDO : (to_string(contarMinasConstruidas()) + 
-			" / 2" )) << endl;
+			cout << (juego -> obtenerJugador() -> minero() ? MJE_CUMPLIDO : (to_string(juego -> obtenerJugador() ->
+			minasConstruidas()) + " / 2" )) << endl;
 			break;
 
 		case CANSADO:
@@ -542,8 +533,8 @@ void Menu::mostrarProgresoObjetivos(int objetivos) {
 			break;
 		
 		case CONSTRUCTOR:
-			cout << (juego -> obtenerJugador() -> constructor() ? MJE_CUMPLIDO : to_string(contarEdificiosConstruidos())
-			+ " / " + to_string(juego -> obtenerCantidadEdificios())) << endl;
+			cout << (juego -> obtenerJugador() -> constructor() ? MJE_CUMPLIDO : to_string(juego -> obtenerJugador() ->
+			edificiosContruidos()) + " / " + to_string(juego -> obtenerCantidadEdificios())) << endl;
 			break;
 
 		case ARMADO:
@@ -556,33 +547,6 @@ void Menu::mostrarProgresoObjetivos(int objetivos) {
 			obtenerCantidadBombasCompradas()) + " / " + to_string(CANTIDAD_EXTREMISTA))) << endl;
 			break;
 	}
-}
-
-int Menu::contarEdificiosConstruidos() {
-	int contador = 0;
-	Jugador* jugador = juego -> obtenerJugador();
-	if(jugador -> hayMinaConstruida())
-		contador++;
-	if(jugador -> hayAserraderoconstruido())
-		contador++;
-	if(jugador -> hayFabricaConstruida())
-		contador++;
-	if(jugador -> hayEscuelaConstruida())
-		contador++;
-	if(jugador -> hayPlantaElectricaConstruida())
-		contador++;
-	if(jugador -> hayMinaOroConstruida())
-		contador++;
-	return contador;
-}
-
-int Menu::contarMinasConstruidas() {
-	int contador = 0;
-	if(juego -> obtenerJugador() -> hayMinaConstruida())
-		contador++;
-	if(juego -> obtenerJugador() -> hayMinaOroConstruida())
-		contador++;
-	return contador;
 }
 
 void Menu::moverseAUnaCoordenada(Juego *juego) {
@@ -600,7 +564,6 @@ void Menu::moverseAUnaCoordenada(Juego *juego) {
 	if(juego -> obtenerJugador() -> obtenerEnergia() >= energiaGastada){
 		xCoord = stoi(&coordenada[0]);
 		yCoord = stoi(&coordenada[2]);
-		juego -> obtenerJugador() -> establecerCoordenadas(xCoord, yCoord);
 		juego -> obtenerMapa() -> obtenerCasillero(stoi(&posicionActual[0]), stoi(&posicionActual[2])) -> removerJugador(juego -> obtenerJugadorActivo());
 		juego -> obtenerMapa() -> obtenerCasillero(xCoord, yCoord) -> setearJugador(juego -> obtenerJugadorActivo());
 		juego -> obtenerJugador() -> restarEnergia(energiaGastada);

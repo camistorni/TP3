@@ -74,10 +74,6 @@ class Menu {
         char confirmacionConstruccion(string nombreIngresado);
 
         // Pre: -
-        // Post: Modifica los valores del jugador para ver si se cumplio un objetivo
-        void setearEdificios(string nombreIngresado, bool construido);
-
-        // Pre: -
         // Post: 
         void listarEdificiosConstruidos();
 
@@ -120,10 +116,6 @@ class Menu {
         // Pre: -
         // Post: Muestra el progreso de los objetivos actuales del jugador
         void mostrarProgresoObjetivos(int i);
-
-        // Pre:
-        // Post: Cuenta la cantidad de edificios construidos que tiene el jugador
-        int contarEdificiosConstruidos();
 
         // Pre: -
         // Post: Devuelve la cantidad de minas construidas

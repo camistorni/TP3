@@ -36,9 +36,6 @@ void colocarJugador (ifstream& archivoUbicaciones, Mapa* mapa, int jugador);
 // Pre: Recibir el archivo abierto
 // Post: Coloca en el mapa los edificios recibidos en el archivo
 void colocarEdificiosJugador (ifstream& archivoUbicaciones, Juego* juego, int jugador);
-// Pre: -
-// Post: Setea en true el atributo del jugador correspondiente al edificio
-void agregarEdificio(Juego* juego, string nombre);
 // Pre: Recibir el archivo abierto
 // Post: Escribe en el archivo los datos necesarios
 void guardarEdificios(ofstream &archivoUbicaciones, Juego *juego, int fila, int columna, int jugador);
